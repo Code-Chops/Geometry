@@ -20,9 +20,9 @@ public static class PointExtensions
 		return Math.Atan2(point.X.Cast<TNumber, double>(), -point.Y.Cast<TNumber, double>()) * (180 / Math.PI);
 	}
 
-	public static string InlineCss<TNumber>(this Point<TNumber> point)
+	public static string InlineCss<TNumber>(this Point<TNumber> point, string unitOfMeasurement = "px")
 		where TNumber : struct, IComparable<TNumber>, IEquatable<TNumber>, IConvertible
 	{
-		return $"left: {point.X}px; top: {point.Y}px";
+		return $"left: {point.X}{unitOfMeasurement}; top: {point.Y}{unitOfMeasurement}; ";
 	}
 }

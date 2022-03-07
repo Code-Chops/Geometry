@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<VersionPrefix>2.0.0</VersionPrefix>
-		<PackageReleaseNotes>Usage of magic enums</PackageReleaseNotes>
+		<VersionPrefix>2.0.1</VersionPrefix>
+		<PackageReleaseNotes>Updated magic enum package</PackageReleaseNotes>
 		<TargetFramework>net6.0</TargetFramework>
 		<LangVersion>10</LangVersion>
 	</PropertyGroup>
@@ -42,9 +42,13 @@ Contains objects and helpers to help the calculation of objects in space and tim
 	</ItemGroup>
 
 	<ItemGroup>
+		<InternalsVisibleTo Include="$(AssemblyName).UnitTests" />
+	</ItemGroup>
+		
+	<ItemGroup>
 		<PackageReference Include="Architect.AmbientContexts" Version="1.1.1" />
 		<PackageReference Include="CodeChops.GenericMath" Version="1.3.0" />
-		<PackageReference Include="CodeChops.MagicEnums" Version="1.0.2" />
+		<PackageReference Include="CodeChops.MagicEnums" Version="1.0.3" />
 		<PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
 		<PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="6.0.0" />
 		<PackageReference Include="System.Collections.Immutable" Version="6.0.0" />
