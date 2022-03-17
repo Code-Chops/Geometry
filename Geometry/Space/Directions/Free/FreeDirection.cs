@@ -16,6 +16,9 @@ public record FreeDirection<TDeltaPointNumber> : IDirection
 	/// </summary>
 	private Point<TDeltaPointNumber> _deltaPoint;
 
+	/// <summary>
+	/// The angle (from 0 to 360 degrees).
+	/// </summary>
 	public double Angle { get; private set; }
 
 	public FreeDirection(Point<TDeltaPointNumber> deltaPoint)
