@@ -1,8 +1,10 @@
-﻿namespace CodeChops.Geometry.Space.Directions;
+﻿using CodeChops.MagicEnums;
 
-public enum RotationType
+namespace CodeChops.Geometry.Space.Directions;
+
+public record RotationType : MagicEnum<RotationType>
 {
-	CounterClockwise = -1,
-	Invert = 0,
-	Clockwise = 1,
+	public static readonly RotationType CounterClockwise	= CreateMember(-1);
+	public static readonly RotationType Invert				= CreateMember(0);
+	public static readonly RotationType Clockwise			= CreateMember(1);
 }

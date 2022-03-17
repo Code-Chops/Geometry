@@ -7,15 +7,16 @@ namespace CodeChops.Geometry.UnitTests;
 public class StrictDirectionModeTests
 {
 	[Theory]
-	[InlineData(nameof(EveryDirection.East),		RotationType.Invert,			nameof(EveryDirection.West))]
-	[InlineData(nameof(EveryDirection.South),		RotationType.Clockwise,			nameof(EveryDirection.SouthWest))]
-	[InlineData(nameof(EveryDirection.NorthEast),	RotationType.Invert,			nameof(EveryDirection.SouthWest))]
-	[InlineData(nameof(EveryDirection.NorthEast),	RotationType.CounterClockwise,	nameof(EveryDirection.North))]
-	[InlineData(nameof(EveryDirection.SouthWest),	RotationType.Clockwise,			nameof(EveryDirection.West))]
-	[InlineData(nameof(EveryDirection.North),		RotationType.CounterClockwise,	nameof(EveryDirection.NorthWest))]
-	public void TurnIsCorrect(string directionName, RotationType rotationType, string expectedDirectionName)
+	[InlineData(nameof(EveryDirection.East),		nameof(RotationType.Invert),			nameof(EveryDirection.West))]
+	[InlineData(nameof(EveryDirection.South),		nameof(RotationType.Clockwise),			nameof(EveryDirection.SouthWest))]
+	[InlineData(nameof(EveryDirection.NorthEast),	nameof(RotationType.Invert),			nameof(EveryDirection.SouthWest))]
+	[InlineData(nameof(EveryDirection.NorthEast),	nameof(RotationType.CounterClockwise),	nameof(EveryDirection.North))]
+	[InlineData(nameof(EveryDirection.SouthWest),	nameof(RotationType.Clockwise),			nameof(EveryDirection.West))]
+	[InlineData(nameof(EveryDirection.North),		nameof(RotationType.CounterClockwise),	nameof(EveryDirection.NorthWest))]
+	public void TurnIsCorrect(string directionName, string rotationTypeName, string expectedDirectionName)
 	{
 		var direction = EveryDirection.GetSingleMember(directionName);
+		var rotationType = RotationType.GetSingleMember(rotationTypeName);
 		var newDirection = direction.GetDirectionFromTurn(rotationType);
 
 		Assert.Equal(expectedDirectionName, newDirection.Name);
