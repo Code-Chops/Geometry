@@ -1,5 +1,6 @@
 ﻿using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
+using System.Runtime.CompilerServices;
 using CodeChops.MagicEnums;
 using CodeChops.MagicEnums.Attributes;
 
@@ -25,6 +26,13 @@ public record StrictDirection<TDirection, TDeltaPointNumber> : MagicCustomEnum<T
 
 	public static ImmutableList<TDirection> PossibleDirections { get; } = _possibleDirections ??= GetEnumerable().ToImmutableList();
 	private static readonly ImmutableList<TDirection> _possibleDirections;
+
+	public static TDirection CreateMember(int x, int y, [CallerMemberName] string name = null!)
+{
+		var point = new Point<int>(x, y).Cast<TDeltaPointNumber>();
+		var member = CreateMember(point, name);
+		return member;
+	}
 
 	/// <summary>
 	/// RotationType left or right. Is non-deterministic!
@@ -78,7 +86,7 @@ public record StrictDirection<TDirection, TDeltaPointNumber> : MagicCustomEnum<T
 		where TTargetDirection : StrictDirection<TTargetDirection, TTargetDeltaPointNumber>
 		where TTargetDeltaPointNumber : struct, IComparable<TTargetDeltaPointNumber>, IEquatable<TTargetDeltaPointNumber>, IConvertible
 	{
-		var newDeltaPoint = Point<TTargetDeltaPointNumber>.Create(deltaPoint.X, deltaPoint.Y);
+		var newDeltaPoint = deltaPoint.Cast<TTargetDeltaPointNumber>();
 		if (!StrictDirection<TTargetDirection, TTargetDeltaPointNumber>.TryGetSingleMember(newDeltaPoint, out var newDirection))
 		{
 			direction = null;

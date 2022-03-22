@@ -24,11 +24,9 @@ public readonly record struct Point<TNumber>
 		this.Y = y;
 	}
 
-	public static Point<TNumber> Create<TNumberX, TNumberY>(TNumberX x, TNumberY y)
+	public static Point<TNumber> Create<TOriginalNumber>(TOriginalNumber x, TOriginalNumber y)
+		where TOriginalNumber : struct, IComparable<TOriginalNumber>, IEquatable<TOriginalNumber>, IConvertible
 	{
-		if (x is null) throw new ArgumentNullException(nameof(x));
-		if (y is null) throw new ArgumentNullException(nameof(y));
-
 		return new Point<TNumber>(
 			x: (TNumber)Convert.ChangeType(x, typeof(TNumber)),
 			y: (TNumber)Convert.ChangeType(y, typeof(TNumber)));
@@ -110,6 +108,12 @@ public readonly record struct Point<TNumber>
 	public static implicit operator Point<TNumber>((TNumber, TNumber) tuple)
 	{
 		return new(tuple.Item1, tuple.Item2);
+	}
+
+	public Point<TTargetNumber> Cast<TTargetNumber>()
+		where TTargetNumber : struct, IComparable<TTargetNumber>, IEquatable<TTargetNumber>, IConvertible
+	{
+		return Point<TTargetNumber>.Create<TNumber>(this.X, this.Y);
 	}
 
 	public bool TryGetAddress(Size<TNumber> size, [NotNullWhen(returnValue: true)] out Number<TNumber>? address)

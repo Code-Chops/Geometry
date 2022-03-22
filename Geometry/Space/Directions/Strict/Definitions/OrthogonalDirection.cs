@@ -1,9 +1,10 @@
 ﻿namespace CodeChops.Geometry.Space.Directions.Strict.Definitions;
 
-public record OrthogonalDirection : StrictDirection<OrthogonalDirection>
+public record OrthogonalDirection<TNumber> : StrictDirection<OrthogonalDirection<TNumber>>
+	where TNumber : struct, IComparable<TNumber>, IEquatable<TNumber>, IConvertible
 {
-	public static OrthogonalDirection Up { get; }		= CreateMember(( 0, -1));
-	public static OrthogonalDirection Right { get; }	= CreateMember(( 1,  0));
-	public static OrthogonalDirection Down { get; }		= CreateMember(( 0,  1));
-	public static OrthogonalDirection Left { get; }		= CreateMember((-1,  0));
+	public static OrthogonalDirection<TNumber> Up { get; }		= CreateMember( 0, -1);
+	public static OrthogonalDirection<TNumber> Right { get; }	= CreateMember( 1,  0);
+	public static OrthogonalDirection<TNumber> Down { get; }	= CreateMember( 0,  1);
+	public static OrthogonalDirection<TNumber> Left { get; }	= CreateMember(-1,  0);
 }
