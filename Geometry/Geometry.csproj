@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<VersionPrefix>2.1.0</VersionPrefix>
-		<PackageReleaseNotes>Fixed markup and updated magic enum package</PackageReleaseNotes>
+		<VersionPrefix>2.1.1</VersionPrefix>
+		<PackageReleaseNotes>Extendended IStrictDirection interface</PackageReleaseNotes>
 		<TargetFramework>net6.0</TargetFramework>
 		<LangVersion>10</LangVersion>
 	</PropertyGroup>
