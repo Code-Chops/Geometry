@@ -15,7 +15,7 @@ public abstract record StrictDirection<TDirectionMode> : StrictDirection<TDirect
 /// A strict direction based on a DirectionMode enum and therefore strongly typed. No freely direction delta points are used.
 /// </summary>
 [DisableConcurrency]
-public record StrictDirection<TDirection, TDeltaPointNumber> : MagicCustomEnum<TDirection, Point<TDeltaPointNumber>>, IDirection<TDeltaPointNumber>, IStrictDirection
+public abstract record StrictDirection<TDirection, TDeltaPointNumber> : MagicCustomEnum<TDirection, Point<TDeltaPointNumber>>, IDirection<TDeltaPointNumber>, IStrictDirection
 	where TDirection : StrictDirection<TDirection, TDeltaPointNumber>
 	where TDeltaPointNumber : struct, IComparable<TDeltaPointNumber>, IEquatable<TDeltaPointNumber>, IConvertible
 {

@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<VersionPrefix>2.2.0</VersionPrefix>
-		<PackageReleaseNotes>Strict directions with generic TNumber</PackageReleaseNotes>
+		<VersionPrefix>2.2.1</VersionPrefix>
+		<PackageReleaseNotes>Fixed abstract strictdirection</PackageReleaseNotes>
 		<TargetFramework>net6.0</TargetFramework>
 		<LangVersion>10</LangVersion>
 	</PropertyGroup>
