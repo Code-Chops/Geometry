@@ -30,7 +30,7 @@ public class StrictDirectionModeTests
 	public void CastDirection_ShouldWork(string directionName, string expectedDirectionName)
 	{
 		var deltaPoint = EveryDirection.GetSingleMember(directionName);
-		var newDirectionName = EveryDirection.Cast<OrthogonalDirection>(deltaPoint).Name;
+		var newDirectionName = EveryDirection.Cast<OrthogonalDirection, int>(deltaPoint).Name;
 
 		Assert.Equal(newDirectionName, expectedDirectionName);
 	}
