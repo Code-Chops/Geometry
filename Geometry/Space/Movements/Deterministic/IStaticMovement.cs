@@ -5,5 +5,5 @@
 /// </summary>
 public interface IStaticMovement
 {
-	string DirectionModeName { get; }
+	string DirectionTypeName { get; }
 }

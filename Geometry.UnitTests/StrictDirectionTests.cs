@@ -3,7 +3,7 @@ using Xunit;
 
 namespace CodeChops.Geometry.UnitTests;
 
-public class StrictDirectionModeTests
+public class StrictDirectionTests
 {
 	[Theory]
 	[InlineData(nameof(EveryDirection.East),		nameof(RotationType.Invert),			nameof(EveryDirection.West))]
