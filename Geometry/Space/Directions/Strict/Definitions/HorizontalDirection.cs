@@ -1,6 +1,6 @@
 ﻿namespace CodeChops.Geometry.Space.Directions.Strict.Definitions;
 
-public record HorizontalDirection<TNumber> : StrictDirection<HorizontalDirection<TNumber>>
+public record HorizontalDirection<TNumber> : StrictDirection<HorizontalDirection<TNumber>, TNumber>
 	where TNumber : struct, IComparable<TNumber>, IEquatable<TNumber>, IConvertible
 {
 	public static HorizontalDirection<TNumber> Right { get; }	= CreateMember( 1, 0);

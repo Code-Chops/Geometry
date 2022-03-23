@@ -1,6 +1,6 @@
 ﻿namespace CodeChops.Geometry.Space.Directions.Strict.Definitions;
 
-public record OrthogonalDirection<TNumber> : StrictDirection<OrthogonalDirection<TNumber>>
+public record OrthogonalDirection<TNumber> : StrictDirection<OrthogonalDirection<TNumber>, TNumber>
 	where TNumber : struct, IComparable<TNumber>, IEquatable<TNumber>, IConvertible
 {
 	public static OrthogonalDirection<TNumber> Up { get; }		= CreateMember( 0, -1);

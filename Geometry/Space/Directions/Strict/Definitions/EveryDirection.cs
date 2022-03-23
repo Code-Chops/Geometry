@@ -1,6 +1,6 @@
 ﻿namespace CodeChops.Geometry.Space.Directions.Strict.Definitions;
 
-public record EveryDirection<TNumber> : StrictDirection<EveryDirection<TNumber>>
+public record EveryDirection<TNumber> : StrictDirection<EveryDirection<TNumber>, TNumber>
 	where TNumber : struct, IComparable<TNumber>, IEquatable<TNumber>, IConvertible
 {
 	public static EveryDirection<TNumber> North { get; }		= CreateMember( 0, -1);
