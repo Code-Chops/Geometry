@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<VersionPrefix>2.3.2</VersionPrefix>
-		<PackageReleaseNotes>Updated strictdirection interface</PackageReleaseNotes>
+		<VersionPrefix>2.3.3</VersionPrefix>
+		<PackageReleaseNotes>Split strictdirection interface into (non)generic</PackageReleaseNotes>
 		<TargetFramework>net6.0</TargetFramework>
 		<LangVersion>10</LangVersion>
 	</PropertyGroup>

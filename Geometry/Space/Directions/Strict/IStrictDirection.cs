@@ -2,13 +2,16 @@
 
 namespace CodeChops.Geometry.Space.Directions.Strict;
 
-public interface IStrictDirection<TDeltaPointNumber> : IDirection<TDeltaPointNumber>
+public interface IStrictDirection<TDeltaPointNumber> : IDirection<TDeltaPointNumber>, IStrictDirection
 	where TDeltaPointNumber : struct, IComparable<TDeltaPointNumber>, IEquatable<TDeltaPointNumber>, IConvertible
 {
-	string Name { get; }
-
 	IStrictDirection<TDeltaPointNumber> GetDirectionFromRandomTurn();
 	IStrictDirection<TDeltaPointNumber> GetDirectionFromTurn(RotationType rotationType);
+}
+
+public interface IStrictDirection : IDirection
+{
+	string Name { get; }
 
 	TTargetDirection Cast<TTargetDirection, TTargetDeltaPointNumber>()
 			where TTargetDirection : StrictDirection<TTargetDirection, TTargetDeltaPointNumber>
