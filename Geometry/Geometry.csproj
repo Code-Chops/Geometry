@@ -25,7 +25,7 @@
 		<Description>
 Contains objects and helpers to help the calculation of objects in space and time:
  -Point with a generic integral value;
- -Size with a generic intergral value;
+ -Size with a generic integral value;
  -Directions: strict and free;
  -Movements: deterministic (dynamic and static) and non-deterministic (free);
  -Timing: stopwatch scope;
