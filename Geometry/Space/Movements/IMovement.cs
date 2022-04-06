@@ -8,7 +8,7 @@ namespace CodeChops.Geometry.Space.Movements;
 public interface IMovement
 {
 	Point<float> GetPoint();
-	Point<float> DirectionDeltaPoint { get; }
+	Point<float> GetDirectionDeltaPoint();
 
 	IDirection GetDirection();
 }

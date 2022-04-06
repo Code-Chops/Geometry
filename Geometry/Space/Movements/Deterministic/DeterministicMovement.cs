@@ -18,7 +18,7 @@ public abstract record DeterministicMovement<TPointNumber> : Movement<TPointNumb
 	/// <summary>
 	/// Not sure if this is correct.
 	/// </summary>
-	public override Point<float> DirectionDeltaPoint => this.CalculatePoint(this.Stopwatch.ElapsedMilliseconds).Cast<TPointNumber, float>();
+	public override Point<float> GetDirectionDeltaPoint() => this.CalculatePoint(this.Stopwatch.ElapsedMilliseconds).Cast<TPointNumber, float>();
 
 	protected DeterministicMovement(Point<TPointNumber> startPoint, float speed)
 	{

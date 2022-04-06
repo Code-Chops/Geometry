@@ -13,7 +13,7 @@ public class FreeDirectionTests
 	public void AngleToDeltaPoint_Is_Correct(double angle, int expectedDeltaX, int expectedDeltaY)
 	{
 		var direction = new FreeDirection(angle);
-		var point = direction.GetValue().Cast<float, int>();
+		var point = direction.GetValue<float>();
 		var expectedPoint = new Point(expectedDeltaX, expectedDeltaY);
 
 		Assert.Equal((int)expectedPoint.X, (int)point.X);

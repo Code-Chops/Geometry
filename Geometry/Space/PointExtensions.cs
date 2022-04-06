@@ -9,6 +9,8 @@ public static class PointExtensions
 		where TNumber : struct, IComparable<TNumber>, IEquatable<TNumber>, IConvertible
 		where TSourceNumber : struct, IComparable<TSourceNumber>, IEquatable<TSourceNumber>, IConvertible
 	{
+		if (point is Point<TNumber> value) return value;
+
 		return new(
 			x: point.X.Cast<TSourceNumber, TNumber>(),
 			y: point.Y.Cast<TSourceNumber, TNumber>());

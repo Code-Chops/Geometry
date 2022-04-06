@@ -3,13 +3,18 @@
 /// <summary>
 /// A direction with every possible delta point.
 /// </summary>
-public record FreeDirection<TDeltaPointNumber> : IDirection
+public record FreeDirection<TDeltaPointNumber> : IDirection<TDeltaPointNumber>
 	where TDeltaPointNumber : struct, IComparable<TDeltaPointNumber>, IEquatable<TDeltaPointNumber>, IConvertible
 {
-	public override string ToString() => $"{nameof(FreeDirection<TDeltaPointNumber>)}: {this.DeltaPoint}";
+	public override string ToString() => $"{nameof(FreeDirection<TDeltaPointNumber>)}: {this.Value}";
 
-	public Point<TDeltaPointNumber> DeltaPoint => this._deltaPoint;
-	public Point<float> GetValue() => this.DeltaPoint.Cast<TDeltaPointNumber, float>();
+	public Point<TDeltaPointNumber> Value => this._deltaPoint;
+
+	public Point<TTargetPointNumber> GetValue<TTargetPointNumber>()
+		where TTargetPointNumber : struct, IComparable<TTargetPointNumber>, IEquatable<TTargetPointNumber>, IConvertible
+	{
+		return this.Value.Cast<TDeltaPointNumber, TTargetPointNumber>();
+	}
 
 	/// <summary>
 	/// Backing field so the value is mutable in this class.
@@ -52,6 +57,6 @@ public record FreeDirection<TDeltaPointNumber> : IDirection
 	{
 		this.Angle = angle;
 		var newDeltaPoint = new Point<TDeltaPointNumber>(this.Angle);
-		if (newDeltaPoint != this.DeltaPoint) this._deltaPoint = newDeltaPoint;
+		if (newDeltaPoint != this.Value) this._deltaPoint = newDeltaPoint;
 	}
 }

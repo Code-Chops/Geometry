@@ -18,11 +18,11 @@ public record FreeMovement<TPointNumber> : Movement<TPointNumber>
 	public sealed override IDirection GetDirection() => this.Direction;
 	public FreeDirection<TPointNumber> Direction { get; set; }
 
-	public sealed override Point<float> DirectionDeltaPoint => this.Direction.GetValue();
+	public sealed override Point<float> GetDirectionDeltaPoint() => this.Direction.GetValue<float>();
 
 	public void MoveRelative(float step)
 	{
-		this._point = this.Direction.DeltaPoint * Number<TPointNumber>.Create(step);
+		this._point = this.Direction.Value * Number<TPointNumber>.Create(step);
 	}
 
 	public void MoveAbsolute(Point<TPointNumber> point)

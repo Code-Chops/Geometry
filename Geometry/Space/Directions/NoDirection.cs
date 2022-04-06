@@ -3,7 +3,10 @@
 public record NoDirection : IDirection
 {
 	public string Name { get; } = nameof(NoDirection);
-	public Point<float> GetValue() => Point<float>.Empty;
+
+	public Point<TTargetPointNumber> GetValue<TTargetPointNumber>()
+		where TTargetPointNumber : struct, IComparable<TTargetPointNumber>, IEquatable<TTargetPointNumber>, IConvertible 
+			=> Point<TTargetPointNumber>.Empty;
 
 	public static readonly NoDirection Instance = new();
 

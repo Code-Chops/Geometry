@@ -22,7 +22,11 @@ public abstract record StrictDirection<TDirection, TDeltaPointNumber> : MagicCus
 	public static ImmutableList<TDirection> Members { get; } = _members ??= GetEnumerable().ToImmutableList();
 	private static readonly ImmutableList<TDirection> _members;
 
-	public Point<float> GetValue() => this.Value.Cast<TDeltaPointNumber, float>();
+	public Point<TTargetPointNumber> GetValue<TTargetPointNumber>()
+		where TTargetPointNumber : struct, IComparable<TTargetPointNumber>, IEquatable<TTargetPointNumber>, IConvertible
+	{
+		return this.Value.Cast<TDeltaPointNumber, TTargetPointNumber>();
+	}
 
 	public static ImmutableList<TDirection> PossibleDirections { get; } = _possibleDirections ??= GetEnumerable().ToImmutableList();
 	private static readonly ImmutableList<TDirection> _possibleDirections;

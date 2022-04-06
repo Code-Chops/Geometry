@@ -10,7 +10,7 @@ public record NoMovement<TPointNumber> : Movement<TPointNumber>
 {
 	public sealed override string ToString() => this.GetType().Name;
 
-	public sealed override Point<float> DirectionDeltaPoint => Point<float>.Empty;
+	public sealed override Point<float> GetDirectionDeltaPoint() => Point<float>.Empty;
 	public sealed override IDirection GetDirection() => this.Direction;
 
 	public IDirection Direction { get; }

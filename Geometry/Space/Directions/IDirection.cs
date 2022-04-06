@@ -11,5 +11,6 @@ public interface IDirection<TDeltaPointNumber> : IDirection
 /// </summary>
 public interface IDirection
 {
-	Point<float> GetValue();
+	Point<TTargetPointNumber> GetValue<TTargetPointNumber>()
+		where TTargetPointNumber : struct, IComparable<TTargetPointNumber>, IEquatable<TTargetPointNumber>, IConvertible;
 }

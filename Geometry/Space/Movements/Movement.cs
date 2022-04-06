@@ -10,6 +10,6 @@ public abstract record Movement<TDeltaPointNumber> : IMovement
 {
 	public Point<float> GetPoint() => this.Point.Cast<TDeltaPointNumber, float>();
 	protected abstract Point<TDeltaPointNumber> Point { get; }
-	public abstract Point<float> DirectionDeltaPoint { get; }
+	public abstract Point<float> GetDirectionDeltaPoint();
 	public abstract IDirection GetDirection();
 }
