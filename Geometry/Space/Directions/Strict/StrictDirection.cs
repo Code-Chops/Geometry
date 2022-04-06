@@ -15,7 +15,7 @@ public abstract record StrictDirection<TDirection> : StrictDirection<TDirection,
 /// A strict direction based on a StrictDirection magic enum and therefore strongly typed. No freely direction delta points are used.
 /// </summary>
 [DisableConcurrency]
-public abstract record StrictDirection<TDirection, TDeltaPointNumber> : MagicCustomEnum<TDirection, Point<TDeltaPointNumber>>, IDirection<TDeltaPointNumber>, IStrictDirection
+public abstract record StrictDirection<TDirection, TDeltaPointNumber> : MagicCustomEnum<TDirection, Point<TDeltaPointNumber>>, IStrictDirection<TDeltaPointNumber>
 	where TDirection : StrictDirection<TDirection, TDeltaPointNumber>
 	where TDeltaPointNumber : struct, IComparable<TDeltaPointNumber>, IEquatable<TDeltaPointNumber>, IConvertible
 {
@@ -41,14 +41,14 @@ public abstract record StrictDirection<TDirection, TDeltaPointNumber> : MagicCus
 	/// <summary>
 	/// RotationType left or right. Is non-deterministic!
 	/// </summary>
-	public TDirection GetDirectionFromRandomTurn()
+	public IStrictDirection<TDeltaPointNumber> GetDirectionFromRandomTurn()
 	{
 		var rotationType = (RotationType)(new Random().NextDouble() * 4 - 2);
 
 		return this.GetDirectionFromTurn(rotationType);
 	}
 
-	public TDirection GetDirectionFromTurn(RotationType rotationType)
+	public IStrictDirection<TDeltaPointNumber> GetDirectionFromTurn(RotationType rotationType)
 	{
 		var currentDirectionTypeIndex = PossibleDirections.IndexOf((TDirection)this);
 		var directionIndexDelta = rotationType == RotationType.Invert

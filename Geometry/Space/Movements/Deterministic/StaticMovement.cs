@@ -12,7 +12,7 @@ public record StaticMovement<TStrictDirection, TDeltaPointNumber> : Deterministi
 {
 	public sealed override string ToString() => $"{this.GetType().Name}: {this.Direction}";
 
-	public sealed override IStrictDirection GetDirection() => this.Direction;
+	public sealed override IStrictDirection<TDeltaPointNumber> GetDirection() => this.Direction;
 	public string DirectionTypeName { get; } = typeof(TStrictDirection).Name;
 	public TStrictDirection Direction { get; init; }
 	protected sealed override Point<TDeltaPointNumber> CalculatePoint(float step) => this.Direction.Value * Number<TDeltaPointNumber>.Create(step);

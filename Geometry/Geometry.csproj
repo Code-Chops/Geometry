@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<VersionPrefix>2.3.0</VersionPrefix>
-		<PackageReleaseNotes>Enhanced cast and GetValue</PackageReleaseNotes>
+		<VersionPrefix>2.3.1</VersionPrefix>
+		<PackageReleaseNotes>Updated strictdirection interface</PackageReleaseNotes>
 		<TargetFramework>net6.0</TargetFramework>
 		<LangVersion>10</LangVersion>
 	</PropertyGroup>
@@ -11,7 +11,7 @@
 		<Title>CodeChops.Geometry</Title>
 		<AssemblyName>CodeChops.Geometry</AssemblyName>
 		<RootNamespace>CodeChops.Geometry</RootNamespace>
-		<PackageId>CodeChops.Geometry</PackageId>
+		<PackageId>CodeChops.Geometry</PackageId>	
 		<Authors>CodeChops (@Code-Chops), Max Bergman</Authors>
 		<Company>CodeChops</Company>
 		<PackageProjectUrl>https://github.com/code-chops/Geometry</PackageProjectUrl>
