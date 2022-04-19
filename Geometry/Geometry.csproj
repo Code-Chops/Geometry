@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<VersionPrefix>2.3.3</VersionPrefix>
-		<PackageReleaseNotes>Split strictdirection interface into (non)generic</PackageReleaseNotes>
+		<VersionPrefix>2.3.4</VersionPrefix>
+		<PackageReleaseNotes>Inline css now uses invariant culture</PackageReleaseNotes>
 		<TargetFramework>net6.0</TargetFramework>
 		<LangVersion>10</LangVersion>
 	</PropertyGroup>

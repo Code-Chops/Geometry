@@ -1,4 +1,5 @@
-﻿using CodeChops.GenericMath;
+﻿using System.Globalization;
+using CodeChops.GenericMath;
 using CodeChops.Geometry.Space;
 
 namespace CodeChops.Geometry.Space;
@@ -25,6 +26,19 @@ public static class PointExtensions
 	public static string InlineCss<TNumber>(this Point<TNumber> point, string unitOfMeasurement = "px")
 		where TNumber : struct, IComparable<TNumber>, IEquatable<TNumber>, IConvertible
 	{
-		return $"left: {point.X}{unitOfMeasurement}; top: {point.Y}{unitOfMeasurement}; ";
+		var originalCulureInfo = CultureInfo.CurrentUICulture;
+		try
+		{
+			Thread.CurrentThread.CurrentUICulture = CultureInfo.InvariantCulture;
+			var inlineCss = $"left: {point.X}{unitOfMeasurement}; top: {point.Y}{unitOfMeasurement}; ";
+
+			return inlineCss;
+		}
+		finally
+		{
+			Thread.CurrentThread.CurrentUICulture = originalCulureInfo;
+		}
+
+		return null!;
 	}
 }
