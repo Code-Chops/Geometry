@@ -29,14 +29,14 @@ public static class PointExtensions
 		var originalCulureInfo = CultureInfo.CurrentUICulture;
 		try
 		{
-			Thread.CurrentThread.CurrentUICulture = CultureInfo.InvariantCulture;
+			Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
 			var inlineCss = $"left: {point.X}{unitOfMeasurement}; top: {point.Y}{unitOfMeasurement}; ";
 
 			return inlineCss;
 		}
 		finally
 		{
-			Thread.CurrentThread.CurrentUICulture = originalCulureInfo;
+			Thread.CurrentThread.CurrentCulture = originalCulureInfo;
 		}
 
 		return null!;

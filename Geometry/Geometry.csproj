@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<VersionPrefix>2.3.4</VersionPrefix>
-		<PackageReleaseNotes>Inline css now uses invariant culture</PackageReleaseNotes>
+		<VersionPrefix>2.3.5</VersionPrefix>
+		<PackageReleaseNotes>Inline css now uses invariant culture fix + tests</PackageReleaseNotes>
 		<TargetFramework>net6.0</TargetFramework>
 		<LangVersion>10</LangVersion>
 	</PropertyGroup>
