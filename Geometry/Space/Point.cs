@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics.CodeAnalysis;
+using System.Text.Json.Serialization;
 using CodeChops.GenericMath;
 
 namespace CodeChops.Geometry.Space;
@@ -18,6 +19,7 @@ public readonly record struct Point<TNumber>
 
 	public static readonly Point<TNumber> Empty = new();
 
+	[JsonConstructor]
 	public Point(Number<TNumber> x, Number<TNumber> y)
 	{
 		this.X = x;

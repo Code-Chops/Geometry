@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<VersionPrefix>2.3.5</VersionPrefix>
-		<PackageReleaseNotes>Inline css now uses invariant culture fix + tests</PackageReleaseNotes>
+		<VersionPrefix>2.3.6</VersionPrefix>
+		<PackageReleaseNotes>Added JSON constructor</PackageReleaseNotes>
 		<TargetFramework>net6.0</TargetFramework>
 		<LangVersion>10</LangVersion>
 	</PropertyGroup>
