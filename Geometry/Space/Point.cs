@@ -1,6 +1,8 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Text.Json.Serialization;
 using CodeChops.GenericMath;
+using CodeChops.MagicEnums.Attributes;
+using CodeChops.MagicEnums;
 
 namespace CodeChops.Geometry.Space;
 
@@ -135,5 +137,5 @@ public readonly record struct Point<TNumber>
 
 	public bool IsOutOfRange(Size<TNumber> size) => !this.TryGetAddress(size, out _);
 
-	public static bool IsOutOfRange(Number<TNumber> address, Size<TNumber> size) => address < Number<TNumber>.Empty || address >= size.ToAddress();
+	public static bool IsOutOfRange(Number<TNumber> address, Size<TNumber> size) => address <Number<TNumber>.Empty || address >= size.ToAddress();
 }

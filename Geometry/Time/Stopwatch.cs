@@ -1,4 +1,6 @@
-﻿namespace CodeChops.Geometry.Time;
+﻿using CodeChops.ImplementationDiscovery;
+
+namespace CodeChops.Geometry.Time;
 
 public class Stopwatch : IStopwatch
 {

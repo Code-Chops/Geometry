@@ -38,7 +38,5 @@ public static class PointExtensions
 		{
 			Thread.CurrentThread.CurrentCulture = originalCulureInfo;
 		}
-
-		return null!;
 	}
 }

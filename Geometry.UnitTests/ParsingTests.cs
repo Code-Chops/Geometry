@@ -1,4 +1,6 @@
 ﻿using CodeChops.Geometry.Space;
+using CodeChops.MagicEnums.Attributes;
+using CodeChops.MagicEnums;
 using Xunit;
 
 namespace CodeChops.Geometry.UnitTests;

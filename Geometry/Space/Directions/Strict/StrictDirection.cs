@@ -15,9 +15,9 @@ public abstract record StrictDirection<TDirection> : StrictDirection<TDirection,
 /// A strict direction based on a StrictDirection magic enum and therefore strongly typed. No freely direction delta points are used.
 /// </summary>
 [DisableConcurrency]
-public abstract record StrictDirection<TDirection, TDeltaPointNumber> : MagicCustomEnum<TDirection, Point<TDeltaPointNumber>>, IStrictDirection<TDeltaPointNumber>
-	where TDirection : StrictDirection<TDirection, TDeltaPointNumber>
-	where TDeltaPointNumber : struct, IComparable<TDeltaPointNumber>, IEquatable<TDeltaPointNumber>, IConvertible
+public abstract record StrictDirection<TDirection, TNumber> : MagicCustomEnum<TDirection, Point<TNumber>>, IStrictDirection<TNumber>
+	where TDirection : StrictDirection<TDirection, TNumber>
+	where TNumber : struct, IComparable<TNumber>, IEquatable<TNumber>, IConvertible
 {
 	public static ImmutableList<TDirection> Members { get; } = _members ??= GetEnumerable().ToImmutableList();
 	private static readonly ImmutableList<TDirection> _members;
@@ -25,7 +25,7 @@ public abstract record StrictDirection<TDirection, TDeltaPointNumber> : MagicCus
 	public Point<TTargetPointNumber> GetValue<TTargetPointNumber>()
 		where TTargetPointNumber : struct, IComparable<TTargetPointNumber>, IEquatable<TTargetPointNumber>, IConvertible
 	{
-		return this.Value.Cast<TDeltaPointNumber, TTargetPointNumber>();
+		return this.Value.Cast<TNumber, TTargetPointNumber>();
 	}
 
 	public static ImmutableList<TDirection> PossibleDirections { get; } = _possibleDirections ??= GetEnumerable().ToImmutableList();
@@ -33,7 +33,7 @@ public abstract record StrictDirection<TDirection, TDeltaPointNumber> : MagicCus
 
 	public static TDirection CreateMember(int x, int y, [CallerMemberName] string name = null!)
 {
-		var point = new Point<int>(x, y).Cast<TDeltaPointNumber>();
+		var point = new Point<int>(x, y).Cast<TNumber>();
 		var member = CreateMember(point, name);
 		return member;
 	}
@@ -41,14 +41,14 @@ public abstract record StrictDirection<TDirection, TDeltaPointNumber> : MagicCus
 	/// <summary>
 	/// RotationType left or right. Is non-deterministic!
 	/// </summary>
-	public IStrictDirection<TDeltaPointNumber> GetDirectionFromRandomTurn()
+	public IStrictDirection<TNumber> GetDirectionFromRandomTurn()
 	{
 		var rotationType = (RotationType)(new Random().NextDouble() * 4 - 2);
 
 		return this.GetDirectionFromTurn(rotationType);
 	}
 
-	public IStrictDirection<TDeltaPointNumber> GetDirectionFromTurn(RotationType rotationType)
+	public IStrictDirection<TNumber> GetDirectionFromTurn(RotationType rotationType)
 	{
 		var currentDirectionTypeIndex = PossibleDirections.IndexOf((TDirection)this);
 		var directionIndexDelta = rotationType == RotationType.Invert
@@ -74,7 +74,7 @@ public abstract record StrictDirection<TDirection, TDeltaPointNumber> : MagicCus
 	}
 
 
-	public static TTargetDirection Cast<TTargetDirection, TTargetDeltaPointNumber>(Point<TDeltaPointNumber> deltaPoint)
+	public static TTargetDirection Cast<TTargetDirection, TTargetDeltaPointNumber>(Point<TNumber> deltaPoint)
 		where TTargetDirection : StrictDirection<TTargetDirection, TTargetDeltaPointNumber>
 		where TTargetDeltaPointNumber : struct, IComparable<TTargetDeltaPointNumber>, IEquatable<TTargetDeltaPointNumber>, IConvertible
 	{
@@ -86,7 +86,7 @@ public abstract record StrictDirection<TDirection, TDeltaPointNumber> : MagicCus
 		return direction;
 	}
 
-	public static bool TryCast<TTargetDirection, TTargetDeltaPointNumber>(Point<TDeltaPointNumber> deltaPoint, [NotNullWhen(true)] out TTargetDirection? direction)
+	public static bool TryCast<TTargetDirection, TTargetDeltaPointNumber>(Point<TNumber> deltaPoint, [NotNullWhen(true)] out TTargetDirection? direction)
 		where TTargetDirection : StrictDirection<TTargetDirection, TTargetDeltaPointNumber>
 		where TTargetDeltaPointNumber : struct, IComparable<TTargetDeltaPointNumber>, IEquatable<TTargetDeltaPointNumber>, IConvertible
 	{

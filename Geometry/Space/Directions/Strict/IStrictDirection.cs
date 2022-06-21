@@ -1,23 +1,25 @@
 ﻿using System.Diagnostics.CodeAnalysis;
+using CodeChops.ImplementationDiscovery;
 
 namespace CodeChops.Geometry.Space.Directions.Strict;
 
-public interface IStrictDirection<TDeltaPointNumber> : IDirection<TDeltaPointNumber>, IStrictDirection
-	where TDeltaPointNumber : struct, IComparable<TDeltaPointNumber>, IEquatable<TDeltaPointNumber>, IConvertible
+[DiscoverImplementations]
+public partial interface IStrictDirection<TNumber> : IDirection<TNumber>, IStrictDirection
+	where TNumber : struct, IComparable<TNumber>, IEquatable<TNumber>, IConvertible
 {
-	IStrictDirection<TDeltaPointNumber> GetDirectionFromRandomTurn();
-	IStrictDirection<TDeltaPointNumber> GetDirectionFromTurn(RotationType rotationType);
+	IStrictDirection<TNumber> GetDirectionFromRandomTurn();
+	IStrictDirection<TNumber> GetDirectionFromTurn(RotationType rotationType);
 }
 
 public interface IStrictDirection : IDirection
 {
 	string Name { get; }
 
-	TTargetDirection Cast<TTargetDirection, TTargetDeltaPointNumber>()
-			where TTargetDirection : StrictDirection<TTargetDirection, TTargetDeltaPointNumber>
-			where TTargetDeltaPointNumber : struct, IComparable<TTargetDeltaPointNumber>, IEquatable<TTargetDeltaPointNumber>, IConvertible;
+	TTargetDirection Cast<TTargetDirection, TTargetNumber>()
+			where TTargetDirection : StrictDirection<TTargetDirection, TTargetNumber>
+			where TTargetNumber : struct, IComparable<TTargetNumber>, IEquatable<TTargetNumber>, IConvertible;
 
-	bool TryCast<TTargetDirection, TTargetDeltaPointNumber>([NotNullWhen(true)] out TTargetDirection? direction)
-		where TTargetDirection : StrictDirection<TTargetDirection, TTargetDeltaPointNumber>
-		where TTargetDeltaPointNumber : struct, IComparable<TTargetDeltaPointNumber>, IEquatable<TTargetDeltaPointNumber>, IConvertible;
+	bool TryCast<TTargetDirection, TTargetNumber>([NotNullWhen(true)] out TTargetDirection? direction)
+		where TTargetDirection : StrictDirection<TTargetDirection, TTargetNumber>
+		where TTargetNumber : struct, IComparable<TTargetNumber>, IEquatable<TTargetNumber>, IConvertible;
 }
