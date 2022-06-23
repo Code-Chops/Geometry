@@ -31,6 +31,18 @@ public abstract record StrictDirection<TDirection, TNumber> : MagicCustomEnum<TD
 	public static ImmutableList<TDirection> PossibleDirections { get; } = _possibleDirections ??= GetEnumerable().ToImmutableList();
 	private static readonly ImmutableList<TDirection> _possibleDirections;
 
+	public static bool TryGetDirection(string directionName, [NotNullWhen(true)] out IStrictDirection<TNumber>? direction)
+	{
+		if (!TryGetSingleMember(directionName, out var concreteDirection))
+		{
+			direction = null;
+			return false;
+		}
+
+		direction = concreteDirection;
+		return true;
+	}
+
 	public static TDirection CreateMember(int x, int y, [CallerMemberName] string name = null!)
 {
 		var point = new Point<int>(x, y).Cast<TNumber>();

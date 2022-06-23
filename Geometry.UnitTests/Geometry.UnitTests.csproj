@@ -9,6 +9,7 @@
     <LangVersion>10</LangVersion>
 	<AssemblyName>CodeChops.Geometry.UnitTests</AssemblyName>
 	<RootNamespace>CodeChops.Geometry.UnitTests</RootNamespace>
+	<EnablePreviewFeatures>true</EnablePreviewFeatures>
   </PropertyGroup>
 
   <ItemGroup>

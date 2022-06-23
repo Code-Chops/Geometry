@@ -7,6 +7,7 @@ namespace CodeChops.Geometry.Space.Directions.Strict;
 public partial interface IStrictDirection<TNumber> : IDirection<TNumber>, IStrictDirection
 	where TNumber : struct, IComparable<TNumber>, IEquatable<TNumber>, IConvertible
 {
+	abstract static bool TryGetDirection(string directionName, [NotNullWhen(true)] out IStrictDirection<TNumber>? direction);
 	IStrictDirection<TNumber> GetDirectionFromRandomTurn();
 	IStrictDirection<TNumber> GetDirectionFromTurn(RotationType rotationType);
 }
