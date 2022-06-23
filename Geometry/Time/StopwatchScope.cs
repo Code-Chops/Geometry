@@ -34,10 +34,10 @@ public class StopwatchScope : AmbientScope<StopwatchScope>
 	/// Private constructor.
 	/// Does not activate this instance.
 	/// </summary>
-	private StopwatchScope(IStopwatch stopwatch!!, AmbientScopeOption ambientScopeOption)
+	private StopwatchScope(IStopwatch stopwatch, AmbientScopeOption ambientScopeOption)
 		: base(ambientScopeOption)
 	{
-		this.Value = stopwatch;
+		this.Value = stopwatch ?? throw new ArgumentNullException(nameof(stopwatch));
 	}
 
 	protected override void DisposeImplementation()
