@@ -9,7 +9,7 @@ namespace CodeChops.Geometry.Space.Movements.Deterministic;
 public record DynamicMovement<TPointNumber> : DeterministicMovement<TPointNumber>
 	where TPointNumber : struct, IComparable<TPointNumber>, IEquatable<TPointNumber>, IConvertible
 {
-	public sealed override string ToString() => $"{this.GetType().Name} ({nameof(DeterministicMovement<TPointNumber>)}): {this.GetDirectionDeltaPoint}";
+	public sealed override string ToString() => $"{this.GetType().Name} ({nameof(DeterministicMovement<TPointNumber>)}): {this.GetDirectionDeltaPoint()}";
 
 	public sealed override IDirection GetDirection() => new FreeDirection<float>(this.GetDirectionDeltaPoint());
 	protected sealed override Point<TPointNumber> CalculatePoint(float step) => this._calculatePoint(step);
