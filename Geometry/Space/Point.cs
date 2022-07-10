@@ -1,15 +1,13 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Text.Json.Serialization;
 using CodeChops.GenericMath;
-using CodeChops.MagicEnums.Attributes;
-using CodeChops.MagicEnums;
 
 namespace CodeChops.Geometry.Space;
 
 /// <summary>
 /// A location that is being stored by TNumber. 
 /// </summary>
-public readonly record struct Point<TNumber>
+public readonly partial record struct Point<TNumber>
 	where TNumber : struct, IComparable<TNumber>, IEquatable<TNumber>, IConvertible
 {
 	public override string ToString() => $"(X:{this.X}, Y:{this.Y})";

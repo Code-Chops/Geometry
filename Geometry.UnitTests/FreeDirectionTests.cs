@@ -1,7 +1,4 @@
-﻿using CodeChops.Geometry.Space;
-using Xunit;
-
-namespace CodeChops.Geometry.UnitTests;
+﻿namespace CodeChops.Geometry.UnitTests;
 
 public class FreeDirectionTests
 {

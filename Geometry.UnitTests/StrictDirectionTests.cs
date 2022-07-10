@@ -1,5 +1,4 @@
 using CodeChops.Geometry.Space.Directions.Strict;
-using Xunit;
 
 namespace CodeChops.Geometry.UnitTests;
 
