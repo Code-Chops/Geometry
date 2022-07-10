@@ -3,16 +3,16 @@
 namespace CodeChops.Geometry.Space;
 
 /// <summary>
-/// A size that is stored by TNumber.
+/// A 2-dimensional measurement with TNumber as type of the underlying values of Width and Height.
 /// </summary>
-public readonly struct Size<TNumber> where TNumber : struct, IComparable<TNumber>, IEquatable<TNumber>, IConvertible
+public struct Size<TNumber> where TNumber : struct, IComparable<TNumber>, IEquatable<TNumber>, IConvertible
 {
 	public override string ToString() => $"({this.Width}, {this.Height})";
 
 	public static readonly Size<TNumber> Default = new();
 
-	public Number<TNumber> Width { get; }
-	public Number<TNumber> Height { get; }
+	public Number<TNumber> Width { get; set; }
+	public Number<TNumber> Height { get; set; }
 
 	public Size(Number<TNumber> width, Number<TNumber> height)
 	{
