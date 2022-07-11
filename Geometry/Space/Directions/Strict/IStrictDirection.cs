@@ -3,7 +3,7 @@ using CodeChops.ImplementationDiscovery;
 
 namespace CodeChops.Geometry.Space.Directions.Strict;
 
-[DiscoverImplementations]
+[DiscoverImplementations(generateIdsForImplementations: true)]
 public partial interface IStrictDirection<TNumber> : IDirection<TNumber>, IStrictDirection
 	where TNumber : struct, IComparable<TNumber>, IEquatable<TNumber>, IConvertible
 {

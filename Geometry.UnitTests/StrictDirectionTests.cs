@@ -1,19 +1,20 @@
 using CodeChops.Geometry.Space.Directions.Strict;
+using CodeChops.Geometry.Space.Directions.Strict.Modes;
 
 namespace CodeChops.Geometry.UnitTests;
 
 public class StrictDirectionTests
 {
 	[Theory]
-	[InlineData(nameof(EveryDirection.East),		nameof(RotationType.Invert),			nameof(EveryDirection.West))]
-	[InlineData(nameof(EveryDirection.South),		nameof(RotationType.Clockwise),			nameof(EveryDirection.SouthWest))]
-	[InlineData(nameof(EveryDirection.NorthEast),	nameof(RotationType.Invert),			nameof(EveryDirection.SouthWest))]
-	[InlineData(nameof(EveryDirection.NorthEast),	nameof(RotationType.CounterClockwise),	nameof(EveryDirection.North))]
-	[InlineData(nameof(EveryDirection.SouthWest),	nameof(RotationType.Clockwise),			nameof(EveryDirection.West))]
-	[InlineData(nameof(EveryDirection.North),		nameof(RotationType.CounterClockwise),	nameof(EveryDirection.NorthWest))]
+	[InlineData(nameof(EveryDirectionMode<int>.East),		nameof(RotationType.Invert),			nameof(EveryDirectionMode<int>.West))]
+	[InlineData(nameof(EveryDirectionMode<int>.South),		nameof(RotationType.Clockwise),			nameof(EveryDirectionMode<int>.SouthWest))]
+	[InlineData(nameof(EveryDirectionMode<int>.NorthEast),	nameof(RotationType.Invert),			nameof(EveryDirectionMode<int>.SouthWest))]
+	[InlineData(nameof(EveryDirectionMode<int>.NorthEast),	nameof(RotationType.CounterClockwise),	nameof(EveryDirectionMode<int>.North))]
+	[InlineData(nameof(EveryDirectionMode<int>.SouthWest),	nameof(RotationType.Clockwise),			nameof(EveryDirectionMode<int>.West))]
+	[InlineData(nameof(EveryDirectionMode<int>.North),		nameof(RotationType.CounterClockwise),	nameof(EveryDirectionMode<int>.NorthWest))]
 	public void EveryDirection_Turn_IsCorrect(string directionName, string rotationTypeName, string expectedDirectionName)
 	{
-		var direction = EveryDirection.GetSingleMember(directionName);
+		var direction = EveryDirectionMode<int>.GetSingleMember(directionName);
 		var rotationType = RotationType.GetSingleMember(rotationTypeName);
 		var newDirection = direction.GetDirectionFromTurn(rotationType);
 
@@ -21,13 +22,13 @@ public class StrictDirectionTests
 	}
 
 	[Theory]
-	[InlineData(nameof(OrthogonalDirection.Right),	nameof(RotationType.Invert),			nameof(OrthogonalDirection.Left))]
-	[InlineData(nameof(OrthogonalDirection.Down),	nameof(RotationType.Clockwise),			nameof(OrthogonalDirection.Left))]
-	[InlineData(nameof(OrthogonalDirection.Up),		nameof(RotationType.Invert),			nameof(OrthogonalDirection.Down))]
-	[InlineData(nameof(OrthogonalDirection.Right),	nameof(RotationType.CounterClockwise),	nameof(OrthogonalDirection.Up))]
+	[InlineData(nameof(OrthogonalDirectionMode<int>.Right),	nameof(RotationType.Invert),			nameof(OrthogonalDirectionMode<int>.Left))]
+	[InlineData(nameof(OrthogonalDirectionMode<int>.Down),	nameof(RotationType.Clockwise),			nameof(OrthogonalDirectionMode<int>.Left))]
+	[InlineData(nameof(OrthogonalDirectionMode<int>.Up),	nameof(RotationType.Invert),			nameof(OrthogonalDirectionMode<int>.Down))]
+	[InlineData(nameof(OrthogonalDirectionMode<int>.Right),	nameof(RotationType.CounterClockwise),	nameof(OrthogonalDirectionMode<int>.Up))]
 	public void OrthogonalDirection_Turn_IsCorrect(string directionName, string rotationTypeName, string expectedDirectionName)
 	{
-		var direction = OrthogonalDirection.GetSingleMember(directionName);
+		var direction = OrthogonalDirectionMode<int>.GetSingleMember(directionName);
 		var rotationType = RotationType.GetSingleMember(rotationTypeName);
 		var newDirection = direction.GetDirectionFromTurn(rotationType);
 
@@ -35,14 +36,14 @@ public class StrictDirectionTests
 	}
 
 	[Theory]
-	[InlineData(nameof(EveryDirection.North),	nameof(OrthogonalDirection.Up))]
-	[InlineData(nameof(EveryDirection.East),	nameof(OrthogonalDirection.Right))]
-	[InlineData(nameof(EveryDirection.South),	nameof(OrthogonalDirection.Down))]
-	[InlineData(nameof(EveryDirection.West),	nameof(OrthogonalDirection.Left))]
+	[InlineData(nameof(EveryDirectionMode<int>.North),	nameof(OrthogonalDirectionMode<int>.Up))]
+	[InlineData(nameof(EveryDirectionMode<int>.East),	nameof(OrthogonalDirectionMode<int>.Right))]
+	[InlineData(nameof(EveryDirectionMode<int>.South),	nameof(OrthogonalDirectionMode<int>.Down))]
+	[InlineData(nameof(EveryDirectionMode<int>.West),	nameof(OrthogonalDirectionMode<int>.Left))]
 	public void Direction_Cast_ShouldWork(string directionName, string expectedDirectionName)
 	{
-		var deltaPoint = EveryDirection.GetSingleMember(directionName);
-		var newDirectionName = EveryDirection.Cast<OrthogonalDirection, int>(deltaPoint).Name;
+		var deltaPoint = EveryDirectionMode<int>.GetSingleMember(directionName);
+		var newDirectionName = EveryDirectionMode<int>.Cast<OrthogonalDirectionMode<int>, int>(deltaPoint).Name;
 
 		Assert.Equal(newDirectionName, expectedDirectionName);
 	}

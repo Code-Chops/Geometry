@@ -6,8 +6,8 @@ using CodeChops.MagicEnums.Attributes;
 
 namespace CodeChops.Geometry.Space.Directions.Strict;
 
-public abstract record StrictDirection<TDirection> : StrictDirection<TDirection, int>
-	where TDirection : StrictDirection<TDirection>
+public abstract record StrictDirection<TDirectionMode> : StrictDirection<TDirectionMode, int>
+	where TDirectionMode : StrictDirection<TDirectionMode>
 {
 }
 
@@ -15,12 +15,12 @@ public abstract record StrictDirection<TDirection> : StrictDirection<TDirection,
 /// A strict direction based on a StrictDirection magic enum and therefore strongly typed. No freely direction delta points are used.
 /// </summary>
 [DisableConcurrency]
-public abstract record StrictDirection<TDirection, TNumber> : MagicCustomEnum<TDirection, Point<TNumber>>, IStrictDirection<TNumber>
-	where TDirection : StrictDirection<TDirection, TNumber>
+public abstract record StrictDirection<TDirectionMode, TNumber> : MagicCustomEnum<TDirectionMode, Point<TNumber>>, IStrictDirection<TNumber>
+	where TDirectionMode : StrictDirection<TDirectionMode, TNumber>
 	where TNumber : struct, IComparable<TNumber>, IEquatable<TNumber>, IConvertible
 {
-	public static ImmutableList<TDirection> Members { get; } = _members ??= GetEnumerable().ToImmutableList();
-	private static readonly ImmutableList<TDirection> _members;
+	public static ImmutableList<TDirectionMode> Members { get; } = _members ??= GetEnumerable().ToImmutableList();
+	private static readonly ImmutableList<TDirectionMode>? _members;
 
 	public Point<TTargetPointNumber> GetValue<TTargetPointNumber>()
 		where TTargetPointNumber : struct, IComparable<TTargetPointNumber>, IEquatable<TTargetPointNumber>, IConvertible
@@ -28,8 +28,8 @@ public abstract record StrictDirection<TDirection, TNumber> : MagicCustomEnum<TD
 		return this.Value.Cast<TNumber, TTargetPointNumber>();
 	}
 
-	public static ImmutableList<TDirection> PossibleDirections { get; } = _possibleDirections ??= GetEnumerable().ToImmutableList();
-	private static readonly ImmutableList<TDirection> _possibleDirections;
+	public static ImmutableList<TDirectionMode> PossibleDirections { get; } = _possibleDirections ??= GetEnumerable().ToImmutableList();
+	private static readonly ImmutableList<TDirectionMode> _possibleDirections;
 
 	public bool TryGetDirection(string directionName, [NotNullWhen(true)] out IStrictDirection<TNumber>? direction)
 	{
@@ -43,7 +43,7 @@ public abstract record StrictDirection<TDirection, TNumber> : MagicCustomEnum<TD
 		return true;
 	}
 
-	public static TDirection CreateMember(int x, int y, [CallerMemberName] string name = null!)
+	public static TDirectionMode CreateMember(int x, int y, [CallerMemberName] string name = null!)
 {
 		var point = new Point<int>(x, y).Cast<TNumber>();
 		var member = CreateMember(point, name);
@@ -62,7 +62,7 @@ public abstract record StrictDirection<TDirection, TNumber> : MagicCustomEnum<TD
 
 	public IStrictDirection<TNumber> GetDirectionFromTurn(RotationType rotationType)
 	{
-		var currentDirectionTypeIndex = PossibleDirections.IndexOf((TDirection)this);
+		var currentDirectionTypeIndex = PossibleDirections.IndexOf((TDirectionMode)this);
 		var directionIndexDelta = rotationType == RotationType.Invert
 			? PossibleDirections.Count / 2
 			: (int)rotationType;
