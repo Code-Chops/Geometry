@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Text.Json.Serialization;
+using CodeChops.DomainDrivenDesign.DomainModeling;
 using CodeChops.GenericMath;
 
 namespace CodeChops.Geometry.Space;
@@ -7,15 +8,15 @@ namespace CodeChops.Geometry.Space;
 /// <summary>
 /// A 2-dimensional location with TNumber als type of the underlying values of X and Y. 
 /// </summary>
-public record struct Point<TNumber>
+public readonly record struct Point<TNumber> : IDomainObject
 	where TNumber : struct, IComparable<TNumber>, IEquatable<TNumber>, IConvertible
 {
 	public override string ToString() => $"(X:{this.X}, Y:{this.Y})";
 
 	public static readonly Point<TNumber> Default = new();
 
-	public Number<TNumber> X { get; set; }
-	public Number<TNumber> Y { get; set; }
+	public Number<TNumber> X { get; }
+	public Number<TNumber> Y { get; }
 
 	public static readonly Point<TNumber> Empty = new();
 
