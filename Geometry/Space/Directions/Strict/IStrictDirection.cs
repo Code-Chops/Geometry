@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using CodeChops.DomainDrivenDesign.DomainModeling;
 using CodeChops.ImplementationDiscovery;
+using CodeChops.MagicEnums;
 
 namespace CodeChops.Geometry.Space.Directions.Strict;
 
@@ -13,7 +14,7 @@ public partial interface IStrictDirection<TNumber> : IDirection<TNumber>, IStric
 	IStrictDirection<TNumber> GetDirectionFromTurn(RotationType rotationType);
 }
 
-public interface IStrictDirection : IDirection, IValueObject
+public interface IStrictDirection : IDirection, IMagicEnum
 {
 	string Name { get; }
 
