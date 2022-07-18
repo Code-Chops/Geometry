@@ -1,5 +1,4 @@
-﻿using System.Text.Json.Serialization;
-using CodeChops.DomainDrivenDesign.DomainModeling;
+﻿using CodeChops.DomainDrivenDesign.DomainModeling;
 using CodeChops.GenericMath;
 
 namespace CodeChops.Geometry.Space;
@@ -7,17 +6,16 @@ namespace CodeChops.Geometry.Space;
 /// <summary>
 /// A 2-dimensional measurement with TNumber as type of the underlying values of Width and Height.
 /// </summary>
-public readonly struct Size<TNumber> : IDomainObject 
+public readonly struct Size<TNumber> : IValueObject
 	where TNumber : struct, IComparable<TNumber>, IEquatable<TNumber>, IConvertible
 {
 	public override string ToString() => $"({this.Width}, {this.Height})";
 
 	public static readonly Size<TNumber> Default = new();
 
-	public Number<TNumber> Width { get; }
-	public Number<TNumber> Height { get; }
+	public Number<TNumber> Width { get; init; }
+	public Number<TNumber> Height { get; init; }
 
-	[JsonConstructor]
 	public Size(Number<TNumber> width, Number<TNumber> height)
 	{
 		this.Width = width;

@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics.CodeAnalysis;
+using CodeChops.DomainDrivenDesign.DomainModeling;
 using CodeChops.ImplementationDiscovery;
 
 namespace CodeChops.Geometry.Space.Directions.Strict;
@@ -12,7 +13,7 @@ public partial interface IStrictDirection<TNumber> : IDirection<TNumber>, IStric
 	IStrictDirection<TNumber> GetDirectionFromTurn(RotationType rotationType);
 }
 
-public interface IStrictDirection : IDirection
+public interface IStrictDirection : IDirection, IValueObject
 {
 	string Name { get; }
 
