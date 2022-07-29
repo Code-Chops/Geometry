@@ -1,11 +1,10 @@
 ﻿using System.Diagnostics.CodeAnalysis;
-using CodeChops.DomainDrivenDesign.DomainModeling;
 using CodeChops.ImplementationDiscovery;
 using CodeChops.MagicEnums;
 
 namespace CodeChops.Geometry.Space.Directions.Strict;
 
-[DiscoverImplementations(generateIdsForImplementations: true)]
+[DiscoverImplementations]
 public partial interface IStrictDirection<TNumber> : IDirection<TNumber>, IStrictDirection
 	where TNumber : struct, IComparable<TNumber>, IEquatable<TNumber>, IConvertible
 {

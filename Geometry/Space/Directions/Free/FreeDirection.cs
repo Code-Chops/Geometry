@@ -3,7 +3,7 @@
 /// <summary>
 /// A direction with every possible delta point.
 /// </summary>
-public record FreeDirection<TDeltaPointNumber> : IDirection<TDeltaPointNumber>
+public record FreeDirection<TDeltaPointNumber> : ValueObject, IDirection<TDeltaPointNumber>
 	where TDeltaPointNumber : struct, IComparable<TDeltaPointNumber>, IEquatable<TDeltaPointNumber>, IConvertible
 {
 	public override string ToString() => $"{nameof(FreeDirection<TDeltaPointNumber>)}: {this.Value}";

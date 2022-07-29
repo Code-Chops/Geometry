@@ -1,5 +1,4 @@
-﻿using CodeChops.DomainDrivenDesign.DomainModeling;
-using CodeChops.Geometry.Space.Directions;
+﻿using CodeChops.Geometry.Space.Directions;
 
 namespace CodeChops.Geometry.Space.Movements;
 

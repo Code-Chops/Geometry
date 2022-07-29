@@ -5,7 +5,7 @@ namespace CodeChops.Geometry.Space.Movements;
 /// <summary>
 /// Describes in what direction an object moves over time.
 /// </summary>
-public abstract record Movement<TDeltaPointNumber> : IMovement
+public abstract record Movement<TDeltaPointNumber> : ValueObject, IMovement
 	where TDeltaPointNumber : struct, IComparable<TDeltaPointNumber>, IEquatable<TDeltaPointNumber>, IConvertible
 {
 	public Point<float> GetPoint() => this.Point.Cast<TDeltaPointNumber, float>();

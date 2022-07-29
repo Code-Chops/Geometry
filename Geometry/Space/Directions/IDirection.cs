@@ -9,7 +9,7 @@ public interface IDirection<TDeltaPointNumber> : IDirection
 /// <summary>
 /// A direction which holds a delta point.
 /// </summary>
-public interface IDirection
+public interface IDirection : IValueObject
 {
 	Point<TTargetPointNumber> GetValue<TTargetPointNumber>()
 		where TTargetPointNumber : struct, IComparable<TTargetPointNumber>, IEquatable<TTargetPointNumber>, IConvertible;
