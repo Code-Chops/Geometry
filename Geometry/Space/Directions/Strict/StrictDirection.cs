@@ -1,15 +1,7 @@
-﻿using System.Collections.Immutable;
-using System.Diagnostics.CodeAnalysis;
-using System.Runtime.CompilerServices;
-using CodeChops.MagicEnums;
-using CodeChops.MagicEnums.Attributes;
-
-namespace CodeChops.Geometry.Space.Directions.Strict;
+﻿namespace CodeChops.Geometry.Space.Directions.Strict;
 
 public abstract record StrictDirection<TDirectionMode> : StrictDirection<TDirectionMode, int>
-	where TDirectionMode : StrictDirection<TDirectionMode>
-{
-}
+	where TDirectionMode : StrictDirection<TDirectionMode>;
 
 /// <summary>
 /// A strict direction based on a StrictDirection magic enum and therefore strongly typed. No freely direction delta points are used.
@@ -29,7 +21,7 @@ public abstract record StrictDirection<TDirectionMode, TNumber> : MagicCustomEnu
 	}
 
 	public static ImmutableList<TDirectionMode> PossibleDirections { get; } = _possibleDirections ??= GetEnumerable().ToImmutableList();
-	private static readonly ImmutableList<TDirectionMode> _possibleDirections;
+	private static readonly ImmutableList<TDirectionMode>? _possibleDirections;
 
 	public bool TryGetDirection(string directionName, [NotNullWhen(true)] out IStrictDirection<TNumber>? direction)
 	{

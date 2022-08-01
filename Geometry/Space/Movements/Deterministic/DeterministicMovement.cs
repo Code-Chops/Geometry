@@ -1,5 +1,4 @@
-﻿using CodeChops.GenericMath;
-using CodeChops.Geometry.Time;
+﻿using CodeChops.Geometry.Time;
 
 namespace CodeChops.Geometry.Space.Movements.Deterministic;
 

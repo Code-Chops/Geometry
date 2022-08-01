@@ -1,5 +1,4 @@
-﻿using CodeChops.GenericMath;
-using CodeChops.Geometry.Space.Directions;
+﻿using CodeChops.Geometry.Space.Directions;
 using CodeChops.Geometry.Space.Directions.Free;
 
 namespace CodeChops.Geometry.Space.Movements.NonDeterministic;
@@ -16,7 +15,7 @@ public record FreeMovement<TPointNumber> : Movement<TPointNumber>
 	private Point<TPointNumber> _point;
 
 	public sealed override IDirection GetDirection() => this.Direction;
-	public FreeDirection<TPointNumber> Direction { get; set; }
+	public FreeDirection<TPointNumber> Direction { get; init; }
 
 	public sealed override Point<float> GetDirectionDeltaPoint() => this.Direction.GetValue<float>();
 

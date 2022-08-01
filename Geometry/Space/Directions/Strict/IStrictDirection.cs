@@ -1,6 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using CodeChops.ImplementationDiscovery;
-using CodeChops.MagicEnums;
+﻿using CodeChops.ImplementationDiscovery;
 
 namespace CodeChops.Geometry.Space.Directions.Strict;
 

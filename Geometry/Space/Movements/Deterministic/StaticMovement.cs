@@ -1,5 +1,4 @@
-﻿using CodeChops.GenericMath;
-using CodeChops.Geometry.Space.Directions.Strict;
+﻿using CodeChops.Geometry.Space.Directions.Strict;
 
 namespace CodeChops.Geometry.Space.Movements.Deterministic;
 

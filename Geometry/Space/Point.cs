@@ -1,8 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using CodeChops.DomainDrivenDesign.DomainModeling;
-using CodeChops.GenericMath;
-
-namespace CodeChops.Geometry.Space;
+﻿namespace CodeChops.Geometry.Space;
 
 /// <summary>
 /// A 2-dimensional location with TNumber als type of the underlying values of X and Y. 

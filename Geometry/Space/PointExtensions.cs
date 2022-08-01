@@ -1,7 +1,4 @@
-﻿using System.Globalization;
-using CodeChops.GenericMath;
-
-namespace CodeChops.Geometry.Space;
+﻿namespace CodeChops.Geometry.Space;
 
 public static class PointExtensions
 {

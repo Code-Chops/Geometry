@@ -1,6 +1,4 @@
-﻿using CodeChops.MagicEnums;
-
-namespace CodeChops.Geometry.Space.Directions.Strict;
+﻿namespace CodeChops.Geometry.Space.Directions.Strict;
 
 public record RotationType : MagicEnum<RotationType>
 {

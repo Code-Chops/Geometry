@@ -9,6 +9,5 @@ public interface IMovement : IValueObject
 {
 	Point<float> GetPoint();
 	Point<float> GetDirectionDeltaPoint();
-
 	IDirection GetDirection();
 }

@@ -1,9 +1,8 @@
-﻿using CodeChops.DomainDrivenDesign.DomainModeling;
-using CodeChops.DomainDrivenDesign.DomainModeling.Attributes;
+﻿using CodeChops.DomainDrivenDesign.DomainModeling.Attributes;
 
 namespace CodeChops.Geometry.Time;
 
-[GenerateEntityId]
+[GenerateStronglyTypedId]
 public partial class Stopwatch : Entity, IStopwatch
 {
     private System.Diagnostics.Stopwatch Instance { get; }

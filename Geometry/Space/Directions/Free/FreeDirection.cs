@@ -8,18 +8,16 @@ public record FreeDirection<TDeltaPointNumber> : ValueObject, IDirection<TDeltaP
 {
 	public override string ToString() => $"{nameof(FreeDirection<TDeltaPointNumber>)}: {this.Value}";
 
-	public Point<TDeltaPointNumber> Value => this._deltaPoint;
+	/// <summary>
+	/// Backing field so the value is mutable in this class.
+	/// </summary>
+	public Point<TDeltaPointNumber> Value { get; private set; }
 
 	public Point<TTargetPointNumber> GetValue<TTargetPointNumber>()
 		where TTargetPointNumber : struct, IComparable<TTargetPointNumber>, IEquatable<TTargetPointNumber>, IConvertible
 	{
 		return this.Value.Cast<TDeltaPointNumber, TTargetPointNumber>();
 	}
-
-	/// <summary>
-	/// Backing field so the value is mutable in this class.
-	/// </summary>
-	private Point<TDeltaPointNumber> _deltaPoint;
 
 	/// <summary>
 	/// The angle (from 0 to 360 degrees).
@@ -48,8 +46,8 @@ public record FreeDirection<TDeltaPointNumber> : ValueObject, IDirection<TDeltaP
 
 	public void SetDeltaPoint(Point<TDeltaPointNumber> point)
 	{
-		this._deltaPoint = point;
-		var newAngle = this._deltaPoint.ToAngle();
+		this.Value = point;
+		var newAngle = this.Value.ToAngle();
 		if (!newAngle.Equals(this.Angle)) this.Angle = newAngle;
 	}
 
@@ -57,6 +55,6 @@ public record FreeDirection<TDeltaPointNumber> : ValueObject, IDirection<TDeltaP
 	{
 		this.Angle = angle;
 		var newDeltaPoint = new Point<TDeltaPointNumber>(this.Angle);
-		if (newDeltaPoint != this.Value) this._deltaPoint = newDeltaPoint;
+		if (newDeltaPoint != this.Value) this.Value = newDeltaPoint;
 	}
 }

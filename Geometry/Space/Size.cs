@@ -1,7 +1,4 @@
-﻿using CodeChops.DomainDrivenDesign.DomainModeling;
-using CodeChops.GenericMath;
-
-namespace CodeChops.Geometry.Space;
+﻿namespace CodeChops.Geometry.Space;
 
 /// <summary>
 /// A 2-dimensional measurement with TNumber as type of the underlying values of Width and Height.
@@ -35,8 +32,8 @@ public readonly struct Size<TNumber> : IValueObject
 
 	public Size(string width, string height)
 	{
-		this.Width = (TNumber)Number<TNumber>.Create(int.Parse(width, System.Globalization.NumberStyles.AllowDecimalPoint));
-		this.Height = (TNumber)Number<TNumber>.Create(int.Parse(height, System.Globalization.NumberStyles.AllowDecimalPoint));
+		this.Width = (TNumber)Number<TNumber>.Create(int.Parse(width, NumberStyles.AllowDecimalPoint));
+		this.Height = (TNumber)Number<TNumber>.Create(int.Parse(height, NumberStyles.AllowDecimalPoint));
 	}
 
 	public void Deconstruct(out Number<TNumber> width, out Number<TNumber> height)
