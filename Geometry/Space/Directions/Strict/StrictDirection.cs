@@ -1,4 +1,6 @@
-﻿namespace CodeChops.Geometry.Space.Directions.Strict;
+﻿using CodeChops.MagicEnums.Core;
+
+namespace CodeChops.Geometry.Space.Directions.Strict;
 
 public abstract record StrictDirection<TDirectionMode> : StrictDirection<TDirectionMode, int>
 	where TDirectionMode : StrictDirection<TDirectionMode>;
@@ -7,7 +9,7 @@ public abstract record StrictDirection<TDirectionMode> : StrictDirection<TDirect
 /// A strict direction based on a StrictDirection magic enum and therefore strongly typed. No freely direction delta points are used.
 /// </summary>
 [DisableConcurrency]
-public abstract record StrictDirection<TDirectionMode, TNumber> : MagicCustomEnum<TDirectionMode, Point<TNumber>>, IStrictDirection<TNumber>
+public abstract record StrictDirection<TDirectionMode, TNumber> : MagicEnumCore<TDirectionMode, Point<TNumber>>, IStrictDirection<TNumber>
 	where TDirectionMode : StrictDirection<TDirectionMode, TNumber>
 	where TNumber : struct, IComparable<TNumber>, IEquatable<TNumber>, IConvertible
 {
