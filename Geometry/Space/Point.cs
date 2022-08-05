@@ -1,32 +1,50 @@
-﻿namespace CodeChops.Geometry.Space;
+﻿using CodeChops.DomainDrivenDesign.DomainModeling.Factories;
+
+namespace CodeChops.Geometry.Space;
 
 /// <summary>
 /// A 2-dimensional location with TNumber als type of the underlying values of X and Y. 
 /// </summary>
-public readonly record struct Point<TNumber> : IValueObject
+public readonly record struct Point<TNumber> : IValueObject, IComparable<Point<TNumber>>, IHasEmptyInstance<Point<TNumber>>
 	where TNumber : struct, IComparable<TNumber>, IEquatable<TNumber>, IConvertible
 {
-	public override string ToString() => $"(X:{this.X}, Y:{this.Y})";
+	#region Comparison
+	
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public int CompareTo(Point<TNumber> other)
+	{
+		if (this.X == other.X)
+		{
+			return (this.Y - other.Y).Value.ToInt32(CultureInfo.InvariantCulture);
+		}
+		else
+		{
+			return (this.X - other.X).Value.ToInt32(CultureInfo.InvariantCulture);
+		}
+	}
 
-	public static readonly Point<TNumber> Default = new();
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static bool operator <(Point<TNumber> left, Point<TNumber> right)	=> left.CompareTo(right) <	0;
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static bool operator <=(Point<TNumber> left, Point<TNumber> right)	=> left.CompareTo(right) <= 0;
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static bool operator >(Point<TNumber> left, Point<TNumber> right)	=> left.CompareTo(right) >	0;
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static bool operator >=(Point<TNumber> left, Point<TNumber> right)	=> left.CompareTo(right) >= 0;
+	
+	#endregion
+	
+	public override string ToString() => $"(X:{this.X}, Y:{this.Y})";
 
 	public Number<TNumber> X { get; init; }
 	public Number<TNumber> Y { get; init; }
 
-	public static readonly Point<TNumber> Empty = new();
+	public static Point<TNumber> Empty { get; } = new();
 
 	public Point(Number<TNumber> x, Number<TNumber> y)
 	{
 		this.X = x;
 		this.Y = y;
-	}
-
-	public static Point<TNumber> Create<TOriginalNumber>(TOriginalNumber x, TOriginalNumber y)
-		where TOriginalNumber : struct, IComparable<TOriginalNumber>, IEquatable<TOriginalNumber>, IConvertible
-	{
-		return new Point<TNumber>(
-			x: (TNumber)Convert.ChangeType(x, typeof(TNumber)),
-			y: (TNumber)Convert.ChangeType(y, typeof(TNumber)));
 	}
 
 	public Point(double angle)
@@ -40,11 +58,19 @@ public readonly record struct Point<TNumber> : IValueObject
 		this.X = Calculator<TNumber>.Modulo(address, size.Width);
 		this.Y = address / size.Width;
 	}
-
+	
 	public void Deconstruct(out Number<TNumber> x, out Number<TNumber> y)
 	{
 		x = this.X;
 		y = this.Y;
+	}
+
+	public static Point<TNumber> Create<TOriginalNumber>(TOriginalNumber x, TOriginalNumber y)
+		where TOriginalNumber : struct, IComparable<TOriginalNumber>, IEquatable<TOriginalNumber>, IConvertible
+	{
+		return new Point<TNumber>(
+			x: (TNumber)Convert.ChangeType(x, typeof(TNumber)),
+			y: (TNumber)Convert.ChangeType(y, typeof(TNumber)));
 	}
 
 	public static Point<TNumber> operator +(Point<TNumber> p1, Point<TNumber> p2)
@@ -97,7 +123,7 @@ public readonly record struct Point<TNumber> : IValueObject
 		return new(point.X / size.Width, point.Y / size.Height);
 	}
 
-	public static implicit operator Point<TNumber>(Size<TNumber> size)
+	public static explicit operator Point<TNumber>(Size<TNumber> size)
 	{
 		return new(size.Width, size.Height);
 	}
