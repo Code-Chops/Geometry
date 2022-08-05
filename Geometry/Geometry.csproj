@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<VersionPrefix>2.6.3</VersionPrefix>
-		<PackageReleaseNotes>TryGetDirection not static anymore.</PackageReleaseNotes>
+		<VersionPrefix>2.6.4</VersionPrefix>
+		<PackageReleaseNotes>TryGetDirection interface changed.</PackageReleaseNotes>
 		<TargetFramework>net6.0</TargetFramework>
 		<LangVersion>10</LangVersion>
 	</PropertyGroup>
