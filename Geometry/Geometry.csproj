@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<VersionPrefix>2.7.0</VersionPrefix>
-		<PackageReleaseNotes>Updated ImplementationDiscovery.</PackageReleaseNotes>
+		<VersionPrefix>2.8.0</VersionPrefix>
+		<PackageReleaseNotes>Added custom name for strictdirection enum.</PackageReleaseNotes>
 		<TargetFramework>net6.0</TargetFramework>
 		<LangVersion>10</LangVersion>
 	</PropertyGroup>
@@ -58,7 +58,7 @@ Contains objects and helpers to help the calculation of objects in space and tim
 	<ItemGroup>
 		<PackageReference Include="Architect.AmbientContexts" Version="1.1.1" />
 		<PackageReference Include="CodeChops.DomainDrivenDesign.DomainModeling" Version="0.8.7" />
-		<PackageReference Include="CodeChops.ImplementationDiscovery" Version="0.18.1" />
+		<PackageReference Include="CodeChops.ImplementationDiscovery" Version="0.18.2" />
 		<PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
 		<PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="6.0.0" />
 		<PackageReference Include="System.Collections.Immutable" Version="6.0.0" />
