@@ -1,27 +1,20 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-	<PropertyGroup>
-		<VersionPrefix>2.8.0</VersionPrefix>
-		<PackageReleaseNotes>Added custom name for strictdirection enum.</PackageReleaseNotes>
-		<TargetFramework>net6.0</TargetFramework>
-		<LangVersion>10</LangVersion>
-	</PropertyGroup>
-
-	<PropertyGroup>
-		<Title>CodeChops.Geometry</Title>
+	<PropertyGroup Label="Main">
 		<AssemblyName>CodeChops.Geometry</AssemblyName>
 		<RootNamespace>CodeChops.Geometry</RootNamespace>
-		<PackageId>CodeChops.Geometry</PackageId>	
-		<Authors>CodeChops (@Code-Chops), Max Bergman</Authors>
-		<Company>CodeChops</Company>
-		<PackageProjectUrl>https://github.com/code-chops/Geometry</PackageProjectUrl>
-		<PackageTags>CodeChops;CodeChops.Geometry;Geometry;</PackageTags>
-		<RepositoryUrl>https://github.com/code-chops/Geometry</RepositoryUrl>
-		<RepositoryType>Git</RepositoryType>
-		<PublishRepositoryUrl>true</PublishRepositoryUrl>
-		<PackageIcon>icon.png</PackageIcon>
-		<PackageLicenseFile>LICENSE</PackageLicenseFile>
-		<Copyright>Copyright (c) CodeChops $([System.DateTime]::Now.ToString(yyyy))</Copyright>
+		<TargetFramework>net6.0</TargetFramework>
+		<LangVersion>10</LangVersion>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<EnablePreviewFeatures>true</EnablePreviewFeatures>
+	</PropertyGroup>
+
+	<PropertyGroup Label="Package">
+		<VersionPrefix>2.8.1</VersionPrefix>
+		<PackageReleaseNotes>Cleanup project files.</PackageReleaseNotes>
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+		<Title>CodeChops.Geometry</Title>
 		<Description>
 Contains objects and helpers to help the calculation of objects in space and time:
  -Point with a generic integral value;
@@ -30,11 +23,17 @@ Contains objects and helpers to help the calculation of objects in space and tim
  -Movements: deterministic (dynamic and static) and non-deterministic (free);
  -Timing: stopwatch scope;
 		</Description>
-		<AnalysisLevel>latest</AnalysisLevel>
-		<Nullable>enable</Nullable>
-		<ImplicitUsings>enable</ImplicitUsings>
-		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-		<EnablePreviewFeatures>true</EnablePreviewFeatures>
+		<PackageId>CodeChops.Geometry</PackageId>
+		<PackageProjectUrl>https://github.com/code-chops/Geometry</PackageProjectUrl>
+		<PackageTags>CodeChops;CodeChops.Geometry;Geometry;</PackageTags>
+		<RepositoryUrl>https://github.com/code-chops/Geometry</RepositoryUrl>
+		<RepositoryType>Git</RepositoryType>
+		<PublishRepositoryUrl>true</PublishRepositoryUrl>
+		<Authors>CodeChops (@Code-Chops), Max Bergman</Authors>
+		<Company>CodeChops</Company>
+		<PackageIcon>icon.png</PackageIcon>
+		<PackageLicenseFile>LICENSE</PackageLicenseFile>
+		<Copyright>Copyright (c) CodeChops $([System.DateTime]::Now.ToString(yyyy))</Copyright>
 	</PropertyGroup>
 	
 	<PropertyGroup Condition="'$(Configuration)' == 'Debug'">
@@ -45,33 +44,24 @@ Contains objects and helpers to help the calculation of objects in space and tim
 	<Target Name="AddNugetPackage" AfterTargets="Pack" Condition="'$(Configuration)' == 'Release' AND '$(LocalNuGetPackagesFolder)' != null">
 		<Exec Command="$(LocalNuGetPackagesFolder)\nuget.exe add $(OutputPath)..\$(PackageId).$(PackageVersion).nupkg -source $(LocalNuGetPackagesFolder)" />
 	</Target>
-
-	<ItemGroup>
+	
+	<ItemGroup Label="PackageAssets">
 		<None Include="Properties\LICENSE" Pack="true" PackagePath="" />
 		<None Include="Properties\icon.png" Pack="true" Visible="true" PackagePath="" />
 	</ItemGroup>
-
-	<ItemGroup>
+	
+	<ItemGroup Label="InternalsVisibleTo">
 		<InternalsVisibleTo Include="$(AssemblyName).UnitTests" />
+		<InternalsVisibleTo Include="$(AssemblyName).IntegrationTests" />
 	</ItemGroup>
 		
-	<ItemGroup>
+	<ItemGroup Label="PackageReferences">
 		<PackageReference Include="Architect.AmbientContexts" Version="1.1.1" />
-		<PackageReference Include="CodeChops.DomainDrivenDesign.DomainModeling" Version="0.8.7" />
-		<PackageReference Include="CodeChops.ImplementationDiscovery" Version="0.18.2" />
+		<PackageReference Include="CodeChops.DomainDrivenDesign.DomainModeling" Version="0.8.11" />
+		<PackageReference Include="CodeChops.ImplementationDiscovery" Version="0.18.5" />
 		<PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
 		<PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="6.0.0" />
 		<PackageReference Include="System.Collections.Immutable" Version="6.0.0" />
 	</ItemGroup>
-	
-	<PropertyGroup>
-		<DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
-	</PropertyGroup>
 
-	<PropertyGroup>
-		<!-- CS1591: Missing XML comment for publicly visible type -->
-		<!-- CS1573: Undocumented public symbol while -doc compiler option is used -->
-		<!-- CA1822: Instance member does not access instance data and can be marked as static -->
-		<NoWarn>CS1591,CS1573,CA1822</NoWarn>
-	</PropertyGroup>
 </Project>
