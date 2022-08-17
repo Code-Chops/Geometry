@@ -1,6 +1,6 @@
 ﻿using CodeChops.Geometry.Space.Directions;
 
-namespace CodeChops.Geometry.Space.Movements.Deterministic;
+namespace CodeChops.Geometry.Space.Movements;
 
 /// <summary>
 /// Should be used for objects that don't move. It can still hold a direction.

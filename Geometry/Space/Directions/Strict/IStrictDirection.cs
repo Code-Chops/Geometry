@@ -2,7 +2,7 @@
 
 namespace CodeChops.Geometry.Space.Directions.Strict;
 
-[DiscoverImplementations(enumName: nameof(StrictDirectionEnum<TNumber>))]
+[DiscoverImplementations(enumName: "StrictDirectionEnum")]
 public partial interface IStrictDirection<TNumber> : IDirection<TNumber>, IStrictDirection
 	where TNumber : struct, IComparable<TNumber>, IEquatable<TNumber>, IConvertible
 {

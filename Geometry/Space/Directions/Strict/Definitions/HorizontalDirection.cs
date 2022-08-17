@@ -1,4 +1,4 @@
-namespace CodeChops.Geometry.Space.Directions.Strict.Modes;
+namespace CodeChops.Geometry.Space.Directions.Strict.Definitions;
 
 [DisableConcurrency]
 public partial record HorizontalDirection<TNumber> : StrictDirection<HorizontalDirection<TNumber>, TNumber>

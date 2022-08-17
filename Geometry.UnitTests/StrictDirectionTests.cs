@@ -1,5 +1,5 @@
-using CodeChops.Geometry.Space.Directions.Strict;
-using CodeChops.Geometry.Space.Directions.Strict.Modes;
+using CodeChops.Geometry.Space;
+using CodeChops.Geometry.Space.Directions.Strict.Definitions;
 
 namespace CodeChops.Geometry.UnitTests;
 

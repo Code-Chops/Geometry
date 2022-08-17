@@ -11,8 +11,8 @@
 	</PropertyGroup>
 
 	<PropertyGroup Label="Package">
-		<Version>2.9.0</Version>
-		<PackageReleaseNotes>Cleaned up and enhanced.</PackageReleaseNotes>
+		<Version>2.10.0</Version>
+		<PackageReleaseNotes>Renamed some variables.</PackageReleaseNotes>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<Title>CodeChops.Geometry</Title>
 		<Description>
@@ -20,7 +20,7 @@ Contains objects and helpers to help the calculation of objects in space and tim
  -Point with a generic integral value;
  -Size with a generic integral value;
  -Directions: strict and free;
- -Movements: deterministic (dynamic and static) and non-deterministic (free);
+ -Movements;
  -Timing: stopwatch scope;
 		</Description>
 		<PackageId>CodeChops.Geometry</PackageId>
@@ -64,18 +64,4 @@ Contains objects and helpers to help the calculation of objects in space and tim
 		<PackageReference Include="System.Collections.Immutable" Version="6.0.0" />
 	</ItemGroup>
 		
-	<ItemGroup>
-	  <Compile Remove="Space\Directions\Strict\Modes\DiagonalDirectionMode.cs" />
-	  <Compile Remove="Space\Directions\Strict\Modes\EveryDirectionMode.cs" />
-	  <Compile Remove="Space\Directions\Strict\Modes\HorizontalDirectionMode.cs" />
-	  <Compile Remove="Space\Directions\Strict\Modes\OrthogonalDirectionMode.cs" />
-	  <Compile Remove="Space\Movements\Deterministic\IStaticMovement.cs" />
-	  <Compile Remove="Space\Movements\IMovement.cs" />
-	</ItemGroup>
-		
-	<ItemGroup>
-	  <Folder Include="Space\Directions\Strict\Modes" />
-	  <Folder Include="Space\Movements\NonDeterministic" />
-	</ItemGroup>
-
 </Project>

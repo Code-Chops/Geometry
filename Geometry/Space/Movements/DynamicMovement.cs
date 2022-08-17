@@ -1,11 +1,11 @@
 ﻿using CodeChops.Geometry.Time;
 
-namespace CodeChops.Geometry.Space.Movements.Deterministic;
+namespace CodeChops.Geometry.Space.Movements;
 
 /// <summary>
-/// A movement that can be determined by using the elapsed milliseconds.
+/// A movement in which the direction and location can be determined by using a formula with the elapsed milliseconds as a parameter.
 /// </summary>
-public abstract record DeterministicMovement<TNumber> : Movement<TNumber>
+public abstract record DynamicMovement<TNumber> : Movement<TNumber>
 	where TNumber : struct, IComparable<TNumber>, IEquatable<TNumber>, IConvertible
 {
 	public override string ToString() => $"{this.GetType().Name}: {this.Point}, start: {this.StartPoint}, direction: {this.CalculatePoint(this.Stopwatch.ElapsedMilliseconds)}, elapsed: {this.Stopwatch.ElapsedMilliseconds}";
@@ -16,7 +16,7 @@ public abstract record DeterministicMovement<TNumber> : Movement<TNumber>
 	
 	protected abstract Point<TNumber> CalculatePoint(float elapsedMilliseconds);
 
-	protected DeterministicMovement(Point<TNumber> startPoint)
+	protected DynamicMovement(Point<TNumber> startPoint)
 	{
 		this.StartPoint = startPoint;
 		this.Stopwatch = StopwatchScope.Current.Value;

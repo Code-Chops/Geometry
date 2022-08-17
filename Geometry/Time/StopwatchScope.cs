@@ -50,9 +50,6 @@ public class StopwatchScope : AmbientScope<StopwatchScope>
 	/// </summary>
 	internal static void SetDefaultValue(IStopwatch stopwatch)
 	{
-		var newDefaultScope = stopwatch is null
-			? null
-			: new StopwatchScope(stopwatch, AmbientScopeOption.NoNesting);
-		SetDefaultScope(newDefaultScope);
+		SetDefaultScope(new StopwatchScope(stopwatch, AmbientScopeOption.NoNesting));
 	}
 }
