@@ -16,7 +16,7 @@ public class SizeTests
 	{
 		var size = new Size<int>(width, height);
 
-		var points = size.GetEnumerable();
+		var points = size.GetAllPointsInSize();
 		foreach (var (index, point) in points)
 		{
 			var expectedPoint = new Point<int>(xOrY[index * 2], xOrY[index * 2 + 1]);

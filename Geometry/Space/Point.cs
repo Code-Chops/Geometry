@@ -1,4 +1,5 @@
 ﻿using CodeChops.DomainDrivenDesign.DomainModeling.Factories;
+using CodeChops.Geometry.Space.Directions;
 
 namespace CodeChops.Geometry.Space;
 
@@ -27,6 +28,16 @@ public readonly record struct Point<TNumber> : IValueObject, IComparable<Point<T
 	public static bool operator >=(Point<TNumber> left, Point<TNumber> right)	=> left.CompareTo(right) >= 0;
 	
 	#endregion
+	
+	public IEnumerable<(int Index, Point<TNumber>)> GetPointsInDirection(IDirection<TNumber> direction, int length)
+	{
+		if (length < 0) throw new ArgumentOutOfRangeException($"Length cannot be smaller than 0. Provided length is {length}.");
+		
+		var index = 0;
+		var point = this - direction.Value;
+		for (var i = 0; i < length; i++)
+			yield return (index++, point += direction.Value);
+	}
 	
 	public override string ToString() => $"(X:{this.X}, Y:{this.Y})";
 
@@ -136,7 +147,7 @@ public readonly record struct Point<TNumber> : IValueObject, IComparable<Point<T
 		return Point<TTargetNumber>.Create<TNumber>(this.X, this.Y);
 	}
 
-	public bool TryGetAddress(Size<TNumber> size, [NotNullWhen(returnValue: true)] out Number<TNumber>? address)
+	public bool TryGetAddress(Size<TNumber> size, [NotNullWhen(returnValue: true)] out ulong? address)
 	{
 		if (this.X < Number<TNumber>.Empty || this.X >= size.Width)
 		{
@@ -144,12 +155,12 @@ public readonly record struct Point<TNumber> : IValueObject, IComparable<Point<T
 			return false;
 		}
 
-		address = this.Y * size.Width + this.X;
-
+		var addressNumber = this.Y * size.Width + this.X;
+		address = addressNumber.Value.ToUInt64(CultureInfo.InvariantCulture);
 		return !IsOutOfRange(address.Value, size);
 	}
 	
 	public bool IsOutOfRange(Size<TNumber> size) => !this.TryGetAddress(size, out _);
 
-	public static bool IsOutOfRange(Number<TNumber> address, Size<TNumber> size) => address <Number<TNumber>.Empty || address >= size.Count();
+	public static bool IsOutOfRange(ulong address, Size<TNumber> size) => address >= size.Count();
 }

@@ -11,8 +11,8 @@
 	</PropertyGroup>
 
 	<PropertyGroup Label="Package">
-		<Version>2.11.2</Version>
-		<PackageReleaseNotes>Added index to enumerable.</PackageReleaseNotes>
+		<Version>2.11.3</Version>
+		<PackageReleaseNotes>Added GetPointsInDirection.</PackageReleaseNotes>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<Title>CodeChops.Geometry</Title>
 		<Description>

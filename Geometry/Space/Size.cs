@@ -28,7 +28,7 @@ public readonly struct Size<TNumber> : IValueObject, IComparable<Size<TNumber>>,
 	
 	#endregion
 
-	public IEnumerable<(int Index, Point<TNumber>)> GetEnumerable()
+	public IEnumerable<(int Index, Point<TNumber>)> GetAllPointsInSize()
 	{
 		var index = 0;
 		for (var y = new Number<TNumber>(); y < this.Height; y++)
@@ -43,8 +43,8 @@ public readonly struct Size<TNumber> : IValueObject, IComparable<Size<TNumber>>,
 
 	public static Size<TNumber> Empty { get; } = new();
 
-	public Number<TNumber> Count() => this.Height * this.Width;
-	public Number<TNumber> Sum() => this.Width + this.Height;
+	public ulong Count() => this.Height.Value.ToUInt64(CultureInfo.InvariantCulture) * this.Width.Value.ToUInt64(CultureInfo.InvariantCulture);
+	public ulong Sum() => this.Width.Value.ToUInt64(CultureInfo.InvariantCulture) + this.Height.Value.ToUInt64(CultureInfo.InvariantCulture);
 
 	public Size(Number<TNumber> width, Number<TNumber> height)
 	{
@@ -56,11 +56,6 @@ public readonly struct Size<TNumber> : IValueObject, IComparable<Size<TNumber>>,
 	{
 		this.Width = point.X;
 		this.Height = point.Y;
-	}
-
-	public Number<TNumber> GetTotalIndex()
-	{
-		return this.Width * this.Height;
 	}
 
 	public Size(string width, string height)
