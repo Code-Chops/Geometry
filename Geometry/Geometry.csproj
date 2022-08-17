@@ -11,8 +11,8 @@
 	</PropertyGroup>
 
 	<PropertyGroup Label="Package">
-		<Version>2.11.1</Version>
-		<PackageReleaseNotes>Added size enumerator and tests.</PackageReleaseNotes>
+		<Version>2.11.2</Version>
+		<PackageReleaseNotes>Added index to enumerable.</PackageReleaseNotes>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<Title>CodeChops.Geometry</Title>
 		<Description>

@@ -28,11 +28,12 @@ public readonly struct Size<TNumber> : IValueObject, IComparable<Size<TNumber>>,
 	
 	#endregion
 
-	public IEnumerable<Point<TNumber>> GetEnumerable()
+	public IEnumerable<(int Index, Point<TNumber>)> GetEnumerable()
 	{
+		var index = 0;
 		for (var y = new Number<TNumber>(); y < this.Height; y++)
 			for (var x = new Number<TNumber>(); x < this.Width; x++)
-				yield return new Point<TNumber>(x, y);
+				yield return (index++, new Point<TNumber>(x, y));
 	}
 
 	public override string ToString() => $"({this.Width}, {this.Height})";

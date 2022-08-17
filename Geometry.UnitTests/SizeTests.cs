@@ -16,11 +16,13 @@ public class SizeTests
 	{
 		var size = new Size<int>(width, height);
 
-		var points = new List<Point<int>>();
-
-		for (var i = 0; i < xOrY.Length; i++)
-			points.Add(new(xOrY[i], xOrY[++i]));
-
-		Assert.Equal(points, size.GetEnumerable());
+		var points = size.GetEnumerable();
+		foreach (var (index, point) in points)
+		{
+			var expectedPoint = new Point<int>(xOrY[index * 2], xOrY[index * 2 + 1]);
+			Assert.Equal(expectedPoint, point);
+		}
+		
+		Assert.Equal(xOrY.Length / 2, points.Count());
 	}
 }
