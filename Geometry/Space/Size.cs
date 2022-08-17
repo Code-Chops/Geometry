@@ -35,6 +35,9 @@ public readonly struct Size<TNumber> : IValueObject, IComparable<Size<TNumber>>,
 
 	public static Size<TNumber> Empty { get; } = new();
 
+	public Number<TNumber> Count() => this.Height * this.Width;
+	public Number<TNumber> Sum() => this.Width + this.Height;
+
 	public Size(Number<TNumber> width, Number<TNumber> height)
 	{
 		this.Width = width;
@@ -113,8 +116,4 @@ public readonly struct Size<TNumber> : IValueObject, IComparable<Size<TNumber>>,
 		var number = size.Width * size.Width + size.Height * size.Height;
 		return number * number;
 	}
-
-	public Number<TNumber> ToAddress() => this.Height * this.Width;
-
-	public Number<TNumber> Sum() => this.Width + this.Height;
 }

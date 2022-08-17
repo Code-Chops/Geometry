@@ -35,6 +35,9 @@ public readonly record struct Point<TNumber> : IValueObject, IComparable<Point<T
 
 	public static Point<TNumber> Empty { get; } = new();
 
+	public Number<TNumber> Count() => this.X * this.Y;
+	public Number<TNumber> Sum() => this.X + this.Y;
+
 	public Point(Number<TNumber> x, Number<TNumber> y)
 	{
 		this.X = x;
@@ -145,10 +148,8 @@ public readonly record struct Point<TNumber> : IValueObject, IComparable<Point<T
 
 		return !IsOutOfRange(address.Value, size);
 	}
-
-	public Number<TNumber> Sum() => this.X + this.Y;
-
+	
 	public bool IsOutOfRange(Size<TNumber> size) => !this.TryGetAddress(size, out _);
 
-	public static bool IsOutOfRange(Number<TNumber> address, Size<TNumber> size) => address <Number<TNumber>.Empty || address >= size.ToAddress();
+	public static bool IsOutOfRange(Number<TNumber> address, Size<TNumber> size) => address <Number<TNumber>.Empty || address >= size.Count();
 }

@@ -11,8 +11,8 @@
 	</PropertyGroup>
 
 	<PropertyGroup Label="Package">
-		<Version>2.10.0</Version>
-		<PackageReleaseNotes>Renamed some variables.</PackageReleaseNotes>
+		<Version>2.11.0</Version>
+		<PackageReleaseNotes>Renamed count of Point and Size.</PackageReleaseNotes>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<Title>CodeChops.Geometry</Title>
 		<Description>
