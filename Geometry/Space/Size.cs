@@ -27,7 +27,14 @@ public readonly struct Size<TNumber> : IValueObject, IComparable<Size<TNumber>>,
 	public static bool operator >=(Size<TNumber> left, Size<TNumber> right)	=> left.CompareTo(right) >= 0;
 	
 	#endregion
-	
+
+	public IEnumerable<Point<TNumber>> GetEnumerable()
+	{
+		for (var y = new Number<TNumber>(); y < this.Height; y++)
+			for (var x = new Number<TNumber>(); x < this.Width; x++)
+				yield return new Point<TNumber>(x, y);
+	}
+
 	public override string ToString() => $"({this.Width}, {this.Height})";
 
 	public Number<TNumber> Width { get; init; }
