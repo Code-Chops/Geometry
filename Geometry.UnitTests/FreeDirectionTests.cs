@@ -16,7 +16,7 @@ public class FreeDirectionTests
 		Assert.Equal((int)expectedPoint.X, (int)x);
 		Assert.Equal((int)expectedPoint.Y, (int)y);
 
-		direction.SetDeltaPoint(expectedPoint);
+		direction = new(expectedPoint);
 
 		Assert.Equal(angle, direction.Angle);
 	}

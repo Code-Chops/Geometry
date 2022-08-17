@@ -5,11 +5,22 @@ namespace CodeChops.Geometry.Space.Movements;
 /// <summary>
 /// Describes in what direction an object moves over time.
 /// </summary>
-public abstract record Movement<TDeltaPointNumber> : ValueObject, IMovement
-	where TDeltaPointNumber : struct, IComparable<TDeltaPointNumber>, IEquatable<TDeltaPointNumber>, IConvertible
+public abstract record Movement<TNumber> : Movement
+	where TNumber : struct, IComparable<TNumber>, IEquatable<TNumber>, IConvertible
 {
-	public Point<float> GetPoint() => this.Point.Cast<TDeltaPointNumber, float>();
-	protected abstract Point<TDeltaPointNumber> Point { get; }
-	public abstract Point<float> GetDirectionDeltaPoint();
-	public abstract IDirection GetDirection();
+	public override Point<TTargetNumber> GetPoint<TTargetNumber>()
+		=> this.Point.Cast<TTargetNumber>();
+
+	public abstract Point<TNumber> Point { get; }
+	public abstract override IDirection Direction { get; }
+}
+
+/// <summary>
+/// Describes in what direction an object moves over time.
+/// </summary>
+public abstract record Movement : IValueObject
+{
+	public abstract Point<TTargetNumber> GetPoint<TTargetNumber>()
+		where TTargetNumber : struct, IComparable<TTargetNumber>, IEquatable<TTargetNumber>, IConvertible;
+	public abstract IDirection Direction { get; }
 }

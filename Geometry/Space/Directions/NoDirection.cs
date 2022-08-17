@@ -1,14 +1,13 @@
 ﻿namespace CodeChops.Geometry.Space.Directions;
 
-public record NoDirection : IDirection
+public record NoDirection<TNumber> : IDirection
+	where TNumber : struct, IComparable<TNumber>, IEquatable<TNumber>, IConvertible
 {
-	public Point<TTargetPointNumber> GetValue<TTargetPointNumber>()
-		where TTargetPointNumber : struct, IComparable<TTargetPointNumber>, IEquatable<TTargetPointNumber>, IConvertible 
-			=> Point<TTargetPointNumber>.Empty;
+	public Point<TNumber> Value => Point<TNumber>.Empty;
 
-	public static readonly NoDirection Instance = new();
+	public Point<TTargetNumber> GetValue<TTargetNumber>()
+		where TTargetNumber : struct, IComparable<TTargetNumber>, IEquatable<TTargetNumber>, IConvertible 
+			=> Point<TTargetNumber>.Empty;
 
-	private NoDirection()
-	{
-	}
+	public static readonly NoDirection<TNumber> Instance = new();
 }

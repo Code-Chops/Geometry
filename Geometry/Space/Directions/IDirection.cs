@@ -1,9 +1,9 @@
 ﻿namespace CodeChops.Geometry.Space.Directions;
 
-public interface IDirection<TDeltaPointNumber> : IDirection
-	where TDeltaPointNumber : struct, IComparable<TDeltaPointNumber>, IEquatable<TDeltaPointNumber>, IConvertible
+public interface IDirection<TNumber> : IDirection
+	where TNumber : struct, IComparable<TNumber>, IEquatable<TNumber>, IConvertible
 {
-	Point<TDeltaPointNumber> Value { get; }
+	Point<TNumber> Value { get; }
 }
 
 /// <summary>
@@ -11,6 +11,6 @@ public interface IDirection<TDeltaPointNumber> : IDirection
 /// </summary>
 public interface IDirection : IValueObject
 {
-	Point<TTargetPointNumber> GetValue<TTargetPointNumber>()
-		where TTargetPointNumber : struct, IComparable<TTargetPointNumber>, IEquatable<TTargetPointNumber>, IConvertible;
+	Point<TTargetNumber> GetValue<TTargetNumber>()
+		where TTargetNumber : struct, IComparable<TTargetNumber>, IEquatable<TTargetNumber>, IConvertible;
 }

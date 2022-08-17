@@ -5,24 +5,20 @@ namespace CodeChops.Geometry.Space.Movements.Deterministic;
 /// <summary>
 /// A movement that can be determined by using the elapsed milliseconds.
 /// </summary>
-public abstract record DeterministicMovement<TPointNumber> : Movement<TPointNumber>
-	where TPointNumber : struct, IComparable<TPointNumber>, IEquatable<TPointNumber>, IConvertible
+public abstract record DeterministicMovement<TNumber> : Movement<TNumber>
+	where TNumber : struct, IComparable<TNumber>, IEquatable<TNumber>, IConvertible
 {
-	protected override Point<TPointNumber> Point => this.StartPoint + this.CalculatePoint(this.Stopwatch.ElapsedMilliseconds) * Number<TPointNumber>.Create(this.Speed);
-	protected abstract Point<TPointNumber> CalculatePoint(float step);
-	public Point<TPointNumber> StartPoint { get; }
-	public float Speed { get; }
+	public override string ToString() => $"{this.GetType().Name}: {this.Point}, start: {this.StartPoint}, direction: {this.CalculatePoint(this.Stopwatch.ElapsedMilliseconds)}, elapsed: {this.Stopwatch.ElapsedMilliseconds}";
+
+	public override Point<TNumber> Point => this.StartPoint + this.CalculatePoint(this.Stopwatch.ElapsedMilliseconds);
+	public Point<TNumber> StartPoint { get; }
 	public IStopwatch Stopwatch { get; }
+	
+	protected abstract Point<TNumber> CalculatePoint(float elapsedMilliseconds);
 
-	/// <summary>
-	/// Not sure if this is correct.
-	/// </summary>
-	public override Point<float> GetDirectionDeltaPoint() => this.CalculatePoint(this.Stopwatch.ElapsedMilliseconds).Cast<TPointNumber, float>();
-
-	protected DeterministicMovement(Point<TPointNumber> startPoint, float speed)
+	protected DeterministicMovement(Point<TNumber> startPoint)
 	{
 		this.StartPoint = startPoint;
-		this.Speed = speed;
 		this.Stopwatch = StopwatchScope.Current.Value;
 		this.Stopwatch.Start();
 	}

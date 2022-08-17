@@ -13,14 +13,8 @@ public readonly record struct Point<TNumber> : IValueObject, IComparable<Point<T
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public int CompareTo(Point<TNumber> other)
 	{
-		if (this.X == other.X)
-		{
-			return (this.Y - other.Y).Value.ToInt32(CultureInfo.InvariantCulture);
-		}
-		else
-		{
-			return (this.X - other.X).Value.ToInt32(CultureInfo.InvariantCulture);
-		}
+		if (this.X == other.X) return (this.Y - other.Y).Value.ToInt32(CultureInfo.InvariantCulture);
+		return (this.X - other.X).Value.ToInt32(CultureInfo.InvariantCulture);
 	}
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]

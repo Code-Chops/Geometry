@@ -11,8 +11,8 @@
 	</PropertyGroup>
 
 	<PropertyGroup Label="Package">
-		<VersionPrefix>2.8.1</VersionPrefix>
-		<PackageReleaseNotes>Cleanup project files.</PackageReleaseNotes>
+		<Version>2.9.0</Version>
+		<PackageReleaseNotes>Cleaned up and enhanced.</PackageReleaseNotes>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<Title>CodeChops.Geometry</Title>
 		<Description>
@@ -62,6 +62,20 @@ Contains objects and helpers to help the calculation of objects in space and tim
 		<PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
 		<PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="6.0.0" />
 		<PackageReference Include="System.Collections.Immutable" Version="6.0.0" />
+	</ItemGroup>
+		
+	<ItemGroup>
+	  <Compile Remove="Space\Directions\Strict\Modes\DiagonalDirectionMode.cs" />
+	  <Compile Remove="Space\Directions\Strict\Modes\EveryDirectionMode.cs" />
+	  <Compile Remove="Space\Directions\Strict\Modes\HorizontalDirectionMode.cs" />
+	  <Compile Remove="Space\Directions\Strict\Modes\OrthogonalDirectionMode.cs" />
+	  <Compile Remove="Space\Movements\Deterministic\IStaticMovement.cs" />
+	  <Compile Remove="Space\Movements\IMovement.cs" />
+	</ItemGroup>
+		
+	<ItemGroup>
+	  <Folder Include="Space\Directions\Strict\Modes" />
+	  <Folder Include="Space\Movements\NonDeterministic" />
 	</ItemGroup>
 
 </Project>

@@ -3,58 +3,43 @@
 /// <summary>
 /// A direction with every possible delta point.
 /// </summary>
-public record FreeDirection<TDeltaPointNumber> : ValueObject, IDirection<TDeltaPointNumber>
-	where TDeltaPointNumber : struct, IComparable<TDeltaPointNumber>, IEquatable<TDeltaPointNumber>, IConvertible
+public record FreeDirection<TNumber> : ValueObject, IDirection
+	where TNumber : struct, IComparable<TNumber>, IEquatable<TNumber>, IConvertible
 {
-	public override string ToString() => $"{nameof(FreeDirection<TDeltaPointNumber>)}: {this.Value}";
+	public override string ToString() => $"{nameof(FreeDirection<TNumber>)}: {this.Value}";
 
-	/// <summary>
-	/// Backing field so the value is mutable in this class.
-	/// </summary>
-	public Point<TDeltaPointNumber> Value { get; private set; }
+	public Point<TNumber> Value { get; }
 
-	public Point<TTargetPointNumber> GetValue<TTargetPointNumber>()
-		where TTargetPointNumber : struct, IComparable<TTargetPointNumber>, IEquatable<TTargetPointNumber>, IConvertible
+	public Point<TTargetNumber> GetValue<TTargetNumber>()
+		where TTargetNumber : struct, IComparable<TTargetNumber>, IEquatable<TTargetNumber>, IConvertible
 	{
-		return this.Value.Cast<TDeltaPointNumber, TTargetPointNumber>();
+		return this.Value.Cast<TNumber, TTargetNumber>();
 	}
 
 	/// <summary>
 	/// The angle (from 0 to 360 degrees).
 	/// </summary>
-	public double Angle { get; private set; }
+	public double Angle { get; }
 
-	public FreeDirection(Point<TDeltaPointNumber> deltaPoint)
+	public FreeDirection(Point<TNumber> value)
 	{
-		this.SetDeltaPoint(deltaPoint);
+		this.Value = value;
+		this.Angle = this.Value.ToAngle();
 	}
 
 	public FreeDirection(double angle)
 	{
-		this.SetAngle(angle);
+		this.Value = new Point<TNumber>(angle);
+		this.Angle = angle;
 	}
 
-	public FreeDirection<TDeltaPointNumber> GetNewDirectionFromRandomTurn()
+	public static FreeDirection<TNumber> GetNewDirectionFromRandomTurn()
 	{
 		return new(new Random().NextDouble() * 360);
 	}
 
-	public FreeDirection<TDeltaPointNumber> GetNewDirectionFromTurn(double angleDelta)
+	public FreeDirection<TNumber> GetNewDirectionFromTurn(double angleDelta)
 	{
 		return new(this.Angle + angleDelta);
-	}
-
-	public void SetDeltaPoint(Point<TDeltaPointNumber> point)
-	{
-		this.Value = point;
-		var newAngle = this.Value.ToAngle();
-		if (!newAngle.Equals(this.Angle)) this.Angle = newAngle;
-	}
-
-	public void SetAngle(double angle)
-	{
-		this.Angle = angle;
-		var newDeltaPoint = new Point<TDeltaPointNumber>(this.Angle);
-		if (newDeltaPoint != this.Value) this.Value = newDeltaPoint;
 	}
 }

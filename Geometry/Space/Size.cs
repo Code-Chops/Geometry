@@ -13,14 +13,8 @@ public readonly struct Size<TNumber> : IValueObject, IComparable<Size<TNumber>>,
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public int CompareTo(Size<TNumber> other)
 	{
-		if (this.Width == other.Width)
-		{
-			return (this.Height - other.Height).Value.ToInt32(CultureInfo.InvariantCulture);
-		}
-		else
-		{
-			return (this.Width - other.Width).Value.ToInt32(CultureInfo.InvariantCulture);
-		}
+		if (this.Width == other.Width) return (this.Height - other.Height).Value.ToInt32(CultureInfo.InvariantCulture);
+		return (this.Width - other.Width).Value.ToInt32(CultureInfo.InvariantCulture);
 	}
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
