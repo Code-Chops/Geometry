@@ -11,8 +11,8 @@
 	</PropertyGroup>
 
 	<PropertyGroup Label="Package">
-		<Version>2.13.0</Version>
-		<PackageReleaseNotes>Cleanup.</PackageReleaseNotes>
+		<Version>2.13.1</Version>
+		<PackageReleaseNotes>Fixed implicit tuple casting for Point and Size.</PackageReleaseNotes>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<Title>CodeChops.Geometry</Title>
 		<Description>

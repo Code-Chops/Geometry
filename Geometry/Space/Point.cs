@@ -102,6 +102,9 @@ public readonly record struct Point<TNumber> : IValueObject, IComparable<Point<T
 
 	public static implicit operator Point<TNumber>((Number<TNumber>, Number<TNumber>) tuple) 
 		=> new(tuple.Item1, tuple.Item2);
+	
+	public static implicit operator Point<TNumber>((TNumber, TNumber) tuple) 
+		=> new(tuple.Item1, tuple.Item2);
 
 	public Point<TTarget> Cast<TTarget>()
 		where TTarget : struct, IComparable<TTarget>, IEquatable<TTarget>, IConvertible

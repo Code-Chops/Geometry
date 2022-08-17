@@ -92,6 +92,9 @@ public readonly struct Size<TNumber> : IValueObject, IComparable<Size<TNumber>>,
 	public static implicit operator Size<TNumber>((Number<TNumber>, Number<TNumber>) tuple) 
 		=> new(tuple.Item1, tuple.Item2);
 
+	public static implicit operator Size<TNumber>((TNumber, TNumber) tuple) 
+		=> new(tuple.Item1, tuple.Item2);
+	
 	public Size<TTarget> Cast<TTarget>()
 		where TTarget : struct, IComparable<TTarget>, IEquatable<TTarget>, IConvertible
 	{
