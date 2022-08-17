@@ -12,7 +12,7 @@ public record StraightMovement<TStrictDirection, TNumber> : DynamicMovement<TNum
 	public sealed override string ToString() => $"{this.GetType().Name}: {this.Direction}";
 
 	public override TStrictDirection Direction { get; }
-	protected sealed override Point<TNumber> CalculatePoint(float elapsedMilliseconds) => this.Direction.Value * Number<TNumber>.Create(elapsedMilliseconds);
+	protected sealed override Point<TNumber> CalculatePoint(float elapsedMilliseconds) => this.Direction.Value * new Number<float>(elapsedMilliseconds).Cast<TNumber>();
 
 	public StraightMovement(Point<TNumber> startPoint, TStrictDirection direction)
 		: base(startPoint)

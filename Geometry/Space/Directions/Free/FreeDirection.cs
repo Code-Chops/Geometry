@@ -10,10 +10,10 @@ public record FreeDirection<TNumber> : ValueObject, IDirection
 
 	public Point<TNumber> Value { get; }
 
-	public Point<TTargetNumber> GetValue<TTargetNumber>()
-		where TTargetNumber : struct, IComparable<TTargetNumber>, IEquatable<TTargetNumber>, IConvertible
+	public Point<TTarget> GetValue<TTarget>()
+		where TTarget : struct, IComparable<TTarget>, IEquatable<TTarget>, IConvertible
 	{
-		return this.Value.Cast<TNumber, TTargetNumber>();
+		return this.Value.Cast<TTarget>();
 	}
 
 	/// <summary>

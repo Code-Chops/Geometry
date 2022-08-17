@@ -5,6 +5,7 @@ namespace CodeChops.Geometry.Time;
 [GenerateStronglyTypedId]
 public partial class Stopwatch : Entity, IStopwatch
 {
+    public override string ToString() => $"{this.GetType().Name} {{ {nameof(this.ElapsedMilliseconds)} = {this.ElapsedMilliseconds} }}";
     private System.Diagnostics.Stopwatch Instance { get; }
 
     public bool IsRunning => this.Instance.IsRunning;

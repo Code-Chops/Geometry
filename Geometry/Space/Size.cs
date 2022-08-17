@@ -52,17 +52,17 @@ public readonly struct Size<TNumber> : IValueObject, IComparable<Size<TNumber>>,
 		this.Width = width;
 		this.Height = height;
 	}
+	
+	public Size(TNumber width, TNumber height)
+	{
+		this.Width = (Number<TNumber>)width;
+		this.Height = (Number<TNumber>)height;
+	}
 
 	public Size(Point<TNumber> point)
 	{
 		this.Width = point.X;
 		this.Height = point.Y;
-	}
-
-	public Size(string width, string height)
-	{
-		this.Width = (TNumber)Number<TNumber>.Create(int.Parse(width, NumberStyles.AllowDecimalPoint));
-		this.Height = (TNumber)Number<TNumber>.Create(int.Parse(height, NumberStyles.AllowDecimalPoint));
 	}
 
 	public void Deconstruct(out Number<TNumber> width, out Number<TNumber> height)
@@ -71,14 +71,6 @@ public readonly struct Size<TNumber> : IValueObject, IComparable<Size<TNumber>>,
 		height = this.Height;
 	}
 
-	public static Size<TNumber> Create<TOriginalNumber>(TOriginalNumber width, TOriginalNumber height)
-		where TOriginalNumber : struct, IComparable<TOriginalNumber>, IEquatable<TOriginalNumber>, IConvertible
-	{
-		return new Size<TNumber>(
-			width: (TNumber)Convert.ChangeType(width, typeof(TNumber)),
-			height: (TNumber)Convert.ChangeType(height, typeof(TNumber)));
-	}
-	
 	public static Size<TNumber> operator +(Size<TNumber> size1, Size<TNumber> size2) 
 		=> new(size1.Width + size2.Width, size1.Height + size2.Height);
 
@@ -94,24 +86,21 @@ public readonly struct Size<TNumber> : IValueObject, IComparable<Size<TNumber>>,
 	public static Size<TNumber> operator /(Size<TNumber> size1, Size<TNumber> size2) 
 		=> new(size1.Width / size2.Width, size1.Height / size2.Height);
 
-	public static Size<TNumber> operator /(Size<TNumber> size, TNumber factor) 
-		=> new(size.Width / factor, size.Height / factor);
-
 	public static explicit operator Size<TNumber>(Point<TNumber> point) 
 		=> new(point.X, point.Y);
 
-	public static implicit operator Size<TNumber>((TNumber, TNumber) tuple) 
+	public static implicit operator Size<TNumber>((Number<TNumber>, Number<TNumber>) tuple) 
 		=> new(tuple.Item1, tuple.Item2);
 
-	public Size<TTargetNumber> Cast<TTargetNumber>()
-		where TTargetNumber : struct, IComparable<TTargetNumber>, IEquatable<TTargetNumber>, IConvertible
+	public Size<TTarget> Cast<TTarget>()
+		where TTarget : struct, IComparable<TTarget>, IEquatable<TTarget>, IConvertible
 	{
-		return Size<TTargetNumber>.Create<TNumber>(this.Width, this.Height);
+		return new Size<TTarget>(this.Width.Cast<TTarget>(), this.Height.Cast<TTarget>());
 	}
 
 	public bool TryGetAddress(Point<TNumber> point, [NotNullWhen(returnValue: true)] out ulong? address)
 	{
-		if (point.X < Number<TNumber>.Empty || point.X >= this.Width)
+		if (point.X < Number<TNumber>.Zero || point.X >= this.Width)
 		{
 			address = null;
 			return false;

@@ -54,16 +54,22 @@ public readonly record struct Point<TNumber> : IValueObject, IComparable<Point<T
 		this.X = x;
 		this.Y = y;
 	}
+	
+	public Point(TNumber x, TNumber y)
+	{
+		this.X = (Number<TNumber>)x;
+		this.Y = (Number<TNumber>)y;
+	}
 
 	public Point(double angle)
 	{
-		this.X = (TNumber)Convert.ChangeType(Math.Cos((angle - 90) / 180 * Math.PI), typeof(TNumber));
-		this.Y = (TNumber)Convert.ChangeType(Math.Sin((angle - 90) / 180 * Math.PI), typeof(TNumber));
+		this.X = (Number<TNumber>)(TNumber)Convert.ChangeType(Math.Cos((angle - 90) / 180 * Math.PI), typeof(TNumber));
+		this.Y = (Number<TNumber>)(TNumber)Convert.ChangeType(Math.Sin((angle - 90) / 180 * Math.PI), typeof(TNumber));
 	}
 
 	public Point(Number<TNumber> address, Size<TNumber> size)
 	{
-		this.X = Calculator<TNumber>.Modulo(address, size.Width);
+		this.X = address % size.Width;
 		this.Y = address / size.Width;
 	}
 	
@@ -71,14 +77,6 @@ public readonly record struct Point<TNumber> : IValueObject, IComparable<Point<T
 	{
 		x = this.X;
 		y = this.Y;
-	}
-
-	public static Point<TNumber> Create<TOriginalNumber>(TOriginalNumber x, TOriginalNumber y)
-		where TOriginalNumber : struct, IComparable<TOriginalNumber>, IEquatable<TOriginalNumber>, IConvertible
-	{
-		return new Point<TNumber>(
-			x: (TNumber)Convert.ChangeType(x, typeof(TNumber)),
-			y: (TNumber)Convert.ChangeType(y, typeof(TNumber)));
 	}
 
 	public static Point<TNumber> operator +(Point<TNumber> point1, Point<TNumber> point2) 
@@ -96,24 +94,24 @@ public readonly record struct Point<TNumber> : IValueObject, IComparable<Point<T
 	public static Point<TNumber> operator /(Point<TNumber> point1, Point<TNumber> point2) 
 		=> new(point1.X / point2.X, point1.Y / point2.Y);
 
-	public static Point<TNumber> operator /(Point<TNumber> point, TNumber factor) 
+	public static Point<TNumber> operator /(Point<TNumber> point, Number<TNumber> factor) 
 		=> new(point.X / factor, point.Y / factor);
 
 	public static explicit operator Point<TNumber>(Size<TNumber> size) 
 		=> new(size.Width, size.Height);
 
-	public static implicit operator Point<TNumber>((TNumber, TNumber) tuple) 
+	public static implicit operator Point<TNumber>((Number<TNumber>, Number<TNumber>) tuple) 
 		=> new(tuple.Item1, tuple.Item2);
 
-	public Point<TTargetNumber> Cast<TTargetNumber>()
-		where TTargetNumber : struct, IComparable<TTargetNumber>, IEquatable<TTargetNumber>, IConvertible
+	public Point<TTarget> Cast<TTarget>()
+		where TTarget : struct, IComparable<TTarget>, IEquatable<TTarget>, IConvertible
 	{
-		return Point<TTargetNumber>.Create<TNumber>(this.X, this.Y);
+		return new Point<TTarget>(this.X.Cast<TTarget>(), this.Y.Cast<TTarget>());
 	}
 
 	public bool TryGetAddress(Size<TNumber> size, [NotNullWhen(returnValue: true)] out ulong? address)
 	{
-		if (this.X < Number<TNumber>.Empty || this.X >= size.Width)
+		if (this.X < Number<TNumber>.Zero || this.X >= size.Width)
 		{
 			address = null;
 			return false;

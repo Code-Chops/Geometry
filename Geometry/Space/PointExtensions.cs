@@ -2,21 +2,10 @@
 
 public static class PointExtensions
 {
-	public static Point<TNumber> Cast<TSourceNumber, TNumber>(this Point<TSourceNumber> point)
-		where TNumber : struct, IComparable<TNumber>, IEquatable<TNumber>, IConvertible
-		where TSourceNumber : struct, IComparable<TSourceNumber>, IEquatable<TSourceNumber>, IConvertible
-	{
-		if (point is Point<TNumber> value) return value;
-
-		return new(
-			x: point.X.Cast<TSourceNumber, TNumber>(),
-			y: point.Y.Cast<TSourceNumber, TNumber>());
-	}
-
 	public static double ToAngle<TNumber>(this Point<TNumber> point)
 		where TNumber : struct, IComparable<TNumber>, IEquatable<TNumber>, IConvertible
 	{
-		return Math.Atan2(point.X.Cast<TNumber, double>(), -point.Y.Cast<TNumber, double>()) * (180 / Math.PI);
+		return Math.Atan2(point.X.Cast<double>(), -point.Y.Cast<double>()) * (180 / Math.PI);
 	}
 
 	public static string InlineCss<TNumber>(this Point<TNumber> point, string unitOfMeasurement = "px")
@@ -26,7 +15,7 @@ public static class PointExtensions
 		try
 		{
 			Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
-			var inlineCss = $"left: {point.X}{unitOfMeasurement}; top: {point.Y}{unitOfMeasurement}; ";
+			var inlineCss = $"left: {point.X.Value}{unitOfMeasurement}; top: {point.Y.Value}{unitOfMeasurement}; ";
 
 			return inlineCss;
 		}
