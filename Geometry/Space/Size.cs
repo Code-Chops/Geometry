@@ -28,6 +28,8 @@ public readonly struct Size<TNumber> : IValueObject, IComparable<Size<TNumber>>,
 	
 	#endregion
 
+	public override string ToString() => $"({this.Width}, {this.Height})";
+
 	public IEnumerable<(int Index, Point<TNumber>)> GetAllPointsInSize()
 	{
 		var index = 0;
@@ -36,10 +38,9 @@ public readonly struct Size<TNumber> : IValueObject, IComparable<Size<TNumber>>,
 				yield return (index++, new Point<TNumber>(x, y));
 	}
 
-	public override string ToString() => $"({this.Width}, {this.Height})";
-
 	public Number<TNumber> Width { get; init; }
 	public Number<TNumber> Height { get; init; }
+	
 
 	public static Size<TNumber> Empty { get; } = new();
 
@@ -78,45 +79,48 @@ public readonly struct Size<TNumber> : IValueObject, IComparable<Size<TNumber>>,
 			height: (TNumber)Convert.ChangeType(height, typeof(TNumber)));
 	}
 	
-	public static Size<TNumber> operator +(Size<TNumber> s1, Size<TNumber> s2)
-	{
-		return new(s1.Width + s2.Width, s1.Height + s2.Height);
-	}
+	public static Size<TNumber> operator +(Size<TNumber> size1, Size<TNumber> size2) 
+		=> new(size1.Width + size2.Width, size1.Height + size2.Height);
 
-	public static Size<TNumber> operator -(Size<TNumber> s1, Size<TNumber> s2)
-	{
-		return new(s1.Width - s2.Width, s1.Height - s2.Height);
-	}
+	public static Size<TNumber> operator -(Size<TNumber> size1, Size<TNumber> size2) 
+		=> new(size1.Width - size2.Width, size1.Height - size2.Height);
 
-	public static Size<TNumber> operator *(Size<TNumber> s1, Size<TNumber> s2)
-	{
-		return new(s1.Width * s2.Width, s1.Height * s2.Height);
-	}
+	public static Size<TNumber> operator *(Size<TNumber> size, Size<TNumber> size2) 
+		=> new(size.Width * size2.Width, size.Height * size2.Height);
 
-	public static Size<TNumber> operator *(Size<TNumber> s1, Number<TNumber> s2)
-	{
-		return new(s1.Width * s2, s1.Height * s2);
-	}
+	public static Size<TNumber> operator *(Size<TNumber> size, Number<TNumber> factor) 
+		=> new(size.Width * factor, size.Height * factor);
 
-	public static explicit operator Size<TNumber>(Point<TNumber> point)
-	{
-		return new(point.X, point.Y);
-	}
+	public static Size<TNumber> operator /(Size<TNumber> size1, Size<TNumber> size2) 
+		=> new(size1.Width / size2.Width, size1.Height / size2.Height);
 
-	public static implicit operator Size<TNumber>((TNumber, TNumber) tuple)
-	{
-		return new(tuple.Item1, tuple.Item2);
-	}
-	
+	public static Size<TNumber> operator /(Size<TNumber> size, TNumber factor) 
+		=> new(size.Width / factor, size.Height / factor);
+
+	public static explicit operator Size<TNumber>(Point<TNumber> point) 
+		=> new(point.X, point.Y);
+
+	public static implicit operator Size<TNumber>((TNumber, TNumber) tuple) 
+		=> new(tuple.Item1, tuple.Item2);
+
 	public Size<TTargetNumber> Cast<TTargetNumber>()
 		where TTargetNumber : struct, IComparable<TTargetNumber>, IEquatable<TTargetNumber>, IConvertible
 	{
 		return Size<TTargetNumber>.Create<TNumber>(this.Width, this.Height);
 	}
 
-	public static Number<TNumber> Sqrt(Size<TNumber> size)
+	public bool TryGetAddress(Point<TNumber> point, [NotNullWhen(returnValue: true)] out ulong? address)
 	{
-		var number = size.Width * size.Width + size.Height * size.Height;
-		return number * number;
+		if (point.X < Number<TNumber>.Empty || point.X >= this.Width)
+		{
+			address = null;
+			return false;
+		}
+
+		var addressNumber = point.Y * this.Width + point.X;
+		address = addressNumber.Value.ToUInt64(CultureInfo.InvariantCulture);
+		return !this.IsOutOfRange(address.Value);
 	}
+
+	public bool IsOutOfRange(ulong address) => address >= this.Count();
 }

@@ -29,6 +29,8 @@ public readonly record struct Point<TNumber> : IValueObject, IComparable<Point<T
 	
 	#endregion
 	
+	public override string ToString() => $"(X:{this.X}, Y:{this.Y})";
+
 	public IEnumerable<(int Index, Point<TNumber>)> GetPointsInDirection(IDirection<TNumber> direction, int length)
 	{
 		if (length < 0) throw new ArgumentOutOfRangeException($"Length cannot be smaller than 0. Provided length is {length}.");
@@ -39,15 +41,13 @@ public readonly record struct Point<TNumber> : IValueObject, IComparable<Point<T
 			yield return (index++, point += direction.Value);
 	}
 	
-	public override string ToString() => $"(X:{this.X}, Y:{this.Y})";
-
 	public Number<TNumber> X { get; init; }
 	public Number<TNumber> Y { get; init; }
 
 	public static Point<TNumber> Empty { get; } = new();
 
-	public Number<TNumber> Count() => this.X * this.Y;
-	public Number<TNumber> Sum() => this.X + this.Y;
+	public ulong Count() => this.X.Value.ToUInt64(CultureInfo.InvariantCulture) * this.Y.Value.ToUInt64(CultureInfo.InvariantCulture);
+	public ulong Sum() => this.X.Value.ToUInt64(CultureInfo.InvariantCulture) + this.Y.Value.ToUInt64(CultureInfo.InvariantCulture);
 
 	public Point(Number<TNumber> x, Number<TNumber> y)
 	{
@@ -81,65 +81,29 @@ public readonly record struct Point<TNumber> : IValueObject, IComparable<Point<T
 			y: (TNumber)Convert.ChangeType(y, typeof(TNumber)));
 	}
 
-	public static Point<TNumber> operator +(Point<TNumber> p1, Point<TNumber> p2)
-	{
-		return new(p1.X + p2.X, p1.Y + p2.Y);
-	}
+	public static Point<TNumber> operator +(Point<TNumber> point1, Point<TNumber> point2) 
+		=> new(point1.X + point2.X, point1.Y + point2.Y);
 
-	public static Point<TNumber> operator -(Point<TNumber> p1, Point<TNumber> p2)
-	{
-		return new(p1.X - p2.X, p1.Y - p2.Y);
-	}
+	public static Point<TNumber> operator -(Point<TNumber> point1, Point<TNumber> point2) 
+		=> new(point1.X - point2.X, point1.Y - point2.Y);
 
-	public static Point<TNumber> operator +(Point<TNumber> point, Number<TNumber> addition)
-	{
-		return new(point.X + addition, point.Y + addition);
-	}
+	public static Point<TNumber> operator *(Point<TNumber> point1, Point<TNumber> point2) 
+		=> new(point1.X * point2.X, point1.Y * point2.Y);
 
-	public static Point<TNumber> operator -(Point<TNumber> point, Number<TNumber> addition)
-	{
-		return new(point.X - addition, point.Y - addition);
-	}
+	public static Point<TNumber> operator *(Point<TNumber> point, Number<TNumber> factor) 
+		=> new(point.X * factor, point.Y * factor);
+	
+	public static Point<TNumber> operator /(Point<TNumber> point1, Point<TNumber> point2) 
+		=> new(point1.X / point2.X, point1.Y / point2.Y);
 
-	public static Point<TNumber> operator *(Point<TNumber> point, Number<TNumber> factor)
-	{
-		return new(point.X * factor, point.Y * factor);
-	}
+	public static Point<TNumber> operator /(Point<TNumber> point, TNumber factor) 
+		=> new(point.X / factor, point.Y / factor);
 
-	public static Point<TNumber> operator *(Point<TNumber> point1, Point<TNumber> point2)
-	{
-		return new(point1.X * point2.X, point1.Y * point2.Y);
-	}
+	public static explicit operator Point<TNumber>(Size<TNumber> size) 
+		=> new(size.Width, size.Height);
 
-	public static Point<TNumber> operator *(Point<TNumber> point, Size<TNumber> size)
-	{
-		return new(point.X * size.Width, point.Y * size.Height);
-	}
-
-	public static Point<TNumber> operator /(Point<TNumber> point1, Point<TNumber> point2)
-	{
-		return new(point1.X / point2.X, point1.Y / point2.Y);
-	}
-
-	public static Point<TNumber> operator /(Point<TNumber> point, TNumber factor)
-	{
-		return new(point.X / factor, point.Y / factor);
-	}
-
-	public static Point<TNumber> operator /(Point<TNumber> point, Size<TNumber> size)
-	{
-		return new(point.X / size.Width, point.Y / size.Height);
-	}
-
-	public static explicit operator Point<TNumber>(Size<TNumber> size)
-	{
-		return new(size.Width, size.Height);
-	}
-
-	public static implicit operator Point<TNumber>((TNumber, TNumber) tuple)
-	{
-		return new(tuple.Item1, tuple.Item2);
-	}
+	public static implicit operator Point<TNumber>((TNumber, TNumber) tuple) 
+		=> new(tuple.Item1, tuple.Item2);
 
 	public Point<TTargetNumber> Cast<TTargetNumber>()
 		where TTargetNumber : struct, IComparable<TTargetNumber>, IEquatable<TTargetNumber>, IConvertible
@@ -157,10 +121,8 @@ public readonly record struct Point<TNumber> : IValueObject, IComparable<Point<T
 
 		var addressNumber = this.Y * size.Width + this.X;
 		address = addressNumber.Value.ToUInt64(CultureInfo.InvariantCulture);
-		return !IsOutOfRange(address.Value, size);
+		return !size.IsOutOfRange(address.Value);
 	}
 	
 	public bool IsOutOfRange(Size<TNumber> size) => !this.TryGetAddress(size, out _);
-
-	public static bool IsOutOfRange(ulong address, Size<TNumber> size) => address >= size.Count();
 }

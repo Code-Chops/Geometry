@@ -11,8 +11,8 @@
 	</PropertyGroup>
 
 	<PropertyGroup Label="Package">
-		<Version>2.11.3</Version>
-		<PackageReleaseNotes>Added GetPointsInDirection.</PackageReleaseNotes>
+		<Version>2.12.0</Version>
+		<PackageReleaseNotes>Aligned size and point.</PackageReleaseNotes>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<Title>CodeChops.Geometry</Title>
 		<Description>
