@@ -46,8 +46,8 @@ public readonly record struct Point<TNumber> : IValueObject, IComparable<Point<T
 
 	public static Point<TNumber> Empty { get; } = new();
 
-	public ulong Count() => this.X.Value.ToUInt64(CultureInfo.InvariantCulture) * this.Y.Value.ToUInt64(CultureInfo.InvariantCulture);
-	public ulong Sum() => this.X.Value.ToUInt64(CultureInfo.InvariantCulture) + this.Y.Value.ToUInt64(CultureInfo.InvariantCulture);
+	public int Count() => this.X.Value.ToInt32(CultureInfo.InvariantCulture) * this.Y.Value.ToInt32(CultureInfo.InvariantCulture);
+	public int Sum() => this.X.Value.ToInt32(CultureInfo.InvariantCulture) + this.Y.Value.ToInt32(CultureInfo.InvariantCulture);
 
 	public Point(Number<TNumber> x, Number<TNumber> y)
 	{
@@ -112,7 +112,7 @@ public readonly record struct Point<TNumber> : IValueObject, IComparable<Point<T
 		return new Point<TTarget>(this.X.Convert<TTarget>(), this.Y.Convert<TTarget>());
 	}
 
-	public bool TryGetAddress(Size<TNumber> size, [NotNullWhen(returnValue: true)] out ulong? address)
+	public bool TryGetAddress(Size<TNumber> size, [NotNullWhen(returnValue: true)] out int? address)
 	{
 		if (this.X < Number<TNumber>.Zero || this.X >= size.Width)
 		{
@@ -121,7 +121,7 @@ public readonly record struct Point<TNumber> : IValueObject, IComparable<Point<T
 		}
 
 		var addressNumber = this.Y * size.Width + this.X;
-		address = addressNumber.Value.ToUInt64(CultureInfo.InvariantCulture);
+		address = addressNumber.Value.ToInt32(CultureInfo.InvariantCulture);
 		return !size.IsOutOfRange(address.Value);
 	}
 	

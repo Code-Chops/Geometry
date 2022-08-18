@@ -11,8 +11,8 @@
 	</PropertyGroup>
 
 	<PropertyGroup Label="Package">
-		<Version>2.14.0</Version>
-		<PackageReleaseNotes>Changed casting to convert and enhanced movements.</PackageReleaseNotes>
+		<Version>2.14.1</Version>
+		<PackageReleaseNotes>Changed ulong to int.</PackageReleaseNotes>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<Title>CodeChops.Geometry</Title>
 		<Description>
