@@ -1,22 +1,25 @@
 ﻿using CodeChops.Geometry.Space.Directions.Strict;
+using CodeChops.Geometry.Time;
 
 namespace CodeChops.Geometry.Space.Movements;
 
 /// <summary>
 /// A movement that only goes into one straight direction over its lifetime.
 /// </summary>
-public record StraightMovement<TStrictDirection, TNumber> : DynamicMovement<TNumber>
+public sealed record StraightMovement<TStrictDirection, TNumber> : Movement<TNumber>
 	where TStrictDirection : StrictDirection<TStrictDirection, TNumber>
 	where TNumber : struct, IComparable<TNumber>, IEquatable<TNumber>, IConvertible
 {
-	public sealed override string ToString() => $"{this.GetType().Name}: {this.Direction}";
+	public override string ToString() => $"{this.GetType().Name}: {this.Direction}";
 
 	public override TStrictDirection Direction { get; }
-	protected sealed override Point<TNumber> CalculatePoint(float elapsedMilliseconds) => this.Direction.Value * new Number<float>(elapsedMilliseconds).Cast<TNumber>();
-
-	public StraightMovement(Point<TNumber> startPoint, TStrictDirection direction)
-		: base(startPoint)
+	protected override Point<TNumber> CalculatePoint(Point<TNumber> startingPoint, IStopwatch stopWatch) => this.StartingPoint + this.Direction.Value * (Number<TNumber>)Convert.ChangeType(stopWatch.ElapsedMilliseconds, typeof(TNumber));
+	public float Speed { get; }
+	
+	public StraightMovement(Point<TNumber> startingPoint, TStrictDirection direction, float speed)
+		: base(startingPoint)
 	{
 		this.Direction = direction;
+		this.Speed = speed;
 	}
 }

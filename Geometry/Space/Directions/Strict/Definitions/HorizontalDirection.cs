@@ -1,7 +1,7 @@
 namespace CodeChops.Geometry.Space.Directions.Strict.Definitions;
 
 [DisableConcurrency]
-public partial record HorizontalDirection<TNumber> : StrictDirection<HorizontalDirection<TNumber>, TNumber>
+public sealed record HorizontalDirection<TNumber> : StrictDirection<HorizontalDirection<TNumber>, TNumber>
 	where TNumber : struct, IComparable<TNumber>, IEquatable<TNumber>, IConvertible
 {
 	public static HorizontalDirection<TNumber> Right { get; }	= CreatePoint( 1, 0);

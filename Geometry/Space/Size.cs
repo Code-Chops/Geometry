@@ -95,10 +95,10 @@ public readonly struct Size<TNumber> : IValueObject, IComparable<Size<TNumber>>,
 	public static implicit operator Size<TNumber>((TNumber, TNumber) tuple) 
 		=> new(tuple.Item1, tuple.Item2);
 	
-	public Size<TTarget> Cast<TTarget>()
+	public Size<TTarget> Convert<TTarget>()
 		where TTarget : struct, IComparable<TTarget>, IEquatable<TTarget>, IConvertible
 	{
-		return new Size<TTarget>(this.Width.Cast<TTarget>(), this.Height.Cast<TTarget>());
+		return new Size<TTarget>(this.Width.Convert<TTarget>(), this.Height.Convert<TTarget>());
 	}
 
 	public bool TryGetAddress(Point<TNumber> point, [NotNullWhen(returnValue: true)] out ulong? address)

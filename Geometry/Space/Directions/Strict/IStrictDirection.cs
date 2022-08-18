@@ -12,15 +12,13 @@ public partial interface IStrictDirection<TNumber> : IDirection<TNumber>, IStric
 
 public interface IStrictDirection : IDirection, IMagicEnum
 {
-	string Name { get; }
-
 	bool TryGetDirection(string directionName, [NotNullWhen(true)] out IStrictDirection? direction);
 	
-	TTargetDirection Cast<TTargetDirection, TTargetNumber>()
+	TTargetDirection Convert<TTargetDirection, TTargetNumber>()
 			where TTargetDirection : StrictDirection<TTargetDirection, TTargetNumber>
 			where TTargetNumber : struct, IComparable<TTargetNumber>, IEquatable<TTargetNumber>, IConvertible;
 
-	bool TryCast<TTargetDirection, TTargetNumber>([NotNullWhen(true)] out TTargetDirection? direction)
+	bool TryConvert<TTargetDirection, TTargetNumber>([NotNullWhen(true)] out TTargetDirection? direction)
 		where TTargetDirection : StrictDirection<TTargetDirection, TTargetNumber>
 		where TTargetNumber : struct, IComparable<TTargetNumber>, IEquatable<TTargetNumber>, IConvertible;
 }

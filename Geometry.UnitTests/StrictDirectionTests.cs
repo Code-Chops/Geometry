@@ -39,10 +39,10 @@ public class StrictDirectionTests
 	[InlineData(nameof(EveryDirection.East),	nameof(OrthogonalDirection.Right))]
 	[InlineData(nameof(EveryDirection.South),	nameof(OrthogonalDirection.Down))]
 	[InlineData(nameof(EveryDirection.West),	nameof(OrthogonalDirection.Left))]
-	public void Direction_Cast_ShouldWork(string directionName, string expectedDirectionName)
+	public void Direction_Convert_ShouldWork(string directionName, string expectedDirectionName)
 	{
 		var deltaPoint = EveryDirection.GetSingleMember(directionName);
-		var newDirectionName = EveryDirection.Cast<OrthogonalDirection, int>(deltaPoint).Name;
+		var newDirectionName = EveryDirection.Convert<OrthogonalDirection, int>(deltaPoint).Name;
 
 		Assert.Equal(newDirectionName, expectedDirectionName);
 	}

@@ -5,7 +5,7 @@ namespace CodeChops.Geometry.Time;
 /// <summary>
 /// Controls access to a stopwatch in the ambient context.
 /// </summary>
-public class StopwatchScope : AmbientScope<StopwatchScope>
+public sealed class StopwatchScope : AmbientScope<StopwatchScope>
 {
 	public override string ToString() => $"{this.GetType().Name}";
 	

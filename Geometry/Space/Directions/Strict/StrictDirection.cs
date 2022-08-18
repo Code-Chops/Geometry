@@ -18,7 +18,7 @@ public abstract record StrictDirection<TSelf, TNumber> : MagicEnumCore<TSelf, Po
 	public Point<TTarget> GetValue<TTarget>()
 		where TTarget : struct, IComparable<TTarget>, IEquatable<TTarget>, IConvertible
 	{
-		return this.Value.Cast<TTarget>();
+		return this.Value.Convert<TTarget>();
 	}
 
 	/// <summary>
@@ -38,7 +38,7 @@ public abstract record StrictDirection<TSelf, TNumber> : MagicEnumCore<TSelf, Po
 
 	protected static TSelf CreatePoint(int x, int y, [CallerMemberName] string name = null!)
 	{
-		var point = new Point<int>(x, y).Cast<TNumber>();
+		var point = new Point<int>(x, y).Convert<TNumber>();
 		var member = CreateMember(point, name);
 
 		// Empty cache
@@ -67,37 +67,35 @@ public abstract record StrictDirection<TSelf, TNumber> : MagicEnumCore<TSelf, Po
 		return PossibleDirections[newDirectionTypeIndex];
 	}
 
-	public TTargetDirection Cast<TTargetDirection, TTargetNumber>()
+	public TTargetDirection Convert<TTargetDirection, TTargetNumber>()
 		where TTargetDirection : StrictDirection<TTargetDirection, TTargetNumber>
 		where TTargetNumber : struct, IComparable<TTargetNumber>, IEquatable<TTargetNumber>, IConvertible
 	{
-		return Cast<TTargetDirection, TTargetNumber>(this.Value);
+		return Convert<TTargetDirection, TTargetNumber>(this.Value);
 	}
 
-	public bool TryCast<TTargetDirection, TTargetNumber>([NotNullWhen(true)] out TTargetDirection? direction)
+	public bool TryConvert<TTargetDirection, TTargetNumber>([NotNullWhen(true)] out TTargetDirection? direction)
 		where TTargetDirection : StrictDirection<TTargetDirection, TTargetNumber>
 		where TTargetNumber : struct, IComparable<TTargetNumber>, IEquatable<TTargetNumber>, IConvertible
 	{
-		return TryCast<TTargetDirection, TTargetNumber>(this.Value, out direction);
+		return TryConvert<TTargetDirection, TTargetNumber>(this.Value, out direction);
 	}
 	
-	public static TTargetDirection Cast<TTargetDirection, TTargetNumber>(Point<TNumber> deltaPoint)
+	public static TTargetDirection Convert<TTargetDirection, TTargetNumber>(Point<TNumber> deltaPoint)
 		where TTargetDirection : StrictDirection<TTargetDirection, TTargetNumber>
 		where TTargetNumber : struct, IComparable<TTargetNumber>, IEquatable<TTargetNumber>, IConvertible
 	{
-		if (!TryCast<TTargetDirection, TTargetNumber>(deltaPoint, out var direction))
-		{
+		if (!TryConvert<TTargetDirection, TTargetNumber>(deltaPoint, out var direction))
 			throw new InvalidOperationException($"{deltaPoint} does not exist in {typeof(TTargetDirection).Name}.");
-		}
 
 		return direction;
 	}
 
-	public static bool TryCast<TTargetDirection, TTargetNumber>(Point<TNumber> deltaPoint, [NotNullWhen(true)] out TTargetDirection? direction)
+	public static bool TryConvert<TTargetDirection, TTargetNumber>(Point<TNumber> deltaPoint, [NotNullWhen(true)] out TTargetDirection? direction)
 		where TTargetDirection : StrictDirection<TTargetDirection, TTargetNumber>
 		where TTargetNumber : struct, IComparable<TTargetNumber>, IEquatable<TTargetNumber>, IConvertible
 	{
-		var newDeltaPoint = deltaPoint.Cast<TTargetNumber>();
+		var newDeltaPoint = deltaPoint.Convert<TTargetNumber>();
 		if (!StrictDirection<TTargetDirection, TTargetNumber>.TryGetSingleMember(newDeltaPoint, out var newDirection))
 		{
 			direction = null;

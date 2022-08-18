@@ -63,8 +63,8 @@ public readonly record struct Point<TNumber> : IValueObject, IComparable<Point<T
 
 	public Point(double angle)
 	{
-		this.X = (Number<TNumber>)(TNumber)Convert.ChangeType(Math.Cos((angle - 90) / 180 * Math.PI), typeof(TNumber));
-		this.Y = (Number<TNumber>)(TNumber)Convert.ChangeType(Math.Sin((angle - 90) / 180 * Math.PI), typeof(TNumber));
+		this.X = (Number<TNumber>)(TNumber)System.Convert.ChangeType(Math.Cos((angle - 90) / 180 * Math.PI), typeof(TNumber));
+		this.Y = (Number<TNumber>)(TNumber)System.Convert.ChangeType(Math.Sin((angle - 90) / 180 * Math.PI), typeof(TNumber));
 	}
 
 	public Point(Number<TNumber> address, Size<TNumber> size)
@@ -106,10 +106,10 @@ public readonly record struct Point<TNumber> : IValueObject, IComparable<Point<T
 	public static implicit operator Point<TNumber>((TNumber, TNumber) tuple) 
 		=> new(tuple.Item1, tuple.Item2);
 
-	public Point<TTarget> Cast<TTarget>()
+	public Point<TTarget> Convert<TTarget>()
 		where TTarget : struct, IComparable<TTarget>, IEquatable<TTarget>, IConvertible
 	{
-		return new Point<TTarget>(this.X.Cast<TTarget>(), this.Y.Cast<TTarget>());
+		return new Point<TTarget>(this.X.Convert<TTarget>(), this.Y.Convert<TTarget>());
 	}
 
 	public bool TryGetAddress(Size<TNumber> size, [NotNullWhen(returnValue: true)] out ulong? address)

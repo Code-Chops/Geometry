@@ -1,4 +1,5 @@
-﻿using CodeChops.Geometry.Time;
+﻿using CodeChops.Geometry.Space.Directions;
+using CodeChops.Geometry.Space.Directions.Free;
 
 namespace CodeChops.Geometry.Space.Movements;
 
@@ -8,18 +9,12 @@ namespace CodeChops.Geometry.Space.Movements;
 public abstract record DynamicMovement<TNumber> : Movement<TNumber>
 	where TNumber : struct, IComparable<TNumber>, IEquatable<TNumber>, IConvertible
 {
-	public override string ToString() => $"{this.GetType().Name}: {this.Point}, start: {this.StartPoint}, direction: {this.CalculatePoint(this.Stopwatch.ElapsedMilliseconds)}, elapsed: {this.Stopwatch.ElapsedMilliseconds}";
+	public override string ToString() => $"{this.GetType().Name}: {this.Point}, start: {this.StartingPoint}, direction: {this.Direction}, elapsed: {this.Stopwatch.ElapsedMilliseconds}";
 
-	public override Point<TNumber> Point => this.StartPoint + this.CalculatePoint(this.Stopwatch.ElapsedMilliseconds);
-	public Point<TNumber> StartPoint { get; }
-	public IStopwatch Stopwatch { get; }
-	
-	protected abstract Point<TNumber> CalculatePoint(float elapsedMilliseconds);
+	public override IDirection Direction => new FreeDirection<TNumber>(this.Point);
 
-	protected DynamicMovement(Point<TNumber> startPoint)
+	protected DynamicMovement(Point<TNumber> startingPoint)
+		: base(startingPoint)
 	{
-		this.StartPoint = startPoint;
-		this.Stopwatch = StopwatchScope.Current.Value;
-		this.Stopwatch.Start();
 	}
 }

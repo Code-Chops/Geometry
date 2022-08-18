@@ -7,7 +7,12 @@ public record NoDirection<TNumber> : IDirection
 
 	public Point<TTargetNumber> GetValue<TTargetNumber>()
 		where TTargetNumber : struct, IComparable<TTargetNumber>, IEquatable<TTargetNumber>, IConvertible 
-			=> Point<TTargetNumber>.Empty;
+		=> Point<TTargetNumber>.Empty;
 
 	public static readonly NoDirection<TNumber> Instance = new();
+	
+	// Should be private because it's a singleton.
+	private NoDirection()
+	{
+	}
 }

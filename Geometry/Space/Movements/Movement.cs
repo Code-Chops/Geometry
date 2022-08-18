@@ -1,4 +1,5 @@
 ﻿using CodeChops.Geometry.Space.Directions;
+using CodeChops.Geometry.Time;
 
 namespace CodeChops.Geometry.Space.Movements;
 
@@ -8,11 +9,22 @@ namespace CodeChops.Geometry.Space.Movements;
 public abstract record Movement<TNumber> : Movement
 	where TNumber : struct, IComparable<TNumber>, IEquatable<TNumber>, IConvertible
 {
-	public override Point<TTargetNumber> GetPoint<TTargetNumber>()
-		=> this.Point.Cast<TTargetNumber>();
+	public sealed override Point<TTargetNumber> GetPoint<TTargetNumber>()
+		=> this.Point.Convert<TTargetNumber>();
 
-	public abstract Point<TNumber> Point { get; }
+	public Point<TNumber> Point => this.CalculatePoint(this.StartingPoint, this.Stopwatch);
 	public abstract override IDirection Direction { get; }
+	public Point<TNumber> StartingPoint { get; }
+	public IStopwatch Stopwatch { get; }
+	
+	protected abstract Point<TNumber> CalculatePoint(Point<TNumber> startingPoint, IStopwatch stopWatch);
+	
+	protected Movement(Point<TNumber> startingPoint)
+	{
+		this.StartingPoint = startingPoint;
+		this.Stopwatch = StopwatchScope.Current.Value;
+		this.Stopwatch.Start();
+	}
 }
 
 /// <summary>
