@@ -29,7 +29,7 @@ public readonly record struct Point<TNumber> : IValueObject, IComparable<Point<T
 	
 	#endregion
 	
-	public override string ToString() => $"(X:{this.X}, Y:{this.Y})";
+	public override string ToString() => $"({this.X}, {this.Y})";
 
 	public IEnumerable<(int Index, Point<TNumber>)> GetPointsInDirection(IDirection<TNumber> direction, int length)
 	{

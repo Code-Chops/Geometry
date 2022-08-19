@@ -28,7 +28,7 @@ public readonly struct Size<TNumber> : IValueObject, IComparable<Size<TNumber>>,
 	
 	#endregion
 
-	public override string ToString() => $"({this.Width}, {this.Height})";
+	public override string ToString() => $"({this.Width} x {this.Height})";
 
 	public IEnumerable<(int Index, Point<TNumber>)> GetAllPointsInSize()
 	{
