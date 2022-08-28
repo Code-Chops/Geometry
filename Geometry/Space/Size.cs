@@ -1,6 +1,4 @@
-﻿using CodeChops.DomainDrivenDesign.DomainModeling.Factories;
-
-namespace CodeChops.Geometry.Space;
+﻿namespace CodeChops.Geometry.Space;
 
 /// <summary>
 /// A 2-dimensional measurement with TNumber as type of the underlying values of Width and Height.
@@ -55,8 +53,8 @@ public readonly struct Size<TNumber> : IValueObject, IComparable<Size<TNumber>>,
 	
 	public Size(TNumber width, TNumber height)
 	{
-		this.Width = (Number<TNumber>)width;
-		this.Height = (Number<TNumber>)height;
+		this.Width = width;
+		this.Height = height;
 	}
 
 	public Size(Point<TNumber> point)
@@ -98,7 +96,7 @@ public readonly struct Size<TNumber> : IValueObject, IComparable<Size<TNumber>>,
 	public Size<TTarget> Convert<TTarget>()
 		where TTarget : struct, IComparable<TTarget>, IEquatable<TTarget>, IConvertible
 	{
-		return new Size<TTarget>(this.Width.Convert<TTarget>(), this.Height.Convert<TTarget>());
+		return new Size<TTarget>(this.Width.ConvertToPrimitive<TTarget>(), this.Height.ConvertToPrimitive<TTarget>());
 	}
 
 	public bool TryGetAddress(Point<TNumber> point, [NotNullWhen(returnValue: true)] out int? address)

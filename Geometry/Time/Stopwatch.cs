@@ -1,6 +1,4 @@
-﻿using CodeChops.DomainDrivenDesign.DomainModeling.Attributes;
-
-namespace CodeChops.Geometry.Time;
+﻿namespace CodeChops.Geometry.Time;
 
 [GenerateStronglyTypedId]
 public partial class Stopwatch : Entity, IStopwatch

@@ -5,7 +5,7 @@ public static class PointExtensions
 	public static double ToAngle<TNumber>(this Point<TNumber> point)
 		where TNumber : struct, IComparable<TNumber>, IEquatable<TNumber>, IConvertible
 	{
-		return Math.Atan2(point.X.Convert<double>(), -point.Y.Convert<double>()) * (180 / Math.PI);
+		return Math.Atan2(point.X.ConvertToPrimitive<double>(), -point.Y.ConvertToPrimitive<double>()) * (180 / Math.PI);
 	}
 
 	public static string InlineCss<TNumber>(this Point<TNumber> point, string unitOfMeasurement = "px")

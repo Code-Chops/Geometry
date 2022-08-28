@@ -1,5 +1,4 @@
-﻿using CodeChops.DomainDrivenDesign.DomainModeling.Factories;
-using CodeChops.Geometry.Space.Directions;
+﻿using CodeChops.Geometry.Space.Directions;
 
 namespace CodeChops.Geometry.Space;
 
@@ -46,25 +45,19 @@ public readonly record struct Point<TNumber> : IValueObject, IComparable<Point<T
 
 	public static Point<TNumber> Empty { get; } = new();
 
-	public int Count() => this.X.Value.ToInt32(CultureInfo.InvariantCulture) * this.Y.Value.ToInt32(CultureInfo.InvariantCulture);
-	public int Sum() => this.X.Value.ToInt32(CultureInfo.InvariantCulture) + this.Y.Value.ToInt32(CultureInfo.InvariantCulture);
+	public int Count() => this.X.ConvertToPrimitive<int>() * this.Y.ConvertToPrimitive<int>();
+	public int Sum() => this.X.ConvertToPrimitive<int>() + this.Y.ConvertToPrimitive<int>();
 
-	public Point(Number<TNumber> x, Number<TNumber> y)
+	public Point(TNumber x, TNumber y)
 	{
 		this.X = x;
 		this.Y = y;
 	}
-	
-	public Point(TNumber x, TNumber y)
-	{
-		this.X = (Number<TNumber>)x;
-		this.Y = (Number<TNumber>)y;
-	}
 
 	public Point(double angle)
 	{
-		this.X = (Number<TNumber>)(TNumber)System.Convert.ChangeType(Math.Cos((angle - 90) / 180 * Math.PI), typeof(TNumber));
-		this.Y = (Number<TNumber>)(TNumber)System.Convert.ChangeType(Math.Sin((angle - 90) / 180 * Math.PI), typeof(TNumber));
+		this.X = (TNumber)System.Convert.ChangeType(Math.Cos((angle - 90) / 180 * Math.PI), typeof(TNumber));
+		this.Y = (TNumber)System.Convert.ChangeType(Math.Sin((angle - 90) / 180 * Math.PI), typeof(TNumber));
 	}
 
 	public Point(Number<TNumber> address, Size<TNumber> size)
@@ -109,7 +102,7 @@ public readonly record struct Point<TNumber> : IValueObject, IComparable<Point<T
 	public Point<TTarget> Convert<TTarget>()
 		where TTarget : struct, IComparable<TTarget>, IEquatable<TTarget>, IConvertible
 	{
-		return new Point<TTarget>(this.X.Convert<TTarget>(), this.Y.Convert<TTarget>());
+		return new Point<TTarget>(this.X.ConvertToPrimitive<TTarget>(), this.Y.ConvertToPrimitive<TTarget>());
 	}
 
 	public bool TryGetAddress(Size<TNumber> size, [NotNullWhen(returnValue: true)] out int? address)

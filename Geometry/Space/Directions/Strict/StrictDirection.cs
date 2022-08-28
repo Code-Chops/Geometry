@@ -12,7 +12,7 @@ public abstract record StrictDirection<TSelf, TNumber> : MagicEnumCore<TSelf, Po
 	where TSelf : StrictDirection<TSelf, TNumber>
 	where TNumber : struct, IComparable<TNumber>, IEquatable<TNumber>, IConvertible
 {
-	private static List<TSelf> PossibleDirections => _possibleDirections ??= GetEnumerable().ToList();
+	private static List<TSelf> PossibleDirections => _possibleDirections ??= GetMembers().ToList();
 	private static List<TSelf>? _possibleDirections;
 	
 	public Point<TTarget> GetValue<TTarget>()
