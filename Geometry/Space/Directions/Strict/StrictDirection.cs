@@ -39,7 +39,7 @@ public abstract record StrictDirection<TSelf, TNumber> : MagicEnumCore<TSelf, Po
 	protected static TSelf CreatePoint(int x, int y, [CallerMemberName] string name = null!)
 	{
 		var point = new Point<int>(x, y).Convert<TNumber>();
-		var member = CreateMember(point, name);
+		var member = CreateMember<TSelf>(valueCreator: () => point, memberCreator: null, name);
 
 		// Empty cache
 		_possibleDirections = null;
