@@ -11,8 +11,8 @@
 	</PropertyGroup>
 
 	<PropertyGroup Label="Package">
-		<Version>2.15.0</Version>
-		<PackageReleaseNotes>Added surface.</PackageReleaseNotes>
+		<Version>2.15.1</Version>
+		<PackageReleaseNotes>Made surface abstract.</PackageReleaseNotes>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<Title>CodeChops.Geometry</Title>
 		<Description>

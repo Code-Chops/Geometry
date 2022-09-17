@@ -15,7 +15,7 @@ public class SurfaceTests
 	public void Size_Enumeration_IsCorrect(int width, int height, params int[] xOrY)
 	{
 		var size = new Size<int>(width, height);
-		var surface = new Surface<int>(size);
+		var surface = new SurfaceMock(size);
 		
 		var points = surface.GetAllPoints().ToList();
 		foreach (var (index, point) in points)
@@ -40,7 +40,7 @@ public class SurfaceTests
 	{
 		var startingPoint = new Point<int>(x, y);
 		var direction = EveryDirection.GetSingleMember(directionName);
-		var surface = new Surface<int>(size: (10,10), offset: (-5,-5));
+		var surface = new SurfaceMock(size: (10,10), offset: (-5,-5));
 		
 		var points = surface.GetPointsInDirection(startingPoint, direction, length);
 		foreach (var (index, point) in points)
@@ -50,5 +50,14 @@ public class SurfaceTests
 		}
 		
 		Assert.Equal(xOrY.Length / 2, length);
+	}
+
+	private class SurfaceMock : Surface<int>
+	{
+		public override SingletonId<SurfaceMock> Id => SingletonId<SurfaceMock>.Instance;
+
+		public SurfaceMock(Size<int> size, Point<int>? offset = null) : base(size, offset)
+		{
+		}
 	}
 }

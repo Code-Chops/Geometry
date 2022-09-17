@@ -2,8 +2,7 @@
 
 namespace CodeChops.Geometry.Space;
 
-[GenerateStronglyTypedId]
-public partial class Surface<TNumber> : Entity
+public abstract partial class Surface<TNumber> : Entity
 	where TNumber : struct, IComparable<TNumber>, IEquatable<TNumber>, IConvertible
 {
 	public Size<TNumber> Size { get; init; }
@@ -21,6 +20,7 @@ public partial class Surface<TNumber> : Entity
 		
 		var index = 0;
 		var point = startingPoint - direction.Value;
+		
 		for (var i = 0; i < length; i++)
 			yield return (index++, point += direction.Value);
 	}
@@ -28,9 +28,10 @@ public partial class Surface<TNumber> : Entity
 	public IEnumerable<(int Index, Point<TNumber>)> GetAllPoints()
 	{
 		var index = 0;
+		
 		for (var y = new Number<TNumber>(); y < this.Size.Height; y++)
-		for (var x = new Number<TNumber>(); x < this.Size.Width; x++)
-			yield return (index++, new Point<TNumber>(x, y));
+			for (var x = new Number<TNumber>(); x < this.Size.Width; x++)
+				yield return (index++, new Point<TNumber>(x, y));
 	}
 
 	public bool TryGetAddress(Point<TNumber> point, [NotNullWhen(returnValue: true)] out int? address)
