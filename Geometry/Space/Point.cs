@@ -30,23 +30,10 @@ public readonly record struct Point<TNumber> : IValueObject, IComparable<Point<T
 	
 	public override string ToString() => $"({this.X}, {this.Y})";
 
-	public IEnumerable<(int Index, Point<TNumber>)> GetPointsInDirection(IDirection<TNumber> direction, int length)
-	{
-		if (length < 0) throw new ArgumentOutOfRangeException($"Length cannot be smaller than 0. Provided length is {length}.");
-		
-		var index = 0;
-		var point = this - direction.Value;
-		for (var i = 0; i < length; i++)
-			yield return (index++, point += direction.Value);
-	}
-	
 	public Number<TNumber> X { get; init; }
 	public Number<TNumber> Y { get; init; }
 
 	public static Point<TNumber> Empty { get; } = new();
-
-	public int Count() => this.X.ConvertToPrimitive<int>() * this.Y.ConvertToPrimitive<int>();
-	public int Sum() => this.X.ConvertToPrimitive<int>() + this.Y.ConvertToPrimitive<int>();
 
 	public Point(TNumber x, TNumber y)
 	{
@@ -54,16 +41,16 @@ public readonly record struct Point<TNumber> : IValueObject, IComparable<Point<T
 		this.Y = y;
 	}
 
-	public Point(double angle)
-	{
-		this.X = (TNumber)System.Convert.ChangeType(Math.Cos((angle - 90) / 180 * Math.PI), typeof(TNumber));
-		this.Y = (TNumber)System.Convert.ChangeType(Math.Sin((angle - 90) / 180 * Math.PI), typeof(TNumber));
-	}
-
 	public Point(Number<TNumber> address, Size<TNumber> size)
 	{
 		this.X = address % size.Width;
 		this.Y = address / size.Width;
+	}
+
+	public Point(double angle)
+	{
+		this.X = (TNumber)System.Convert.ChangeType(Math.Cos((angle - 90) / 180 * Math.PI), typeof(TNumber));
+		this.Y = (TNumber)System.Convert.ChangeType(Math.Sin((angle - 90) / 180 * Math.PI), typeof(TNumber));
 	}
 	
 	public void Deconstruct(out Number<TNumber> x, out Number<TNumber> y)
@@ -104,19 +91,4 @@ public readonly record struct Point<TNumber> : IValueObject, IComparable<Point<T
 	{
 		return new Point<TTarget>(this.X.ConvertToPrimitive<TTarget>(), this.Y.ConvertToPrimitive<TTarget>());
 	}
-
-	public bool TryGetAddress(Size<TNumber> size, [NotNullWhen(returnValue: true)] out int? address)
-	{
-		if (this.X < Number<TNumber>.Zero || this.X >= size.Width)
-		{
-			address = null;
-			return false;
-		}
-
-		var addressNumber = this.Y * size.Width + this.X;
-		address = addressNumber.Value.ToInt32(CultureInfo.InvariantCulture);
-		return !size.IsOutOfRange(address.Value);
-	}
-	
-	public bool IsOutOfRange(Size<TNumber> size) => !this.TryGetAddress(size, out _);
 }

@@ -2,8 +2,31 @@
 
 namespace CodeChops.Geometry.UnitTests;
 
-public class PointTests
+public class SurfaceTests
 {
+	[Theory]
+	[InlineData(0,	 0																		)]
+	[InlineData(1,	 0																		)]
+	[InlineData(0,	 1																		)]
+	[InlineData(1,	 2,  0,0,	0,1															)]
+	[InlineData(2,	 1,  0,0,	1,0															)]
+	[InlineData(2,	 2,  0,0,	1,0,	0,1,	1,1											)]
+	[InlineData(3,   3,  0,0,	1,0,	2,0,	0,1,	1,1,	2,1,	0,2,	1,2,	2,2	)]		
+	public void Size_Enumeration_IsCorrect(int width, int height, params int[] xOrY)
+	{
+		var size = new Size<int>(width, height);
+		var surface = new Surface<int>(size);
+		
+		var points = surface.GetAllPoints().ToList();
+		foreach (var (index, point) in points)
+		{
+			var expectedPoint = new Point<int>(xOrY[index * 2], xOrY[index * 2 + 1]);
+			Assert.Equal(expectedPoint, point);
+		}
+		
+		Assert.Equal(xOrY.Length / 2, points.Count());
+	}
+	
 	[Theory]
 	[InlineData(0,10,	nameof(EveryDirection.North),		3,		0,10,	0,9,	0,8 		)]
 	[InlineData(1,0,	nameof(EveryDirection.NorthEast),	0									)]	
@@ -17,8 +40,9 @@ public class PointTests
 	{
 		var startingPoint = new Point<int>(x, y);
 		var direction = EveryDirection.GetSingleMember(directionName);
-
-		var points = startingPoint.GetPointsInDirection(direction, length);
+		var surface = new Surface<int>(size: (10,10), offset: (-5,-5));
+		
+		var points = surface.GetPointsInDirection(startingPoint, direction, length);
 		foreach (var (index, point) in points)
 		{
 			var expectedPoint = new Point<int>(xOrY[index * 2], xOrY[index * 2 + 1]);

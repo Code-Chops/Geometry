@@ -28,39 +28,30 @@ public readonly struct Size<TNumber> : IValueObject, IComparable<Size<TNumber>>,
 
 	public override string ToString() => $"({this.Width} x {this.Height})";
 
-	public IEnumerable<(int Index, Point<TNumber>)> GetAllPointsInSize()
-	{
-		var index = 0;
-		for (var y = new Number<TNumber>(); y < this.Height; y++)
-			for (var x = new Number<TNumber>(); x < this.Width; x++)
-				yield return (index++, new Point<TNumber>(x, y));
-	}
-
 	public Number<TNumber> Width { get; init; }
 	public Number<TNumber> Height { get; init; }
-	
 
 	public static Size<TNumber> Empty { get; } = new();
 
-	public int Count() => this.Height.Value.ToInt32(CultureInfo.InvariantCulture) * this.Width.Value.ToInt32(CultureInfo.InvariantCulture);
-	public int Sum() => this.Width.Value.ToInt32(CultureInfo.InvariantCulture) + this.Height.Value.ToInt32(CultureInfo.InvariantCulture);
-
-	public Size(Number<TNumber> width, Number<TNumber> height)
+	public int Count { get; }
+	public int Sum { get; }
+	
+	public Size(Point<TNumber> point)
+		: this(point.X, point.Y)
 	{
-		this.Width = width;
-		this.Height = height;
 	}
 	
+	public Size(Number<TNumber> width, Number<TNumber> height)
+		: this(width.Value, height.Value)
+	{
+	}
+
 	public Size(TNumber width, TNumber height)
 	{
 		this.Width = width;
 		this.Height = height;
-	}
-
-	public Size(Point<TNumber> point)
-	{
-		this.Width = point.X;
-		this.Height = point.Y;
+		this.Count = this.Height.Value.ToInt32(CultureInfo.InvariantCulture) * this.Width.Value.ToInt32(CultureInfo.InvariantCulture);
+		this.Sum = this.Width.Value.ToInt32(CultureInfo.InvariantCulture) + this.Height.Value.ToInt32(CultureInfo.InvariantCulture);
 	}
 
 	public void Deconstruct(out Number<TNumber> width, out Number<TNumber> height)
@@ -98,19 +89,4 @@ public readonly struct Size<TNumber> : IValueObject, IComparable<Size<TNumber>>,
 	{
 		return new Size<TTarget>(this.Width.ConvertToPrimitive<TTarget>(), this.Height.ConvertToPrimitive<TTarget>());
 	}
-
-	public bool TryGetAddress(Point<TNumber> point, [NotNullWhen(returnValue: true)] out int? address)
-	{
-		if (point.X < Number<TNumber>.Zero || point.X >= this.Width)
-		{
-			address = null;
-			return false;
-		}
-
-		var addressNumber = point.Y * this.Width + point.X;
-		address = addressNumber.Value.ToInt32(CultureInfo.InvariantCulture);
-		return !this.IsOutOfRange(address.Value);
-	}
-
-	public bool IsOutOfRange(int address) => address >= this.Count();
 }
