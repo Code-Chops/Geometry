@@ -11,8 +11,8 @@
 	</PropertyGroup>
 
 	<PropertyGroup Label="Package">
-		<Version>2.16.0</Version>
-		<PackageReleaseNotes>Enhanced PointsOutOfBoundsException and validation.</PackageReleaseNotes>
+		<Version>2.16.1</Version>
+		<PackageReleaseNotes>Renamed IsOutOfRange to IsOutOfBounds.</PackageReleaseNotes>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<Title>CodeChops.Geometry</Title>
 		<Description>

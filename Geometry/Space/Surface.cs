@@ -25,10 +25,10 @@ public abstract class Surface<TNumber> : Entity, ISurface
 		var index = 0;
 		var point = startingPoint - direction.Value; // Go backwards one time because the iteration below will go forward immediately.
 
-		if (this.IsOutOfRange(startingPoint)) throw PointOutOfBoundsException<Surface<TNumber>, Point<TNumber>>.Create((this, startingPoint));
+		if (this.IsOutOfBounds(startingPoint)) throw PointOutOfBoundsException<Surface<TNumber>, Point<TNumber>>.Create((this, startingPoint));
 		
 		for (var i = 0; i < length; i++)
-			yield return this.IsOutOfRange(point += direction.Value) 
+			yield return this.IsOutOfBounds(point += direction.Value) 
 				? throw PointOutOfBoundsException<Surface<TNumber>, Point<TNumber>>.Create((this, point))
 				: (index++, point);
 	}
@@ -45,7 +45,7 @@ public abstract class Surface<TNumber> : Entity, ISurface
 	public bool TryGetAddress(Point<TNumber> point, [NotNullWhen(returnValue: true)] out Number<TNumber>? address)
 	{
 		address = (point.Y - this.Offset.Y) * this.Size.Width + point.X - this.Offset.X;
-		if (this.IsOutOfRange(address.Value))
+		if (this.IsOutOfBounds(address.Value))
 		{
 			address = null;
 			return false;
@@ -54,7 +54,7 @@ public abstract class Surface<TNumber> : Entity, ISurface
 		return true;
 	}
 	
-	public bool IsOutOfRange(Point<TNumber> point) => !this.TryGetAddress(point, out _);
+	public bool IsOutOfBounds(Point<TNumber> point) => !this.TryGetAddress(point, out _);
 	
-	public bool IsOutOfRange(TNumber address) => address < Number<TNumber>.Zero || address >= this.Size.Count;
+	public bool IsOutOfBounds(TNumber address) => address < Number<TNumber>.Zero || address >= this.Size.Count;
 }
