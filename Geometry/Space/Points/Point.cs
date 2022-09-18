@@ -1,11 +1,12 @@
-﻿using CodeChops.Geometry.Space.Directions;
+﻿using System.Text.Json.Serialization;
+using CodeChops.Geometry.Space.Sizes;
 
-namespace CodeChops.Geometry.Space;
+namespace CodeChops.Geometry.Space.Points;
 
 /// <summary>
 /// A 2-dimensional location with TNumber als type of the underlying values of X and Y. 
 /// </summary>
-public readonly record struct Point<TNumber> : IValueObject, IComparable<Point<TNumber>>, IHasEmptyInstance<Point<TNumber>>
+public readonly record struct Point<TNumber> : IPoint, IComparable<Point<TNumber>>, IHasEmptyInstance<Point<TNumber>> 
 	where TNumber : struct, IComparable<TNumber>, IEquatable<TNumber>, IConvertible
 {
 	#region Comparison
@@ -30,12 +31,13 @@ public readonly record struct Point<TNumber> : IValueObject, IComparable<Point<T
 	
 	public override string ToString() => $"({this.X}, {this.Y})";
 
-	public Number<TNumber> X { get; init; }
-	public Number<TNumber> Y { get; init; }
+	public Number<TNumber> X { get; }
+	public Number<TNumber> Y { get; }
 
 	public static Point<TNumber> Empty { get; } = new();
 
-	public Point(TNumber x, TNumber y)
+	[JsonConstructor]
+	public Point(Number<TNumber> x, Number<TNumber> y)
 	{
 		this.X = x;
 		this.Y = y;

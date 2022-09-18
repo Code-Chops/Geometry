@@ -1,4 +1,6 @@
-﻿namespace CodeChops.Geometry.UnitTests;
+﻿using CodeChops.Geometry.Space.Points;
+
+namespace CodeChops.Geometry.UnitTests;
 
 public class FreeDirectionTests
 {
@@ -11,7 +13,7 @@ public class FreeDirectionTests
 	{
 		var direction = new FreeDirection(angle);
 		var (x, y) = direction.GetValue<float>();
-		var expectedPoint = new Point(expectedDeltaX, expectedDeltaY);
+		var expectedPoint = new Point<float>(expectedDeltaX, expectedDeltaY);
 
 		Assert.Equal((int)expectedPoint.X, (int)x);
 		Assert.Equal((int)expectedPoint.Y, (int)y);

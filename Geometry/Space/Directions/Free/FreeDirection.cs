@@ -1,4 +1,6 @@
-﻿namespace CodeChops.Geometry.Space.Directions.Free;
+﻿using CodeChops.Geometry.Space.Points;
+
+namespace CodeChops.Geometry.Space.Directions.Free;
 
 /// <summary>
 /// A direction with every possible delta point.

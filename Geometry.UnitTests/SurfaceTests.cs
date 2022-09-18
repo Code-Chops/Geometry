@@ -1,4 +1,7 @@
-﻿using CodeChops.Geometry.Space;
+﻿using System.Text.Json.Serialization;
+using CodeChops.Geometry.Space;
+using CodeChops.Geometry.Space.Points;
+using CodeChops.Geometry.Space.Sizes;
 
 namespace CodeChops.Geometry.UnitTests;
 
@@ -28,7 +31,7 @@ public class SurfaceTests
 	}
 	
 	[Theory]
-	[InlineData(0,10,	nameof(EveryDirection.North),		3,		0,10,	0,9,	0,8 		)]
+	[InlineData(0,7,	nameof(EveryDirection.North),		3,		0,7,	0,6,	0,5 		)]
 	[InlineData(1,0,	nameof(EveryDirection.NorthEast),	0									)]	
 	[InlineData(0,1,	nameof(EveryDirection.East),		4,		0,1,	1,1,	2,1,	3,1	)]
 	[InlineData(1,2,	nameof(EveryDirection.SouthEast),	1,		1,2							)]
@@ -40,7 +43,7 @@ public class SurfaceTests
 	{
 		var startingPoint = new Point<int>(x, y);
 		var direction = EveryDirection.GetSingleMember(directionName);
-		var surface = new SurfaceMock(size: (10,10), offset: (-5,-5));
+		var surface = new SurfaceMock(size: (20,20), offset: (-10,-10));
 		
 		var points = surface.GetPointsInDirection(startingPoint, direction, length);
 		foreach (var (index, point) in points)
@@ -54,6 +57,7 @@ public class SurfaceTests
 
 	private class SurfaceMock : Surface<int>
 	{
+		[JsonIgnore(Condition = JsonIgnoreCondition.Always)]
 		public override SingletonId<SurfaceMock> Id => SingletonId<SurfaceMock>.Instance;
 
 		public SurfaceMock(Size<int> size, Point<int>? offset = null) : base(size, offset)

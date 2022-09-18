@@ -1,9 +1,12 @@
-﻿namespace CodeChops.Geometry.Space;
+﻿using System.Text.Json.Serialization;
+using CodeChops.Geometry.Space.Points;
+
+namespace CodeChops.Geometry.Space.Sizes;
 
 /// <summary>
 /// A 2-dimensional measurement with TNumber as type of the underlying values of Width and Height.
 /// </summary>
-public readonly struct Size<TNumber> : IValueObject, IComparable<Size<TNumber>>, IHasEmptyInstance<Size<TNumber>>
+public readonly struct Size<TNumber> : ISize, IComparable<Size<TNumber>>, IHasEmptyInstance<Size<TNumber>>
 	where TNumber : struct, IComparable<TNumber>, IEquatable<TNumber>, IConvertible
 {
 	#region Comparison
@@ -28,30 +31,28 @@ public readonly struct Size<TNumber> : IValueObject, IComparable<Size<TNumber>>,
 
 	public override string ToString() => $"({this.Width} x {this.Height})";
 
-	public Number<TNumber> Width { get; init; }
-	public Number<TNumber> Height { get; init; }
+	public Number<TNumber> Width { get; }
+	public Number<TNumber> Height { get; }
 
 	public static Size<TNumber> Empty { get; } = new();
-
-	public int Count { get; }
-	public int Sum { get; }
+	
+	[JsonIgnore(Condition = JsonIgnoreCondition.Always)]
+	public Number<TNumber> Count { get; }
+	[JsonIgnore(Condition = JsonIgnoreCondition.Always)]
+	public Number<TNumber> Sum { get; }
 	
 	public Size(Point<TNumber> point)
 		: this(point.X, point.Y)
 	{
 	}
 	
+	[JsonConstructor]
 	public Size(Number<TNumber> width, Number<TNumber> height)
-		: this(width.Value, height.Value)
-	{
-	}
-
-	public Size(TNumber width, TNumber height)
 	{
 		this.Width = width;
 		this.Height = height;
-		this.Count = this.Height.Value.ToInt32(CultureInfo.InvariantCulture) * this.Width.Value.ToInt32(CultureInfo.InvariantCulture);
-		this.Sum = this.Width.Value.ToInt32(CultureInfo.InvariantCulture) + this.Height.Value.ToInt32(CultureInfo.InvariantCulture);
+		this.Count = Calculator<TNumber>.Multiply(this.Height.Value, this.Width.Value);
+		this.Sum = Calculator<TNumber>.Add(this.Width.Value, this.Height.Value);
 	}
 
 	public void Deconstruct(out Number<TNumber> width, out Number<TNumber> height)

@@ -1,5 +1,6 @@
 ﻿using CodeChops.Geometry.Space.Directions;
 using CodeChops.Geometry.Space.Directions.Free;
+using CodeChops.Geometry.Space.Points;
 
 namespace CodeChops.Geometry.Space.Movements;
 

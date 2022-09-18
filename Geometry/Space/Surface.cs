@@ -1,13 +1,17 @@
-﻿using CodeChops.Geometry.Space.Directions;
+﻿using System.Text.Json.Serialization;
+using CodeChops.Geometry.Space.Directions;
+using CodeChops.Geometry.Space.Points;
+using CodeChops.Geometry.Space.Sizes;
 
 namespace CodeChops.Geometry.Space;
 
-public abstract partial class Surface<TNumber> : Entity
+public abstract class Surface<TNumber> : Entity, ISurface 
 	where TNumber : struct, IComparable<TNumber>, IEquatable<TNumber>, IConvertible
 {
-	public Size<TNumber> Size { get; init; }
-	public Point<TNumber> Offset { get; init; }
+	public Size<TNumber> Size { get; }
+	public Point<TNumber> Offset { get; }
 
+	[JsonConstructor]
 	public Surface(Size<TNumber> size, Point<TNumber>? offset = null)
 	{
 		this.Size = size;
@@ -19,35 +23,38 @@ public abstract partial class Surface<TNumber> : Entity
 		if (length < 0) throw new ArgumentOutOfRangeException($"Length cannot be smaller than 0. Provided length is {length}.");
 		
 		var index = 0;
-		var point = startingPoint - direction.Value;
+		var point = startingPoint - direction.Value; // Go backwards one time because the iteration below will go forward immediately.
+
+		if (this.IsOutOfRange(startingPoint)) throw PointOutOfBoundsException<Surface<TNumber>, Point<TNumber>>.Create((this, startingPoint));
 		
 		for (var i = 0; i < length; i++)
-			yield return (index++, point += direction.Value);
+			yield return this.IsOutOfRange(point += direction.Value) 
+				? throw PointOutOfBoundsException<Surface<TNumber>, Point<TNumber>>.Create((this, point))
+				: (index++, point);
 	}
 
 	public IEnumerable<(int Index, Point<TNumber>)> GetAllPoints()
 	{
 		var index = 0;
 		
-		for (var y = new Number<TNumber>(); y < this.Size.Height; y++)
-			for (var x = new Number<TNumber>(); x < this.Size.Width; x++)
+		for (var y = this.Offset.Y; y < this.Size.Height + this.Offset.Y; y++)
+			for (var x = this.Offset.X; x < this.Size.Width + this.Offset.Y; x++)
 				yield return (index++, new Point<TNumber>(x, y));
 	}
 
-	public bool TryGetAddress(Point<TNumber> point, [NotNullWhen(returnValue: true)] out int? address)
+	public bool TryGetAddress(Point<TNumber> point, [NotNullWhen(returnValue: true)] out Number<TNumber>? address)
 	{
-		if (point.X < Number<TNumber>.Zero || point.X >= this.Size.Width)
+		address = (point.Y - this.Offset.Y) * this.Size.Width + point.X - this.Offset.X;
+		if (this.IsOutOfRange(address.Value))
 		{
 			address = null;
 			return false;
 		}
-
-		var addressNumber = point.Y * this.Size.Width + point.X;
-		address = addressNumber.Value.ToInt32(CultureInfo.InvariantCulture);
-		return !this.IsOutOfRange(address.Value);
+		
+		return true;
 	}
 	
 	public bool IsOutOfRange(Point<TNumber> point) => !this.TryGetAddress(point, out _);
 	
-	public bool IsOutOfRange(int address) => address < 0 || address >= this.Size.Count;
+	public bool IsOutOfRange(TNumber address) => address < Number<TNumber>.Zero || address >= this.Size.Count;
 }

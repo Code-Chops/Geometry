@@ -1,4 +1,6 @@
-﻿namespace CodeChops.Geometry.Space.Directions;
+﻿using CodeChops.Geometry.Space.Points;
+
+namespace CodeChops.Geometry.Space.Directions;
 
 public interface IDirection<TNumber> : IDirection
 	where TNumber : struct, IComparable<TNumber>, IEquatable<TNumber>, IConvertible

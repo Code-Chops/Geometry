@@ -1,4 +1,5 @@
-﻿using CodeChops.MagicEnums.Core;
+﻿using CodeChops.Geometry.Space.Points;
+using CodeChops.MagicEnums.Core;
 
 namespace CodeChops.Geometry.Space.Directions.Strict;
 
