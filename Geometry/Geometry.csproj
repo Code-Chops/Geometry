@@ -11,8 +11,8 @@
 	</PropertyGroup>
 
 	<PropertyGroup Label="Package">
-		<Version>2.17.0</Version>
-		<PackageReleaseNotes>Removed indices from point interations.</PackageReleaseNotes>
+		<Version>2.17.1</Version>
+		<PackageReleaseNotes>Added GetAllPoints to Size.</PackageReleaseNotes>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<Title>CodeChops.Geometry</Title>
 		<Description>

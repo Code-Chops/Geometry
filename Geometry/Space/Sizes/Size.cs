@@ -61,6 +61,13 @@ public readonly struct Size<TNumber> : ISize, IComparable<Size<TNumber>>, IHasEm
 		height = this.Height;
 	}
 
+	public IEnumerable<Point<TNumber>> GetAllPoints()
+	{
+		for (var y = Number<TNumber>.Zero; y < this.Height; y++)
+			for (var x = Number<TNumber>.Zero; x < this.Width; x++)
+				yield return new(x, y);
+	}
+	
 	public static Size<TNumber> operator +(Size<TNumber> size1, Size<TNumber> size2) 
 		=> new(size1.Width + size2.Width, size1.Height + size2.Height);
 

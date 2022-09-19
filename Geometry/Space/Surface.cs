@@ -34,9 +34,8 @@ public abstract class Surface<TNumber> : Entity, ISurface
 
 	public IEnumerable<Point<TNumber>> GetAllPoints()
 	{
-		for (var y = this.Offset.Y; y < this.Size.Height + this.Offset.Y; y++)
-			for (var x = this.Offset.X; x < this.Size.Width + this.Offset.Y; x++)
-				yield return new(x, y);
+		foreach (var point in this.Size.GetAllPoints())
+			yield return point + this.Offset;
 	}
 
 	public bool TryGetAddress(Point<TNumber> point, [NotNullWhen(returnValue: true)] out Number<TNumber>? address)
