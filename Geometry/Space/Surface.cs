@@ -33,7 +33,7 @@ public abstract class Surface<TNumber> : Entity, ISurface
 				: (index++, point);
 	}
 
-	public IEnumerable<(int Index, Point<TNumber>)> GetAllPoints()
+	public IEnumerable<(int Index, Point<TNumber> Point)> GetAllPoints()
 	{
 		var index = 0;
 		
