@@ -1,4 +1,5 @@
 ﻿using System.Text.Json.Serialization;
+using CodeChops.GenericMath;
 using CodeChops.Geometry.Space;
 using CodeChops.Geometry.Space.Points;
 using CodeChops.Geometry.Space.Sizes;
@@ -21,13 +22,15 @@ public class SurfaceTests
 		var surface = new SurfaceMock(size);
 		
 		var points = surface.GetAllPoints().ToList();
-		foreach (var (index, point) in points)
+		var index = 0;
+		foreach (var point in points)
 		{
 			var expectedPoint = new Point<int>(xOrY[index * 2], xOrY[index * 2 + 1]);
 			Assert.Equal(expectedPoint, point);
+			index++;
 		}
 		
-		Assert.Equal(xOrY.Length / 2, points.Count());
+		Assert.Equal(xOrY.Length / 2, points.Count);
 	}
 	
 	[Theory]
@@ -46,10 +49,12 @@ public class SurfaceTests
 		var surface = new SurfaceMock(size: (20,20), offset: (-10,-10));
 		
 		var points = surface.GetPointsInDirection(startingPoint, direction, length);
-		foreach (var (index, point) in points)
+		var index = 0;
+		foreach (var point in points)
 		{
 			var expectedPoint = new Point<int>(xOrY[index * 2], xOrY[index * 2 + 1]);
 			Assert.Equal(expectedPoint, point);
+			index++;
 		}
 		
 		Assert.Equal(xOrY.Length / 2, length);
@@ -60,7 +65,8 @@ public class SurfaceTests
 		[JsonIgnore(Condition = JsonIgnoreCondition.Always)]
 		public override SingletonId<SurfaceMock> Id => SingletonId<SurfaceMock>.Instance;
 
-		public SurfaceMock(Size<int> size, Point<int>? offset = null) : base(size, offset)
+		public SurfaceMock(Size<int> size, Point<int>? offset = null) 
+			: base(size, offset)
 		{
 		}
 	}

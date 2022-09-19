@@ -11,8 +11,8 @@
 	</PropertyGroup>
 
 	<PropertyGroup Label="Package">
-		<Version>2.16.2</Version>
-		<PackageReleaseNotes>Updated packages.</PackageReleaseNotes>
+		<Version>2.17.0</Version>
+		<PackageReleaseNotes>Removed indices from point interations.</PackageReleaseNotes>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<Title>CodeChops.Geometry</Title>
 		<Description>

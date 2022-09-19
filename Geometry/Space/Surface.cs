@@ -18,11 +18,10 @@ public abstract class Surface<TNumber> : Entity, ISurface
 		this.Offset = offset ?? Point<TNumber>.Empty;
 	}
 
-	public IEnumerable<(int Index, Point<TNumber>)> GetPointsInDirection(Point<TNumber> startingPoint, IDirection<TNumber> direction, int length)
+	public IEnumerable<Point<TNumber>> GetPointsInDirection(Point<TNumber> startingPoint, IDirection<TNumber> direction, int length)
 	{
 		if (length < 0) throw new ArgumentOutOfRangeException($"Length cannot be smaller than 0. Provided length is {length}.");
 		
-		var index = 0;
 		var point = startingPoint - direction.Value; // Go backwards one time because the iteration below will go forward immediately.
 
 		if (this.IsOutOfBounds(startingPoint)) throw PointOutOfBoundsException<Surface<TNumber>, Point<TNumber>>.Create((this, startingPoint));
@@ -30,16 +29,14 @@ public abstract class Surface<TNumber> : Entity, ISurface
 		for (var i = 0; i < length; i++)
 			yield return this.IsOutOfBounds(point += direction.Value) 
 				? throw PointOutOfBoundsException<Surface<TNumber>, Point<TNumber>>.Create((this, point))
-				: (index++, point);
+				: point;
 	}
 
-	public IEnumerable<(int Index, Point<TNumber> Point)> GetAllPoints()
+	public IEnumerable<Point<TNumber>> GetAllPoints()
 	{
-		var index = 0;
-		
 		for (var y = this.Offset.Y; y < this.Size.Height + this.Offset.Y; y++)
 			for (var x = this.Offset.X; x < this.Size.Width + this.Offset.Y; x++)
-				yield return (index++, new Point<TNumber>(x, y));
+				yield return new(x, y);
 	}
 
 	public bool TryGetAddress(Point<TNumber> point, [NotNullWhen(returnValue: true)] out Number<TNumber>? address)
