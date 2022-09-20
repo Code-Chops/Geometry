@@ -30,22 +30,28 @@ public abstract class Surface<TNumber> : Entity, ISurface
 	}
 
 	/// <summary>
-	/// Enumerates all points from a starting point in a certain direction of 'length' amount of steps.
+	/// Enumerates all points from a starting point in a certain direction.
 	/// </summary>
 	/// <exception cref="ArgumentOutOfRangeException">If length is smaller than 0.</exception>
-	/// <exception cref="PointOutOfBoundsException{Surface,Point}">If the point exceeds the bounds of the surface.</exception>
-	public IEnumerable<Point<TNumber>> GetPointsInDirection(Point<TNumber> startingPoint, IDirection<TNumber> direction, int length)
+	/// <exception cref="PointOutOfBoundsException{Surface,Point}">If the point exceeds the bounds of the surface (when length is provided).</exception>
+	/// <param name="length">The amount of steps to take. If null, it continues until the end of the surface.</param>
+	public IEnumerable<Point<TNumber>> GetPointsInDirection(Point<TNumber> startingPoint, IDirection<TNumber> direction, int? length)
 	{
 		if (length < 0) throw new ArgumentOutOfRangeException($"Length cannot be smaller than 0. Provided length is {length}.");
-		
-		var point = startingPoint - direction.Value; // Go backwards one time because the iteration below will go forward immediately.
 
-		if (this.IsOutOfBounds(startingPoint)) throw PointOutOfBoundsException<Surface<TNumber>, Point<TNumber>>.Create((this, startingPoint));
-		
-		for (var i = 0; i < length; i++)
-			yield return this.IsOutOfBounds(point += direction.Value) 
-				? throw PointOutOfBoundsException<Surface<TNumber>, Point<TNumber>>.Create((this, point))
-				: point;
+		var point = startingPoint; // Go backwards one time because the iteration below will go forward immediately.
+
+		var i = 0;
+		while (i < length)
+		{
+			yield return point;
+			
+			if (this.IsOutOfBounds(point += direction.Value)) break;
+			i++;
+		}
+
+		// If length is not null and loop is terminated prematurely.
+		if (i < length) throw PointOutOfBoundsException<Surface<TNumber>, Point<TNumber>>.Create((this, point));
 	}
 
 	/// <summary>
