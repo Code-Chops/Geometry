@@ -8,7 +8,7 @@ namespace CodeChops.Geometry.Space;
 public abstract class Surface<TNumber> : Entity, ISurface 
 	where TNumber : struct, IComparable<TNumber>, IEquatable<TNumber>, IConvertible
 {
-	private Size<TNumber> Size { get; }
+	public Size<TNumber> Size { get; }
 	public Point<TNumber> Offset { get; }
 	
 	/// <summary>
@@ -19,9 +19,6 @@ public abstract class Surface<TNumber> : Entity, ISurface
 	/// The multiplication of the width and height. 
 	/// </summary>
 	public Number<TNumber> Area { get; }
-
-	public Number<TNumber> Width => this.Size.Width;
-	public Number<TNumber> Height => this.Size.Height;
 
 	[JsonConstructor]
 	public Surface(Size<TNumber> size, Point<TNumber>? offset = null)
@@ -65,7 +62,7 @@ public abstract class Surface<TNumber> : Entity, ISurface
 	/// </summary>
 	public bool TryGetAddress(Point<TNumber> point, [NotNullWhen(returnValue: true)] out Number<TNumber>? address)
 	{
-		address = (point.Y - this.Offset.Y) * this.Width + point.X - this.Offset.X;
+		address = (point.Y - this.Offset.Y) * this.Size.Width + point.X - this.Offset.X;
 		if (this.IsOutOfBounds(address.Value))
 		{
 			address = null;

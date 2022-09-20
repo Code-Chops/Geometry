@@ -11,8 +11,8 @@
 	</PropertyGroup>
 
 	<PropertyGroup Label="Package">
-		<Version>2.17.2</Version>
-		<PackageReleaseNotes>Added Sum and Multiply to Point and Circumference and Area to Size.</PackageReleaseNotes>
+		<Version>2.17.3</Version>
+		<PackageReleaseNotes>Removed width and height from surface and made size public.</PackageReleaseNotes>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<Title>CodeChops.Geometry</Title>
 		<Description>
