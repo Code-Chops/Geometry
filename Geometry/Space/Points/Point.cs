@@ -36,6 +36,16 @@ public readonly record struct Point<TNumber> : IPoint, IComparable<Point<TNumber
 
 	public static Point<TNumber> Empty { get; } = new();
 
+	/// <summary>
+	/// Sums up X and Y.
+	/// </summary>
+	public Number<TNumber> Sum() => Calculator<TNumber>.Add(this.X, this.Y);
+	
+	/// <summary>
+	/// Multiplies X and Y.
+	/// </summary>
+	public Number<TNumber> Multiply() => Calculator<TNumber>.Multiply(this.X, this.Y);
+	
 	[JsonConstructor]
 	public Point(Number<TNumber> x, Number<TNumber> y)
 	{

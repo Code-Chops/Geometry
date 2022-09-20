@@ -36,10 +36,15 @@ public readonly struct Size<TNumber> : ISize, IComparable<Size<TNumber>>, IHasEm
 
 	public static Size<TNumber> Empty { get; } = new();
 	
-	[JsonIgnore(Condition = JsonIgnoreCondition.Always)]
-	public Number<TNumber> Count { get; }
-	[JsonIgnore(Condition = JsonIgnoreCondition.Always)]
-	public Number<TNumber> Sum { get; }
+	/// <summary>
+	/// Sums up the width and height to get the circumference.
+	/// </summary>
+	public Number<TNumber> GetCircumference() => Calculator<TNumber>.Add(this.Width, this.Height);
+	
+	/// <summary>
+	/// Multiplies the width and height to get the area.
+	/// </summary>
+	public Number<TNumber> GetArea() => Calculator<TNumber>.Multiply(this.Height, this.Width);
 	
 	public Size(Point<TNumber> point)
 		: this(point.X, point.Y)
@@ -51,8 +56,6 @@ public readonly struct Size<TNumber> : ISize, IComparable<Size<TNumber>>, IHasEm
 	{
 		this.Width = width;
 		this.Height = height;
-		this.Count = Calculator<TNumber>.Multiply(this.Height.Value, this.Width.Value);
-		this.Sum = Calculator<TNumber>.Add(this.Width.Value, this.Height.Value);
 	}
 
 	public void Deconstruct(out Number<TNumber> width, out Number<TNumber> height)
@@ -61,6 +64,9 @@ public readonly struct Size<TNumber> : ISize, IComparable<Size<TNumber>>, IHasEm
 		height = this.Height;
 	}
 
+	/// <summary>
+	/// Enumerates all points of the surface starting from left to right and then downwards.
+	/// </summary>
 	public IEnumerable<Point<TNumber>> GetAllPoints()
 	{
 		for (var y = Number<TNumber>.Zero; y < this.Height; y++)

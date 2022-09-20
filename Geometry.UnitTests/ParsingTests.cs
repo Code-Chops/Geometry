@@ -1,5 +1,4 @@
-﻿using CodeChops.Geometry.Space;
-using CodeChops.Geometry.Space.Points;
+﻿using CodeChops.Geometry.Space.Points;
 
 namespace CodeChops.Geometry.UnitTests;
 
