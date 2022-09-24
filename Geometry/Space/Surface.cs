@@ -44,9 +44,10 @@ public abstract class Surface<TNumber> : Entity, ISurface
 		var i = 0;
 		while (i < length)
 		{
-			yield return point;
+			if (this.IsOutOfBounds(point)) break;
 			
-			if (this.IsOutOfBounds(point += direction.Value)) break;
+			yield return point;
+			point += direction.Value;
 			i++;
 		}
 

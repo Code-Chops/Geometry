@@ -1,4 +1,5 @@
 using System.Text.Json;
+using CodeChops.DomainDrivenDesign.DomainModeling.Exceptions.Core;
 using CodeChops.DomainDrivenDesign.DomainModeling.Serialization;
 using CodeChops.DomainDrivenDesign.DomainModeling.TypeExtensions;
 using CodeChops.GenericMath.Serialization;
