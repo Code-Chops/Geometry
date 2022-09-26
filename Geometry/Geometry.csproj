@@ -11,8 +11,8 @@
 	</PropertyGroup>
 
 	<PropertyGroup Label="Package">
-		<Version>2.17.6</Version>
-		<PackageReleaseNotes>Fixed length is null bug in GetPointsInDirection from Surface.</PackageReleaseNotes>
+		<Version>2.17.7</Version>
+		<PackageReleaseNotes>Changed PointOutOfBounds check for surface.</PackageReleaseNotes>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<Title>CodeChops.Geometry</Title>
 		<Description>

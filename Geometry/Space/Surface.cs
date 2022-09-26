@@ -80,8 +80,12 @@ public abstract class Surface<TNumber> : Entity, ISurface
 	/// <summary>
 	/// Checks if the provided point is out of the surface's bounds. 
 	/// </summary>
-	public bool IsOutOfBounds(Point<TNumber> point) => !this.TryGetAddress(point, out _);
-	
+	public bool IsOutOfBounds(Point<TNumber> point)
+	{
+		point += this.Offset;
+		return point.X < Number<TNumber>.Zero || point.Y < Number<TNumber>.Zero || point.X >= this.Size.Width || point.Y >= this.Size.Height;
+	}
+
 	/// <summary>
 	/// Checks if the provided address is out of the surface's bounds. 
 	/// </summary>
