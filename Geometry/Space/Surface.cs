@@ -35,18 +35,19 @@ public abstract class Surface<TNumber> : Entity, ISurface
 	/// <exception cref="ArgumentOutOfRangeException">If length is smaller than 0.</exception>
 	/// <exception cref="PointOutOfBoundsException{Surface,Point}">If the point exceeds the bounds of the surface (when length is provided).</exception>
 	/// <param name="length">The amount of steps to take. If null, it continues until the end of the surface.</param>
-	public IEnumerable<Point<TNumber>> GetPointsInDirection(Point<TNumber> startingPoint, IDirection<TNumber> direction, int? length)
+	public IEnumerable<Point<TNumber>> GetPointsInDirection(Point<TNumber> startingPoint, IDirection<TNumber> direction, int? length = null)
 	{
 		if (length < 0) throw new ArgumentOutOfRangeException($"Length cannot be smaller than 0. Provided length is {length}.");
 
 		var point = startingPoint; // Go backwards one time because the iteration below will go forward immediately.
 
 		var i = 0;
-		while (i < length)
+		while (length is null || i < length)
 		{
 			if (this.IsOutOfBounds(point)) break;
 			
 			yield return point;
+			
 			point += direction.Value;
 			i++;
 		}
@@ -58,11 +59,8 @@ public abstract class Surface<TNumber> : Entity, ISurface
 	/// <summary>
 	/// Enumerates all points of the surface (starting from left to right and then downwards).
 	/// </summary>
-	public IEnumerable<Point<TNumber>> GetAllPoints()
-	{
-		foreach (var point in this.Size.GetAllPoints())
-			yield return point + this.Offset;
-	}
+	public IEnumerable<Point<TNumber>> GetAllPoints() 
+		=> this.Size.GetAllPoints().Select(point => point + this.Offset);
 
 	/// <summary>
 	/// Tries to get the address of a point (starting from left to right and then downwards).
