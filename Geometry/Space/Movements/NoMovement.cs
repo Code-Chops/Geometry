@@ -11,13 +11,15 @@ public sealed record NoMovement<TNumber> : Movement<TNumber>
 	where TNumber : struct, IComparable<TNumber>, IEquatable<TNumber>, IConvertible
 {
 	public override string ToString() => this.GetType().Name;
+
+	public override IDirection GetDirection() => this._direction;
+	private readonly IDirection _direction;
 	
-	public override IDirection Direction { get; }
 	protected override Point<TNumber> CalculatePoint(Point<TNumber> _, IStopwatch __) => this.StartingPoint;
 
 	public NoMovement(Point<TNumber> point, IDirection? direction = null)
 		: base(startingPoint: point)
 	{
-		this.Direction = direction ?? NoDirection<TNumber>.Instance;
+		this._direction = direction ?? NoDirection<TNumber>.Instance;
 	}
 }

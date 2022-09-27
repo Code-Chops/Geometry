@@ -10,9 +10,9 @@ namespace CodeChops.Geometry.Space.Movements;
 public abstract record DynamicMovement<TNumber> : Movement<TNumber>
 	where TNumber : struct, IComparable<TNumber>, IEquatable<TNumber>, IConvertible
 {
-	public override string ToString() => $"{this.GetType().Name}: {this.Point}, start: {this.StartingPoint}, direction: {this.Direction}, elapsed: {this.Stopwatch.ElapsedMilliseconds}";
+	public override string ToString() => $"{this.GetType().Name}: {this.Point}, start: {this.StartingPoint}, direction: {this.GetDirection()}, elapsed: {this.Stopwatch.ElapsedMilliseconds}";
 
-	public override IDirection Direction => new FreeDirection<TNumber>(this.Point);
+	public override IDirection GetDirection() => new FreeDirection<TNumber>(this.Point);
 
 	protected DynamicMovement(Point<TNumber> startingPoint)
 		: base(startingPoint)

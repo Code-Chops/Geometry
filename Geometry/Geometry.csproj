@@ -11,8 +11,8 @@
 	</PropertyGroup>
 
 	<PropertyGroup Label="Package">
-		<Version>2.17.7</Version>
-		<PackageReleaseNotes>Changed PointOutOfBounds check for surface.</PackageReleaseNotes>
+		<Version>2.18.0</Version>
+		<PackageReleaseNotes>Updated packages. Made classes internal or sealed. Fixed Surface out of bounds check.</PackageReleaseNotes>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<Title>CodeChops.Geometry</Title>
 		<Description>
@@ -62,9 +62,9 @@ Contains objects and helpers to help the calculation of objects in space and tim
 		
 	<ItemGroup Label="PackageReferences">
 		<PackageReference Include="Architect.AmbientContexts" Version="1.1.1" />
-		<PackageReference Include="CodeChops.DomainDrivenDesign.DomainModeling" Version="0.28.3" />
-		<PackageReference Include="CodeChops.GenericMath" Version="2.10.4" />
-		<PackageReference Include="CodeChops.ImplementationDiscovery" Version="0.20.11" />
+		<PackageReference Include="CodeChops.DomainDrivenDesign.DomainModeling" Version="0.29.2" />
+		<PackageReference Include="CodeChops.GenericMath" Version="2.10.6" />
+		<PackageReference Include="CodeChops.ImplementationDiscovery" Version="0.20.14" />
 		<PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
 		<PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="6.0.0" />
 		<PackageReference Include="System.Collections.Immutable" Version="6.0.0" />

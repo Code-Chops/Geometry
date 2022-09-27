@@ -11,16 +11,18 @@ public sealed record StraightMovement<TStrictDirection, TNumber> : Movement<TNum
 	where TStrictDirection : StrictDirection<TStrictDirection, TNumber>
 	where TNumber : struct, IComparable<TNumber>, IEquatable<TNumber>, IConvertible
 {
-	public override string ToString() => $"{this.GetType().Name}: {this.Direction}";
+	public override string ToString() => $"{this.GetType().Name}: {this._direction}";
 
-	public override TStrictDirection Direction { get; }
-	protected override Point<TNumber> CalculatePoint(Point<TNumber> startingPoint, IStopwatch stopWatch) => this.StartingPoint + this.Direction.Value * (Number<TNumber>)Convert.ChangeType(stopWatch.ElapsedMilliseconds, typeof(TNumber));
+	public override TStrictDirection GetDirection() => this._direction;
+	private readonly TStrictDirection _direction;
+	
+	protected override Point<TNumber> CalculatePoint(Point<TNumber> startingPoint, IStopwatch stopWatch) => this.StartingPoint + this.GetDirection().Value * (Number<TNumber>)Convert.ChangeType(stopWatch.ElapsedMilliseconds, typeof(TNumber));
 	public float Speed { get; }
 	
 	public StraightMovement(Point<TNumber> startingPoint, TStrictDirection direction, float speed)
 		: base(startingPoint)
 	{
-		this.Direction = direction;
+		this._direction = direction;
 		this.Speed = speed;
 	}
 }

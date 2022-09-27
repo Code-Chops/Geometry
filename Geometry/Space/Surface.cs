@@ -53,7 +53,7 @@ public abstract class Surface<TNumber> : Entity, ISurface
 		}
 
 		// If length is not null and loop is terminated prematurely.
-		if (i < length) throw PointOutOfBoundsException<Surface<TNumber>, Point<TNumber>>.Create((this, point));
+		if (i < length) new PointOutOfBoundsException<Surface<TNumber>, Point<TNumber>>().Throw(point);
 	}
 
 	/// <summary>
@@ -63,8 +63,9 @@ public abstract class Surface<TNumber> : Entity, ISurface
 		=> this.Size.GetAllPoints().Select(point => point + this.Offset);
 
 	/// <summary>
-	/// Tries to get the address of a point (starting from left to right and then downwards).
+	/// Tries to get the address of a point (starting from left to right and then downwards). Is null when out of bounds.
 	/// </summary>
+	/// <returns>False when out of bounds.</returns>
 	public bool TryGetAddress(Point<TNumber> point, [NotNullWhen(returnValue: true)] out Number<TNumber>? address)
 	{
 		address = (point.Y - this.Offset.Y) * this.Size.Width + point.X - this.Offset.X;
@@ -82,7 +83,7 @@ public abstract class Surface<TNumber> : Entity, ISurface
 	/// </summary>
 	public bool IsOutOfBounds(Point<TNumber> point)
 	{
-		point += this.Offset;
+		point -= this.Offset;
 		return point.X < Number<TNumber>.Zero || point.Y < Number<TNumber>.Zero || point.X >= this.Size.Width || point.Y >= this.Size.Height;
 	}
 

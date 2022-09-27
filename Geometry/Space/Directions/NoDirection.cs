@@ -2,7 +2,7 @@
 
 namespace CodeChops.Geometry.Space.Directions;
 
-public record NoDirection<TNumber> : IDirection
+public sealed record NoDirection<TNumber> : IDirection
 	where TNumber : struct, IComparable<TNumber>, IEquatable<TNumber>, IConvertible
 {
 	public Point<TNumber> Value => Point<TNumber>.Empty;

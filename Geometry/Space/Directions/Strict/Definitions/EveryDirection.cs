@@ -4,12 +4,12 @@ namespace CodeChops.Geometry.Space.Directions.Strict.Definitions;
 public sealed record EveryDirection<TNumber> : StrictDirection<EveryDirection<TNumber>, TNumber>
 	where TNumber : struct, IComparable<TNumber>, IEquatable<TNumber>, IConvertible
 {
-	public static EveryDirection<TNumber> North { get; }		= CreatePoint( 0, -1);
-	public static EveryDirection<TNumber> NorthEast { get; }	= CreatePoint( 1, -1);
-	public static EveryDirection<TNumber> East { get; }			= CreatePoint( 1,  0);
-	public static EveryDirection<TNumber> SouthEast { get; }	= CreatePoint( 1,  1);
-	public static EveryDirection<TNumber> South { get; }		= CreatePoint( 0,  1);
-	public static EveryDirection<TNumber> SouthWest { get; }	= CreatePoint(-1,  1);
-	public static EveryDirection<TNumber> West { get; }			= CreatePoint(-1,  0);
-	public static EveryDirection<TNumber> NorthWest { get; }	= CreatePoint(-1, -1);
+	public static readonly EveryDirection<TNumber> North 		= CreatePoint( 0, -1);
+	public static readonly EveryDirection<TNumber> NorthEast 	= CreatePoint( 1, -1);
+	public static readonly EveryDirection<TNumber> East 		= CreatePoint( 1,  0);
+	public static readonly EveryDirection<TNumber> SouthEast 	= CreatePoint( 1,  1);
+	public static readonly EveryDirection<TNumber> South 		= CreatePoint( 0,  1);
+	public static readonly EveryDirection<TNumber> SouthWest 	= CreatePoint(-1,  1);
+	public static readonly EveryDirection<TNumber> West 		= CreatePoint(-1,  0);
+	public static readonly EveryDirection<TNumber> NorthWest 	= CreatePoint(-1, -1);
 }

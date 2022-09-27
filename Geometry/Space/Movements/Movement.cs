@@ -14,7 +14,7 @@ public abstract record Movement<TNumber> : Movement
 		=> this.Point.Convert<TTargetNumber>();
 
 	public Point<TNumber> Point => this.CalculatePoint(this.StartingPoint, this.Stopwatch);
-	public abstract override IDirection Direction { get; }
+	public abstract override IDirection GetDirection();
 	public Point<TNumber> StartingPoint { get; }
 	public IStopwatch Stopwatch { get; }
 	
@@ -35,5 +35,6 @@ public abstract record Movement : IValueObject
 {
 	public abstract Point<TTargetNumber> GetPoint<TTargetNumber>()
 		where TTargetNumber : struct, IComparable<TTargetNumber>, IEquatable<TTargetNumber>, IConvertible;
-	public abstract IDirection Direction { get; }
+
+	public abstract IDirection GetDirection();
 }

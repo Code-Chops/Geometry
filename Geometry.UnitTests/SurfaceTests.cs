@@ -1,12 +1,23 @@
 ﻿using System.Text.Json.Serialization;
+using CodeChops.DomainDrivenDesign.DomainModeling.Identities.Serialization.Json;
+using CodeChops.DomainDrivenDesign.DomainModeling.Serialization;
+using CodeChops.GenericMath.Serialization.Json;
 using CodeChops.Geometry.Space;
 using CodeChops.Geometry.Space.Points;
 using CodeChops.Geometry.Space.Sizes;
+using CodeChops.MagicEnums.Json;
 
 namespace CodeChops.Geometry.UnitTests;
 
 public class SurfaceTests
 {
+	static SurfaceTests()
+	{
+		JsonSerialization.DefaultOptions.Converters.Add(new MagicEnumJsonConverterFactory());
+		JsonSerialization.DefaultOptions.Converters.Add(new IdentityJsonConverterFactory());
+		JsonSerialization.DefaultOptions.Converters.Add(new NumberJsonConverterFactory());
+	}
+	
 	[Theory]
 	[InlineData(0,	 0																		)]
 	[InlineData(1,	 0																		)]
