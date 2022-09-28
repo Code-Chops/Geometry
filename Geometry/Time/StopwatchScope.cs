@@ -7,7 +7,7 @@ namespace CodeChops.Geometry.Time;
 /// </summary>
 public sealed class StopwatchScope : AmbientScope<StopwatchScope>
 {
-	public override string ToString() => $"{this.GetType().Name}";
+	public override string ToString() => this.GetType().Name;
 	
 	static StopwatchScope()
 	{

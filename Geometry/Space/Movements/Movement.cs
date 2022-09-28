@@ -33,6 +33,8 @@ public abstract record Movement<TNumber> : Movement
 /// </summary>
 public abstract record Movement : IValueObject
 {
+	public override string ToString() => this.ToDisplayString();
+	
 	public abstract Point<TTargetNumber> GetPoint<TTargetNumber>()
 		where TTargetNumber : struct, IComparable<TTargetNumber>, IEquatable<TTargetNumber>, IConvertible;
 

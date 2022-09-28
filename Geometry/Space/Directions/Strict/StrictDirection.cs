@@ -10,7 +10,7 @@ public abstract record StrictDirection<TSelf> : StrictDirection<TSelf, int>
 /// A strict direction based on a StrictDirection magic enum and therefore strongly typed. No freely direction delta points are used.
 /// </summary>
 public abstract record StrictDirection<TSelf, TNumber> : MagicEnumCore<TSelf, Point<TNumber>>, IStrictDirection<TNumber>
-	where TSelf : StrictDirection<TSelf, TNumber>
+	where TSelf : StrictDirection<TSelf, TNumber> 
 	where TNumber : struct, IComparable<TNumber>, IEquatable<TNumber>, IConvertible
 {
 	private static List<TSelf> PossibleDirections => _possibleDirections ??= GetMembers().ToList();
@@ -27,13 +27,13 @@ public abstract record StrictDirection<TSelf, TNumber> : MagicEnumCore<TSelf, Po
 	/// </summary>
 	public bool TryGetDirection(string directionName, [NotNullWhen(true)] out IStrictDirection? direction)
 	{
-		if (!TryGetSingleMember(directionName, out var concreteDirection))
+		if (StrictDirection<TSelf, TNumber>.TryGetSingleMember(directionName, out var concreteDirection))
 		{
 			direction = null;
 			return false;
 		}
 
-		direction = concreteDirection;
+		direction = concreteDirection!;
 		return true;
 	}
 

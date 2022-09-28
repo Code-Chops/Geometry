@@ -3,7 +3,7 @@
 [GenerateStronglyTypedId]
 public sealed partial class Stopwatch : Entity, IStopwatch
 {
-    public override string ToString() => $"{this.GetType().Name} {{ {nameof(this.ElapsedMilliseconds)} = {this.ElapsedMilliseconds} }}";
+    public override string ToString() => this.ToDisplayString();
     private System.Diagnostics.Stopwatch Instance { get; }
 
     public bool IsRunning => this.Instance.IsRunning;

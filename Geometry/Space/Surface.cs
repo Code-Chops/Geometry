@@ -8,6 +8,8 @@ namespace CodeChops.Geometry.Space;
 public abstract class Surface<TNumber> : Entity, ISurface 
 	where TNumber : struct, IComparable<TNumber>, IEquatable<TNumber>, IConvertible
 {
+	public override string ToString() => this.ToDisplayString(new { this.Size, this.Offset });
+	
 	public Size<TNumber> Size { get; }
 	public Point<TNumber> Offset { get; }
 	
