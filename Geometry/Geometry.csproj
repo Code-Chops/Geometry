@@ -11,8 +11,8 @@
 	</PropertyGroup>
 
 	<PropertyGroup Label="Package">
-		<Version>2.18.1</Version>
-		<PackageReleaseNotes>Changed sealed of Movement classes.</PackageReleaseNotes>
+		<Version>2.18.2</Version>
+		<PackageReleaseNotes>Re-added Point and Size additition and substraction.</PackageReleaseNotes>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<Title>CodeChops.Geometry</Title>
 		<Description>

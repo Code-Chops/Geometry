@@ -73,9 +73,15 @@ public readonly record struct Point<TNumber> : IPoint, IComparable<Point<TNumber
 
 	public static Point<TNumber> operator +(Point<TNumber> point1, Point<TNumber> point2) 
 		=> new(point1.X + point2.X, point1.Y + point2.Y);
+	
+	public static Point<TNumber> operator +(Point<TNumber> point, Number<TNumber> number) 
+		=> new(point.X + number, point.Y + number);
 
 	public static Point<TNumber> operator -(Point<TNumber> point1, Point<TNumber> point2) 
 		=> new(point1.X - point2.X, point1.Y - point2.Y);
+
+	public static Point<TNumber> operator -(Point<TNumber> point, Number<TNumber> number) 
+		=> new(point.X - number, point.Y - number);
 
 	public static Point<TNumber> operator *(Point<TNumber> point1, Point<TNumber> point2) 
 		=> new(point1.X * point2.X, point1.Y * point2.Y);

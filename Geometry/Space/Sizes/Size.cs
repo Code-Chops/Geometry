@@ -76,10 +76,16 @@ public readonly struct Size<TNumber> : ISize, IComparable<Size<TNumber>>, IHasEm
 	
 	public static Size<TNumber> operator +(Size<TNumber> size1, Size<TNumber> size2) 
 		=> new(size1.Width + size2.Width, size1.Height + size2.Height);
+	
+	public static Size<TNumber> operator +(Size<TNumber> size, Number<TNumber> number) 
+		=> new(size.Width + number, size.Height + number);
 
 	public static Size<TNumber> operator -(Size<TNumber> size1, Size<TNumber> size2) 
 		=> new(size1.Width - size2.Width, size1.Height - size2.Height);
 
+	public static Size<TNumber> operator -(Size<TNumber> size, Number<TNumber> number) 
+		=> new(size.Width - number, size.Height - number);
+	
 	public static Size<TNumber> operator *(Size<TNumber> size, Size<TNumber> size2) 
 		=> new(size.Width * size2.Width, size.Height * size2.Height);
 
