@@ -1,6 +1,5 @@
 ﻿using System.Text.Json.Serialization;
 using CodeChops.DomainDrivenDesign.DomainModeling.Identities.Serialization.Json;
-using CodeChops.DomainDrivenDesign.DomainModeling.Serialization;
 using CodeChops.GenericMath.Serialization.Json;
 using CodeChops.Geometry.Space;
 using CodeChops.Geometry.Space.Points;

@@ -1,5 +1,4 @@
 ﻿using CodeChops.DomainDrivenDesign.DomainModeling.Identities.Serialization.Json;
-using CodeChops.DomainDrivenDesign.DomainModeling.Serialization;
 using CodeChops.GenericMath.Serialization.Json;
 using CodeChops.Geometry.Space.Points;
 using CodeChops.MagicEnums.Json;

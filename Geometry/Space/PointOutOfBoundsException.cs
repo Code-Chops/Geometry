@@ -1,5 +1,4 @@
 using CodeChops.Geometry.Space.Points;
-using CodeChops.DomainDrivenDesign.DomainModeling.Exceptions.System.Core;
 
 namespace CodeChops.Geometry.Space;
 
