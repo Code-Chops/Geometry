@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+﻿0.3<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup Label="Main">
 		<AssemblyName>CodeChops.Geometry</AssemblyName>
@@ -11,8 +11,8 @@
 	</PropertyGroup>
 
 	<PropertyGroup Label="Package">
-		<Version>3.0.2</Version>
-		<PackageReleaseNotes>Updated package references 2.</PackageReleaseNotes>
+		<Version>3.0.3</Version>
+		<PackageReleaseNotes>Updated package references 3.</PackageReleaseNotes>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<Title>CodeChops.Geometry</Title>
 		<Description>
@@ -67,7 +67,7 @@ Contains objects and helpers to help the calculation of objects in space and tim
 	<ItemGroup Label="PackageReferences">
 		<PackageReference Include="Architect.AmbientContexts" Version="1.1.1" />
 		<PackageReference Include="CodeChops.DomainDrivenDesign.DomainModeling" Version="1.0.2" />
-		<PackageReference Include="CodeChops.GenericMath" Version="2.10.6" />
+		<PackageReference Include="CodeChops.GenericMath" Version="3.0.1" />
 		<PackageReference Include="CodeChops.ImplementationDiscovery" Version="0.27.3" />
 		<PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
 		<PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="6.0.0" />
