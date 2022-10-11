@@ -1,4 +1,4 @@
-﻿0.3<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup Label="Main">
 		<AssemblyName>CodeChops.Geometry</AssemblyName>
@@ -11,8 +11,8 @@
 	</PropertyGroup>
 
 	<PropertyGroup Label="Package">
-		<Version>3.0.3</Version>
-		<PackageReleaseNotes>Updated package references 3.</PackageReleaseNotes>
+		<Version>3.0.4</Version>
+		<PackageReleaseNotes>Updated package references 4.</PackageReleaseNotes>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<Title>CodeChops.Geometry</Title>
 		<Description>
