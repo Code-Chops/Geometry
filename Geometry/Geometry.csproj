@@ -11,8 +11,8 @@
 	</PropertyGroup>
 
 	<PropertyGroup Label="Package">
-		<Version>3.0.6</Version>
-		<PackageReleaseNotes>Updated package references 6.</PackageReleaseNotes>
+		<Version>3.0.7</Version>
+		<PackageReleaseNotes>Updated package references 7.</PackageReleaseNotes>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<Title>CodeChops.Geometry</Title>
 		<Description>
