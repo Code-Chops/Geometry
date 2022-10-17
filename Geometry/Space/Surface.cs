@@ -23,7 +23,7 @@ public abstract class Surface<TNumber> : Entity, ISurface
 	public Number<TNumber> Area { get; }
 
 	[JsonConstructor]
-	protected Surface(Size<TNumber> size, Point<TNumber>? offset = null)
+	public Surface(Size<TNumber> size, Point<TNumber>? offset = null)
 	{
 		this.Size = size;
 		this.Offset = offset ?? Point<TNumber>.DefaultInstance;
