@@ -37,7 +37,7 @@ public readonly struct Size<TNumber> : ISize, IComparable<Size<TNumber>>, IHasDe
 	/// <summary>
 	/// (0, 0)
 	/// </summary>
-	public static Size<TNumber> Default { get; } = new();
+	public static Size<TNumber> DefaultInstance { get; } = new();
 	
 	/// <summary>
 	/// Sums up the width and height to get the circumference.

@@ -37,7 +37,7 @@ public readonly record struct Point<TNumber> : IPoint, IComparable<Point<TNumber
 	/// <summary>
 	/// (0, 0)
 	/// </summary>
-	public static Point<TNumber> Default { get; } = new();
+	public static Point<TNumber> DefaultInstance { get; } = new();
 
 	/// <summary>
 	/// Sums up X and Y.
