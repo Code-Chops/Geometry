@@ -4,17 +4,18 @@ using CodeChops.MagicEnums.Core;
 namespace CodeChops.Geometry.Space.Directions.Strict;
 
 public abstract record StrictDirection<TSelf> : StrictDirection<TSelf, int>
-	where TSelf : StrictDirection<TSelf>;
+	where TSelf : StrictDirection<TSelf>, new();
 
 /// <summary>
 /// A strict direction based on a StrictDirection magic enum and therefore strongly typed. No freely direction delta points are used.
 /// </summary>
-public abstract record StrictDirection<TSelf, TNumber> : MagicEnumCore<TSelf, Point<TNumber>>, IStrictDirection<TNumber>
-	where TSelf : StrictDirection<TSelf, TNumber> 
-	where TNumber : struct, IComparable<TNumber>, IEquatable<TNumber>, IConvertible
+public abstract record StrictDirection<TSelf, TNumber> : MagicEnumCore<TSelf, Point<TNumber>>, IStrictDirection<TNumber>, IHasDefaultInstance<TSelf>
+	where TSelf : StrictDirection<TSelf, TNumber>, new() where TNumber : struct, IComparable<TNumber>, IEquatable<TNumber>, IConvertible
 {
 	private static List<TSelf> PossibleDirections => _possibleDirections ??= GetMembers().ToList();
 	private static List<TSelf>? _possibleDirections;
+
+	public static TSelf Default { get; } = new();
 	
 	public Point<TTarget> GetValue<TTarget>()
 		where TTarget : struct, IComparable<TTarget>, IEquatable<TTarget>, IConvertible
@@ -69,21 +70,21 @@ public abstract record StrictDirection<TSelf, TNumber> : MagicEnumCore<TSelf, Po
 	}
 
 	public TTargetDirection Convert<TTargetDirection, TTargetNumber>()
-		where TTargetDirection : StrictDirection<TTargetDirection, TTargetNumber>
+		where TTargetDirection : StrictDirection<TTargetDirection, TTargetNumber>, new()
 		where TTargetNumber : struct, IComparable<TTargetNumber>, IEquatable<TTargetNumber>, IConvertible
 	{
 		return Convert<TTargetDirection, TTargetNumber>(this.Value);
 	}
 
 	public bool TryConvert<TTargetDirection, TTargetNumber>([NotNullWhen(true)] out TTargetDirection? direction)
-		where TTargetDirection : StrictDirection<TTargetDirection, TTargetNumber>
+		where TTargetDirection : StrictDirection<TTargetDirection, TTargetNumber>, new()
 		where TTargetNumber : struct, IComparable<TTargetNumber>, IEquatable<TTargetNumber>, IConvertible
 	{
 		return TryConvert<TTargetDirection, TTargetNumber>(this.Value, out direction);
 	}
 	
 	public static TTargetDirection Convert<TTargetDirection, TTargetNumber>(Point<TNumber> deltaPoint)
-		where TTargetDirection : StrictDirection<TTargetDirection, TTargetNumber>
+		where TTargetDirection : StrictDirection<TTargetDirection, TTargetNumber>, new()
 		where TTargetNumber : struct, IComparable<TTargetNumber>, IEquatable<TTargetNumber>, IConvertible
 	{
 		if (!TryConvert<TTargetDirection, TTargetNumber>(deltaPoint, out var direction))
@@ -93,7 +94,7 @@ public abstract record StrictDirection<TSelf, TNumber> : MagicEnumCore<TSelf, Po
 	}
 
 	public static bool TryConvert<TTargetDirection, TTargetNumber>(Point<TNumber> deltaPoint, [NotNullWhen(true)] out TTargetDirection? direction)
-		where TTargetDirection : StrictDirection<TTargetDirection, TTargetNumber>
+		where TTargetDirection : StrictDirection<TTargetDirection, TTargetNumber>, new()
 		where TTargetNumber : struct, IComparable<TTargetNumber>, IEquatable<TTargetNumber>, IConvertible
 	{
 		var newDeltaPoint = deltaPoint.Convert<TTargetNumber>();

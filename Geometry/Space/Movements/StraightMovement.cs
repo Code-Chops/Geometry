@@ -8,7 +8,7 @@ namespace CodeChops.Geometry.Space.Movements;
 /// A movement that only goes into one straight direction over its lifetime.
 /// </summary>
 public record StraightMovement<TStrictDirection, TNumber> : Movement<TNumber>
-	where TStrictDirection : StrictDirection<TStrictDirection, TNumber>
+	where TStrictDirection : StrictDirection<TStrictDirection, TNumber>, new()
 	where TNumber : struct, IComparable<TNumber>, IEquatable<TNumber>, IConvertible
 {
 	public sealed override TStrictDirection GetDirection() => this._direction;

@@ -6,7 +6,7 @@ namespace CodeChops.Geometry.Space.Points;
 /// <summary>
 /// A 2-dimensional location with TNumber als type of the underlying values of X and Y. 
 /// </summary>
-public readonly record struct Point<TNumber> : IPoint, IComparable<Point<TNumber>>, IHasEmptyInstance<Point<TNumber>> 
+public readonly record struct Point<TNumber> : IPoint, IComparable<Point<TNumber>>, IHasDefaultInstance<Point<TNumber>> 
 	where TNumber : struct, IComparable<TNumber>, IEquatable<TNumber>, IConvertible
 {
 	#region Comparison
@@ -34,7 +34,10 @@ public readonly record struct Point<TNumber> : IPoint, IComparable<Point<TNumber
 	public Number<TNumber> X { get; }
 	public Number<TNumber> Y { get; }
 
-	public static Point<TNumber> Empty { get; } = new();
+	/// <summary>
+	/// (0, 0)
+	/// </summary>
+	public static Point<TNumber> Default { get; } = new();
 
 	/// <summary>
 	/// Sums up X and Y.

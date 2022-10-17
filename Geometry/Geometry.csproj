@@ -11,8 +11,8 @@
 	</PropertyGroup>
 
 	<PropertyGroup Label="Package">
-		<Version>3.0.11</Version>
-		<PackageReleaseNotes>Updated package references 11.</PackageReleaseNotes>
+		<Version>3.1.0</Version>
+		<PackageReleaseNotes>Updated package references 12.</PackageReleaseNotes>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<Title>CodeChops.Geometry</Title>
 		<Description>
@@ -66,7 +66,7 @@ Contains objects and helpers to help the calculation of objects in space and tim
 		
 	<ItemGroup Label="PackageReferences">
 		<PackageReference Include="Architect.AmbientContexts" Version="1.1.1" />
-		<PackageReference Include="CodeChops.DomainDrivenDesign.DomainModeling" Version="1.0.2" />
+		<PackageReference Include="CodeChops.DomainDrivenDesign.DomainModeling" Version="1.1.0" />
 		<PackageReference Include="CodeChops.GenericMath" Version="3.0.1" />
 		<PackageReference Include="CodeChops.ImplementationDiscovery" Version="0.30.2" />
 		<PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
