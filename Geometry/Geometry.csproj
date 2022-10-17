@@ -11,8 +11,8 @@
 	</PropertyGroup>
 
 	<PropertyGroup Label="Package">
-		<Version>3.2.0</Version>
-		<PackageReleaseNotes>Updated package references 13.</PackageReleaseNotes>
+		<Version>3.2.1</Version>
+		<PackageReleaseNotes>Added magic enum interface implementation to strictdirection.</PackageReleaseNotes>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<Title>CodeChops.Geometry</Title>
 		<Description>

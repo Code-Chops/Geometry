@@ -1,9 +1,11 @@
-﻿using CodeChops.ImplementationDiscovery;
+﻿using CodeChops.Geometry.Space.Points;
+using CodeChops.ImplementationDiscovery;
 
 namespace CodeChops.Geometry.Space.Directions.Strict;
 
 [DiscoverImplementations]
-public partial interface IStrictDirection<TNumber> : IDirection<TNumber>, IStrictDirection
+// ReSharper disable once PossibleInterfaceMemberAmbiguity
+public partial interface IStrictDirection<TNumber> : IMagicEnum<Point<TNumber>>, IDirection<TNumber>, IStrictDirection
 	where TNumber : struct, IComparable<TNumber>, IEquatable<TNumber>, IConvertible
 {
 	IStrictDirection<TNumber> GetDirectionFromRandomTurn();
