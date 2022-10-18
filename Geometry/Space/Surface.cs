@@ -23,7 +23,7 @@ public abstract class Surface<TNumber> : Entity, ISurface
 	public Number<TNumber> Area { get; }
 
 	[JsonConstructor]
-	public Surface(Size<TNumber> size, Point<TNumber>? offset = null)
+	protected Surface(Size<TNumber> size, Point<TNumber>? offset = null)
 	{
 		this.Size = size;
 		this.Offset = offset ?? Point<TNumber>.DefaultInstance;
@@ -41,7 +41,7 @@ public abstract class Surface<TNumber> : Entity, ISurface
 	{
 		if (length < 0) throw new ArgumentOutOfRangeException($"Length cannot be smaller than 0. Provided length is {length}.");
 
-		var point = startingPoint; // Go backwards one time because the iteration below will go forward immediately.
+		var point = startingPoint;
 
 		var i = 0;
 		while (length is null || i < length)
@@ -54,7 +54,7 @@ public abstract class Surface<TNumber> : Entity, ISurface
 			i++;
 		}
 
-		// If length is not null and loop is terminated prematurely.
+		// Throw if length is not undetermined and loop is terminated prematurely.
 		if (i < length) new PointOutOfBoundsException<Surface<TNumber>, Point<TNumber>>().Throw(point);
 	}
 

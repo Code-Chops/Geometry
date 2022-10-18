@@ -2,6 +2,11 @@
 
 public static class PointExtensions
 {
+	public static PointIterator GetEnumerator(this (Point<double> Start, Point<double> End) point)
+	{
+		return new PointIterator(point.Start, point.End);
+	}
+	
 	public static double ToAngle<TNumber>(this Point<TNumber> point)
 		where TNumber : struct, IComparable<TNumber>, IEquatable<TNumber>, IConvertible
 	{

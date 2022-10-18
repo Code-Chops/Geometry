@@ -11,8 +11,8 @@
 	</PropertyGroup>
 
 	<PropertyGroup Label="Package">
-		<Version>3.2.4</Version>
-		<PackageReleaseNotes>Update package references.</PackageReleaseNotes>
+		<Version>3.2.5</Version>
+		<PackageReleaseNotes>Added point enumerator.</PackageReleaseNotes>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<Title>CodeChops.Geometry</Title>
 		<Description>
