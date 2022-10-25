@@ -74,6 +74,13 @@ public readonly record struct Point<TNumber> : IPoint, IComparable<Point<TNumber
 		y = this.Y;
 	}
 
+	public double DistanceTo(Point<TNumber> endPoint)
+	{
+		var difference = (endPoint - this).Convert<double>();
+
+		return Math.Sqrt(Math.Pow(difference.X, 2) + Math.Pow(difference.Y, 2));
+	}
+
 	public static Point<TNumber> operator +(Point<TNumber> point1, Point<TNumber> point2) 
 		=> new(point1.X + point2.X, point1.Y + point2.Y);
 	
