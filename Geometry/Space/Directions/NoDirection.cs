@@ -1,6 +1,4 @@
-﻿using CodeChops.Geometry.Space.Points;
-
-namespace CodeChops.Geometry.Space.Directions;
+﻿namespace CodeChops.Geometry.Space.Directions;
 
 public sealed record NoDirection<TNumber> : IDirection
 	where TNumber : struct, IComparable<TNumber>, IEquatable<TNumber>, IConvertible

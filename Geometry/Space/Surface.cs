@@ -1,11 +1,10 @@
 ﻿using System.Text.Json.Serialization;
 using CodeChops.Geometry.Space.Directions;
-using CodeChops.Geometry.Space.Points;
-using CodeChops.Geometry.Space.Sizes;
 
 namespace CodeChops.Geometry.Space;
 
-public abstract class Surface<TNumber> : Entity, ISurface 
+public abstract class Surface<TSelf, TNumber> : Entity, ISurface<TNumber>
+	where TSelf : Surface<TSelf, TNumber>
 	where TNumber : struct, IComparable<TNumber>, IEquatable<TNumber>, IConvertible
 {
 	public override string ToString() => this.ToDisplayString(new { this.Size, this.Offset });
@@ -35,10 +34,11 @@ public abstract class Surface<TNumber> : Entity, ISurface
 	/// Enumerates all points from a starting point in a certain direction.
 	/// </summary>
 	/// <exception cref="ArgumentOutOfRangeException">If length is smaller than 0.</exception>
-	/// <exception cref="PointOutOfBoundsException{Surface,Point}">If the point exceeds the bounds of the surface (when length is provided).</exception>
 	/// <param name="length">The amount of steps to take. If null, it continues until the end of the surface.</param>
-	public IEnumerable<Point<TNumber>> GetPointsInDirection(Point<TNumber> startingPoint, IDirection<TNumber> direction, int? length = null)
+	public IEnumerable<Point<TNumber>> GetPointsInDirection(Point<TNumber> startingPoint, IDirection<TNumber> direction, int? length = null, Validator? validator = null)
 	{
+		validator ??= Validator.Get<TSelf>.Default;
+		
 		if (length < 0) throw new ArgumentOutOfRangeException($"Length cannot be smaller than 0. Provided length is {length}.");
 
 		var point = startingPoint;
@@ -46,16 +46,13 @@ public abstract class Surface<TNumber> : Entity, ISurface
 		var i = 0;
 		while (length is null || i < length)
 		{
-			if (this.IsOutOfBounds(point)) break;
+			validator.GuardInRange(this, point, errorCode: null);
 			
 			yield return point;
 			
 			point += direction.Value;
 			i++;
 		}
-
-		// Throw if length is not undetermined and loop is terminated prematurely.
-		if (i < length) new PointOutOfBoundsException<Surface<TNumber>, Point<TNumber>>().Throw(point);
 	}
 
 	/// <summary>
@@ -71,7 +68,8 @@ public abstract class Surface<TNumber> : Entity, ISurface
 	public bool TryGetAddress(Point<TNumber> point, [NotNullWhen(returnValue: true)] out Number<TNumber>? address)
 	{
 		address = (point.Y - this.Offset.Y) * this.Size.Width + point.X - this.Offset.X;
-		if (this.IsOutOfBounds(address.Value))
+		
+		if (Validator.Get<TSelf>.Oblivious.GuardInRange(this, address.Value, errorCode: null))
 		{
 			address = null;
 			return false;
@@ -79,18 +77,4 @@ public abstract class Surface<TNumber> : Entity, ISurface
 		
 		return true;
 	}
-	
-	/// <summary>
-	/// Checks if the provided point is out of the surface's bounds. 
-	/// </summary>
-	public bool IsOutOfBounds(Point<TNumber> point)
-	{
-		point -= this.Offset;
-		return point.X < Number<TNumber>.Zero || point.Y < Number<TNumber>.Zero || point.X >= this.Size.Width || point.Y >= this.Size.Height;
-	}
-
-	/// <summary>
-	/// Checks if the provided address is out of the surface's bounds. 
-	/// </summary>
-	public bool IsOutOfBounds(TNumber address) => address < Number<TNumber>.Zero || address >= this.Area;
 }

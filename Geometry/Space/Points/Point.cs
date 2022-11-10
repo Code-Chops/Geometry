@@ -1,5 +1,4 @@
 ﻿using System.Text.Json.Serialization;
-using CodeChops.Geometry.Space.Sizes;
 
 namespace CodeChops.Geometry.Space.Points;
 

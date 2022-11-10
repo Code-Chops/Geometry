@@ -69,7 +69,7 @@ public class SurfaceTests
 		Assert.Equal(xOrY.Length / 2, length);
 	}
 
-	private class SurfaceMock : Surface<int>
+	private class SurfaceMock : Surface<SurfaceMock, int>
 	{
 		[JsonIgnore(Condition = JsonIgnoreCondition.Always)]
 		public override SingletonId<SurfaceMock> Id => SingletonId<SurfaceMock>.Instance;

@@ -1,28 +1,28 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup Label="Main">
-	<AssemblyName>CodeChops.Geometry.UnitTests</AssemblyName>
-	<RootNamespace>CodeChops.Geometry.UnitTests</RootNamespace>
-    <TargetFramework>net6.0</TargetFramework>
-    <LangVersion>10</LangVersion>
-    <IsPackable>false</IsPackable>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-	<EnablePreviewFeatures>true</EnablePreviewFeatures>
-  </PropertyGroup>
+    <PropertyGroup Label="Main">
+        <AssemblyName>CodeChops.Geometry.UnitTests</AssemblyName>
+        <RootNamespace>CodeChops.Geometry.UnitTests</RootNamespace>
+        <TargetFramework>net7.0</TargetFramework>
+        <LangVersion>11</LangVersion>
+        <IsPackable>false</IsPackable>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <EnablePreviewFeatures>true</EnablePreviewFeatures>
+    </PropertyGroup>
 
-  <ItemGroup Label="ProjectReferences">
-    <ProjectReference Include="..\Geometry\Geometry.csproj" />
-  </ItemGroup>
+    <ItemGroup Label="ProjectReferences">
+        <ProjectReference Include="..\Geometry\Geometry.csproj" />
+    </ItemGroup>
 
-  <ItemGroup Label="PackageReferences">
-    <PackageReference Include="CodeChops.MagicEnums.Json" Version="3.0.4" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.3.2" />
-    <PackageReference Include="xunit" Version="2.4.2" />
-    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.5">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-  </ItemGroup>
+    <ItemGroup Label="PackageReferences">
+        <PackageReference Include="CodeChops.MagicEnums.Json" Version="3.1.0" />
+        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.4.0" />
+        <PackageReference Include="xunit" Version="2.4.2" />
+        <PackageReference Include="xunit.runner.visualstudio" Version="2.4.5">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+    </ItemGroup>
 
 </Project>
