@@ -5,7 +5,7 @@ namespace CodeChops.Geometry.Space.Sizes;
 /// <summary>
 /// A 2-dimensional measurement with TNumber as type of the underlying values of Width and Height.
 /// </summary>
-public readonly struct Size<TNumber> : ISize, IComparable<Size<TNumber>>, IHasDefault<Size<TNumber>>
+public readonly record struct Size<TNumber> : ISize, IComparable<Size<TNumber>>, IHasDefault<Size<TNumber>>
 	where TNumber : struct, IComparable<TNumber>, IEquatable<TNumber>, IConvertible
 {
 	#region Comparison

@@ -1,5 +1,4 @@
-﻿using System.Text.Json.Serialization;
-using CodeChops.DomainDrivenDesign.DomainModeling.Identities.Serialization.Json;
+﻿using CodeChops.DomainDrivenDesign.DomainModeling.Identities.Serialization.Json;
 using CodeChops.GenericMath.Serialization.Json;
 using CodeChops.Geometry.Space;
 using CodeChops.Geometry.Space.Points;
@@ -28,7 +27,7 @@ public class SurfaceTests
 	public void Size_Enumeration_IsCorrect(int width, int height, params int[] xOrY)
 	{
 		var size = new Size<int>(width, height);
-		var surface = new SurfaceMock(size);
+		var surface = new Surface<int>(size);
 		
 		var points = surface.GetAllPoints().ToList();
 		var index = 0;
@@ -55,7 +54,7 @@ public class SurfaceTests
 	{
 		var startingPoint = new Point<int>(x, y);
 		var direction = EveryDirection.GetSingleMember(directionName);
-		var surface = new SurfaceMock(size: (20,20), offset: (-10,-10));
+		var surface = new Surface<int>(size: (20,20), offset: (-10,-10));
 		
 		var points = surface.GetPointsInDirection(startingPoint, direction, length);
 		var index = 0;
@@ -67,16 +66,5 @@ public class SurfaceTests
 		}
 		
 		Assert.Equal(xOrY.Length / 2, length);
-	}
-
-	private class SurfaceMock : Surface<SurfaceMock, int>
-	{
-		[JsonIgnore(Condition = JsonIgnoreCondition.Always)]
-		public override SingletonId<SurfaceMock> Id => SingletonId<SurfaceMock>.Instance;
-
-		public SurfaceMock(Size<int> size, Point<int>? offset = null) 
-			: base(size, offset)
-		{
-		}
 	}
 }

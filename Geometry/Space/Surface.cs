@@ -3,8 +3,7 @@ using CodeChops.Geometry.Space.Directions;
 
 namespace CodeChops.Geometry.Space;
 
-public abstract class Surface<TSelf, TNumber> : Entity, ISurface<TNumber>
-	where TSelf : Surface<TSelf, TNumber>
+public readonly record struct Surface<TNumber> : ISurface<TNumber>
 	where TNumber : struct, IComparable<TNumber>, IEquatable<TNumber>, IConvertible
 {
 	public override string ToString() => this.ToDisplayString(new { this.Size, this.Offset });
@@ -22,7 +21,7 @@ public abstract class Surface<TSelf, TNumber> : Entity, ISurface<TNumber>
 	public Number<TNumber> Area { get; }
 
 	[JsonConstructor]
-	protected Surface(Size<TNumber> size, Point<TNumber>? offset = null)
+	public Surface(Size<TNumber> size, Point<TNumber>? offset = null)
 	{
 		this.Size = size;
 		this.Offset = offset ?? Point<TNumber>.Default;
@@ -37,7 +36,7 @@ public abstract class Surface<TSelf, TNumber> : Entity, ISurface<TNumber>
 	/// <param name="length">The amount of steps to take. If null, it continues until the end of the surface.</param>
 	public IEnumerable<Point<TNumber>> GetPointsInDirection(Point<TNumber> startingPoint, IDirection<TNumber> direction, int? length = null, Validator? validator = null)
 	{
-		validator ??= Validator.Get<TSelf>.Default;
+		validator ??= new Validator(this.GetType().Name);
 		
 		if (length < 0) throw new ArgumentOutOfRangeException($"Length cannot be smaller than 0. Provided length is {length}.");
 
@@ -58,8 +57,11 @@ public abstract class Surface<TSelf, TNumber> : Entity, ISurface<TNumber>
 	/// <summary>
 	/// Enumerates all points of the surface (starting from left to right and then downwards).
 	/// </summary>
-	public IEnumerable<Point<TNumber>> GetAllPoints() 
-		=> this.Size.GetAllPoints().Select(point => point + this.Offset);
+	public IEnumerable<Point<TNumber>> GetAllPoints()
+	{
+		foreach (var point in this.Size.GetAllPoints()) 
+			yield return point + this.Offset;
+	}
 
 	/// <summary>
 	/// Tries to get the address of a point (starting from left to right and then downwards). Is null when out of bounds.
@@ -69,7 +71,7 @@ public abstract class Surface<TSelf, TNumber> : Entity, ISurface<TNumber>
 	{
 		address = (point.Y - this.Offset.Y) * this.Size.Width + point.X - this.Offset.X;
 		
-		if (Validator.Get<TSelf>.Oblivious.GuardInRange(this, address.Value, errorCode: null))
+		if (Validator.Get<Surface<TNumber>>.Oblivious.GuardInRange(this, address.Value, errorCode: null))
 		{
 			address = null;
 			return false;
