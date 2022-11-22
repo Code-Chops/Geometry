@@ -8,13 +8,13 @@ public abstract record StrictDirection<TSelf> : StrictDirection<TSelf, int>
 /// <summary>
 /// A strict direction based on a StrictDirection magic enum and therefore strongly typed. No freely direction delta points are used.
 /// </summary>
-public abstract record StrictDirection<TSelf, TNumber> : MagicEnumCore<TSelf, Point<TNumber>>, IStrictDirection<TNumber>, IHasDefaultInstance<TSelf>
+public abstract record StrictDirection<TSelf, TNumber> : MagicEnumCore<TSelf, Point<TNumber>>, IStrictDirection<TNumber>, IHasDefault<TSelf>
 	where TSelf : StrictDirection<TSelf, TNumber>, new() where TNumber : struct, IComparable<TNumber>, IEquatable<TNumber>, IConvertible
 {
 	private static List<TSelf> PossibleDirections => _possibleDirections ??= GetMembers().ToList();
 	private static List<TSelf>? _possibleDirections;
 
-	public static TSelf DefaultInstance { get; } = new();
+	public static TSelf Default { get; } = new();
 	
 	public Point<TTarget> GetValue<TTarget>()
 		where TTarget : struct, IComparable<TTarget>, IEquatable<TTarget>, IConvertible

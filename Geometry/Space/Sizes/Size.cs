@@ -5,7 +5,7 @@ namespace CodeChops.Geometry.Space.Sizes;
 /// <summary>
 /// A 2-dimensional measurement with TNumber as type of the underlying values of Width and Height.
 /// </summary>
-public readonly struct Size<TNumber> : ISize, IComparable<Size<TNumber>>, IHasDefaultInstance<Size<TNumber>>
+public readonly struct Size<TNumber> : ISize, IComparable<Size<TNumber>>, IHasDefault<Size<TNumber>>
 	where TNumber : struct, IComparable<TNumber>, IEquatable<TNumber>, IConvertible
 {
 	#region Comparison
@@ -36,7 +36,7 @@ public readonly struct Size<TNumber> : ISize, IComparable<Size<TNumber>>, IHasDe
 	/// <summary>
 	/// (0, 0)
 	/// </summary>
-	public static Size<TNumber> DefaultInstance { get; } = new();
+	public static Size<TNumber> Default { get; } = new();
 	
 	/// <summary>
 	/// Sums up the width and height to get the circumference.

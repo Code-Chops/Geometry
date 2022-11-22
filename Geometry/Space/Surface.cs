@@ -25,7 +25,7 @@ public abstract class Surface<TSelf, TNumber> : Entity, ISurface<TNumber>
 	protected Surface(Size<TNumber> size, Point<TNumber>? offset = null)
 	{
 		this.Size = size;
-		this.Offset = offset ?? Point<TNumber>.DefaultInstance;
+		this.Offset = offset ?? Point<TNumber>.Default;
 		this.Circumference = this.Size.GetCircumference();
 		this.Area = this.Size.GetArea();
 	}

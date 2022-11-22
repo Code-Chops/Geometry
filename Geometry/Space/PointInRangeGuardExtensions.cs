@@ -9,9 +9,7 @@ public static class InRangeGuardExtensions
 		IErrorCode? errorCode, Exception? innerException = null)
 		where TNumber : struct, IComparable<TNumber>, IEquatable<TNumber>, IConvertible
 	{
-		var parameters = (value, Number<TNumber>.Zero, surface.Area);
-
-		InRangeNoOutputGuard<TNumber>.Guard(validator, parameters, parameters, errorCode, innerException);
+		validator.GuardInRange<TNumber>(value, Number<TNumber>.Zero, surface.Area, errorCode, innerException);
 
 		return validator.IsValid;
 	}
