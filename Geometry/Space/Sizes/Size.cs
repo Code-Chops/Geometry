@@ -66,6 +66,9 @@ public readonly record struct Size<TNumber> : ISize, IComparable<Size<TNumber>>,
 		height = this.Height;
 	}
 
+	internal Number<TNumber> GetAddress(Point<TNumber> point, Point<TNumber> offset) 
+		=> (point.Y - offset.Y) * this.Width + point.X - offset.X;
+
 	/// <summary>
 	/// Enumerates all points of the surface starting from left to right and then downwards.
 	/// </summary>

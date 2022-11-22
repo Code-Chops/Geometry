@@ -21,10 +21,10 @@ public readonly record struct Surface<TNumber> : ISurface<TNumber>
 	public Number<TNumber> Area { get; }
 
 	[JsonConstructor]
-	public Surface(Size<TNumber> size, Point<TNumber>? offset = null)
+	public Surface(Size<TNumber> size, Point<TNumber> offset = default)
 	{
 		this.Size = size;
-		this.Offset = offset ?? Point<TNumber>.Default;
+		this.Offset = offset;
 		this.Circumference = this.Size.GetCircumference();
 		this.Area = this.Size.GetArea();
 	}
@@ -63,13 +63,16 @@ public readonly record struct Surface<TNumber> : ISurface<TNumber>
 			yield return point + this.Offset;
 	}
 
+	public Number<TNumber> GetAddress(Point<TNumber> point)
+		=> Validator.Get<Surface<TNumber>>.Default.GuardInRange(this, point, errorCode: null);
+	
 	/// <summary>
 	/// Tries to get the address of a point (starting from left to right and then downwards). Is null when out of bounds.
 	/// </summary>
 	/// <returns>False when out of bounds.</returns>
 	public bool TryGetAddress(Point<TNumber> point, [NotNullWhen(returnValue: true)] out Number<TNumber>? address)
 	{
-		address = (point.Y - this.Offset.Y) * this.Size.Width + point.X - this.Offset.X;
+		address = this.Size.GetAddress(point, this.Offset);
 		
 		if (Validator.Get<Surface<TNumber>>.Oblivious.GuardInRange(this, address.Value, errorCode: null))
 		{

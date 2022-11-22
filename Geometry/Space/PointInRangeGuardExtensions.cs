@@ -17,17 +17,13 @@ public static class InRangeGuardExtensions
 	/// <summary>
 	/// Checks if the provided point is in the surface's bounds. 
 	/// </summary>
-	public static Point<TNumber> GuardInRange<TNumber>(this Validator validator, ISurface<TNumber> surface, Point<TNumber> point, 
+	public static Number<TNumber> GuardInRange<TNumber>(this Validator validator, ISurface<TNumber> surface, Point<TNumber> point, 
 		IErrorCode? errorCode, Exception? innerException = null)
 		where TNumber : struct, IComparable<TNumber>, IEquatable<TNumber>, IConvertible
 	{
-		point -= surface.Offset;
-		var parametersX = (value: point.X, Number<TNumber>.Zero, surface.Size.Width);
-		var parametersY = (value: point.Y, Number<TNumber>.Zero, surface.Size.Height);
-
-		InRangeNoOutputGuard<TNumber>.Guard(validator, parametersX, parametersX, errorCode, innerException);
-		InRangeNoOutputGuard<TNumber>.Guard(validator, parametersY, parametersY, errorCode, innerException);
+		var address = surface.Size.GetAddress(point, surface.Offset);
+		validator.GuardInRange(surface, address, errorCode, innerException);
 		
-		return point;
+		return address;
 	}
 }

@@ -10,8 +10,8 @@
 	</PropertyGroup>
 
 	<PropertyGroup Label="Package">
-		<Version>3.4.0</Version>
-		<PackageReleaseNotes>Surface now readonly record struct.</PackageReleaseNotes>
+		<Version>3.4.1</Version>
+		<PackageReleaseNotes>Enhanced surface guards.</PackageReleaseNotes>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<Title>CodeChops.Geometry</Title>
 		<Description>
