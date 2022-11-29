@@ -27,7 +27,7 @@ public abstract record StrictDirection<TSelf, TNumber> : MagicEnumCore<TSelf, Po
 	/// </summary>
 	public bool TryGetDirection(string directionName, [NotNullWhen(true)] out IStrictDirection? direction)
 	{
-		if (StrictDirection<TSelf, TNumber>.TryGetSingleMember(directionName, out var concreteDirection))
+		if (!StrictDirection<TSelf, TNumber>.TryGetSingleMember(directionName, out var concreteDirection))
 		{
 			direction = null;
 			return false;

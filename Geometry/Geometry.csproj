@@ -10,8 +10,8 @@
 	</PropertyGroup>
 
 	<PropertyGroup Label="Package">
-		<Version>3.4.1</Version>
-		<PackageReleaseNotes>Enhanced surface guards.</PackageReleaseNotes>
+		<Version>3.4.2</Version>
+		<PackageReleaseNotes>Fixed TryGetDirection bug.</PackageReleaseNotes>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<Title>CodeChops.Geometry</Title>
 		<Description>
