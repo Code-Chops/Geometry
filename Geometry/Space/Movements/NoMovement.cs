@@ -1,5 +1,4 @@
 ﻿using CodeChops.Geometry.Space.Directions;
-using CodeChops.Geometry.Time;
 
 namespace CodeChops.Geometry.Space.Movements;
 
@@ -12,7 +11,7 @@ public record NoMovement<TNumber> : Movement<TNumber>
 	public sealed override IDirection GetDirection() => this._direction;
 	private readonly IDirection _direction;
 	
-	protected sealed override Point<TNumber> CalculatePoint(Point<TNumber> _, IStopwatch __) => this.StartingPoint;
+	protected sealed override Point<TNumber> CalculatePoint() => this.StartingPoint;
 
 	public NoMovement(Point<TNumber> point, IDirection? direction = null)
 		: base(startingPoint: point)

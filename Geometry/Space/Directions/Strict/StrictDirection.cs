@@ -33,7 +33,7 @@ public abstract record StrictDirection<TSelf, TNumber> : MagicEnumCore<TSelf, Po
 			return false;
 		}
 
-		direction = concreteDirection!;
+		direction = concreteDirection;
 		return true;
 	}
 

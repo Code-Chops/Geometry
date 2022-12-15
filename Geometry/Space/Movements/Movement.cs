@@ -12,12 +12,12 @@ public abstract record Movement<TNumber> : Movement
 	public sealed override Point<TTargetNumber> GetPoint<TTargetNumber>()
 		=> this.Point.Convert<TTargetNumber>();
 
-	public Point<TNumber> Point => this.CalculatePoint(this.StartingPoint, this.Stopwatch);
+	public Point<TNumber> Point => this.CalculatePoint();
 	public abstract override IDirection GetDirection();
 	public Point<TNumber> StartingPoint { get; }
 	public IStopwatch Stopwatch { get; }
 	
-	protected abstract Point<TNumber> CalculatePoint(Point<TNumber> startingPoint, IStopwatch stopWatch);
+	protected abstract Point<TNumber> CalculatePoint();
 	
 	protected Movement(Point<TNumber> startingPoint)
 	{

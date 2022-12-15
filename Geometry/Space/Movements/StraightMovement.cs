@@ -1,5 +1,4 @@
 ﻿using CodeChops.Geometry.Space.Directions.Strict;
-using CodeChops.Geometry.Time;
 
 namespace CodeChops.Geometry.Space.Movements;
 
@@ -13,7 +12,7 @@ public record StraightMovement<TStrictDirection, TNumber> : Movement<TNumber>
 	public sealed override TStrictDirection GetDirection() => this._direction;
 	private readonly TStrictDirection _direction;
 	
-	protected sealed override Point<TNumber> CalculatePoint(Point<TNumber> startingPoint, IStopwatch stopWatch) => this.StartingPoint + this.GetDirection().Value * (Number<TNumber>)Convert.ChangeType(stopWatch.ElapsedMilliseconds, typeof(TNumber));
+	protected sealed override Point<TNumber> CalculatePoint() => this.StartingPoint + this.GetDirection().Value * (Number<TNumber>)Convert.ChangeType(this.Stopwatch.ElapsedMilliseconds, typeof(TNumber));
 	public float Speed { get; }
 	
 	public StraightMovement(Point<TNumber> startingPoint, TStrictDirection direction, float speed)
