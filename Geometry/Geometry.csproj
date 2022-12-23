@@ -10,8 +10,8 @@
 	</PropertyGroup>
 
 	<PropertyGroup Label="Package">
-		<Version>3.5.1</Version>
-		<PackageReleaseNotes>Updated package references 2.</PackageReleaseNotes>
+		<Version>3.5.2</Version>
+		<PackageReleaseNotes>Added generateProxies to IStrictDirection.</PackageReleaseNotes>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<Title>CodeChops.Geometry</Title>
 		<Description>
