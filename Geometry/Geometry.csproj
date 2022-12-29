@@ -10,8 +10,8 @@
 	</PropertyGroup>
 
 	<PropertyGroup Label="Package">
-		<Version>3.5.2</Version>
-		<PackageReleaseNotes>Added generateProxies to IStrictDirection.</PackageReleaseNotes>
+		<Version>3.6.0</Version>
+		<PackageReleaseNotes>Added StepCounters.</PackageReleaseNotes>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<Title>CodeChops.Geometry</Title>
 		<Description>
@@ -65,8 +65,8 @@ Contains objects and helpers to help the calculation of objects in space and tim
 		
 	<ItemGroup Label="PackageReferences">
 		<PackageReference Include="Architect.AmbientContexts" Version="1.1.1" />
-		<PackageReference Include="CodeChops.DomainDrivenDesign.DomainModeling" Version="1.6.8" />
-		<PackageReference Include="CodeChops.GenericMath" Version="3.3.2" />
+		<PackageReference Include="CodeChops.DomainDrivenDesign.DomainModeling" Version="1.7.0" />
+		<PackageReference Include="CodeChops.GenericMath" Version="3.3.3" />
 		<PackageReference Include="CodeChops.ImplementationDiscovery" Version="0.38.1" />
 		<PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
 		<PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="7.0.0" />
