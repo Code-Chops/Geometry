@@ -1,5 +1,4 @@
 ﻿using CodeChops.DomainDrivenDesign.DomainModeling.Identities.Serialization.Json;
-using CodeChops.GenericMath.Serialization.Json;
 using CodeChops.Geometry.Space.Points;
 using CodeChops.MagicEnums.Json;
 
@@ -11,7 +10,6 @@ public class ParsingTests
 	{
 		JsonSerialization.DefaultOptions.Converters.Add(new MagicEnumJsonConverterFactory());
 		JsonSerialization.DefaultOptions.Converters.Add(new IdentityJsonConverterFactory());
-		JsonSerialization.DefaultOptions.Converters.Add(new NumberJsonConverterFactory());
 	}
 	
 	[Theory]

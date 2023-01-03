@@ -4,16 +4,15 @@ using CodeChops.Geometry.Space.Movements.Steps;
 namespace CodeChops.Geometry.Space.Movements;
 
 /// <summary>
-/// Describes in what direction an object moves using steps.
+/// Describes in what direction an object moves from a starting point, using a step counter.
 /// </summary>
 public abstract record Movement<TNumber> : Movement
-	where TNumber : struct, IComparable<TNumber>, IEquatable<TNumber>, IConvertible
+	where TNumber : INumber<TNumber>
 {
-	public sealed override Point<TTargetNumber> GetPoint<TTargetNumber>()
-		=> this.Point.Convert<TTargetNumber>();
+	public static implicit operator Point<TNumber>(Movement<TNumber> value) => value.Point;
 
 	public Point<TNumber> Point => this.CalculatePoint();
-	public abstract override IDirection GetDirection();
+	public abstract override IDirection<TNumber> GetDirection();
 	public Point<TNumber> StartingPoint { get; }
 	public IStepCounter StepCounter { get; }
 	
@@ -34,9 +33,6 @@ public abstract record Movement<TNumber> : Movement
 public abstract record Movement : IValueObject
 {
 	public override string ToString() => this.ToDisplayString();
-	
-	public abstract Point<TTargetNumber> GetPoint<TTargetNumber>()
-		where TTargetNumber : struct, IComparable<TTargetNumber>, IEquatable<TTargetNumber>, IConvertible;
 
 	public abstract IDirection GetDirection();
 }

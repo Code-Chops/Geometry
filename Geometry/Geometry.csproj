@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+﻿ <Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup Label="Main">
 		<AssemblyName>CodeChops.Geometry</AssemblyName>
@@ -10,18 +10,11 @@
 	</PropertyGroup>
 
 	<PropertyGroup Label="Package">
-		<Version>3.6.0</Version>
-		<PackageReleaseNotes>Added StepCounters.</PackageReleaseNotes>
+		<Version>4.0.0</Version>
+		<PackageReleaseNotes>Big release: Added step counters, line, README.md. Stopped using CodeChops GenericMath.</PackageReleaseNotes>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<Title>CodeChops.Geometry</Title>
-		<Description>
-Contains objects and helpers to help the calculation of objects in space and time:
- -Point with a generic integral value;
- -Size with a generic integral value;
- -Directions: strict and free;
- -Movements;
- -Timing: stopwatch scope;
-		</Description>
+		<Description>Contains objects and helpers to help the calculation of objects in 2D-space and time.</Description>
 		<PackageId>CodeChops.Geometry</PackageId>
 		<PackageProjectUrl>https://github.com/code-chops/Geometry</PackageProjectUrl>
 		<PackageTags>CodeChops;CodeChops.Geometry;Geometry;</PackageTags>
@@ -33,6 +26,7 @@ Contains objects and helpers to help the calculation of objects in space and tim
 		<PackageIcon>icon.png</PackageIcon>
 		<PackageLicenseFile>LICENSE</PackageLicenseFile>
 		<Copyright>Copyright (c) CodeChops $([System.DateTime]::Now.ToString(yyyy))</Copyright>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<NoWarn>
 			CS1591, <!-- Missing XML comment for publicly visible type or member -->
 			CS1573, <!-- Parameter has no matching param tag in the XML comment -->
@@ -52,11 +46,12 @@ Contains objects and helpers to help the calculation of objects in space and tim
 	<Target Name="AddNugetPackage" AfterTargets="Pack" Condition="'$(Configuration)' == 'Release' AND '$(LocalNuGetPackagesFolder)' != null">
 		<Exec Command="$(LocalNuGetPackagesFolder)\nuget.exe add $(OutputPath)..\$(PackageId).$(PackageVersion).nupkg -source $(LocalNuGetPackagesFolder)" />
 	</Target>
-	
-	<ItemGroup Label="PackageAssets">
-		<None Include="Properties\LICENSE" Pack="true" PackagePath="" />
-		<None Include="Properties\icon.png" Pack="true" Visible="true" PackagePath="" />
-	</ItemGroup>
+
+	 <ItemGroup Label="PackageAssets">
+		 <None Include="..\LICENSE" Pack="true" PackagePath="" />
+		 <None Include="..\icon.png" Pack="true" Visible="true" PackagePath="" />
+		 <None Include="..\README.md" Pack="true" PackagePath="\" />
+	 </ItemGroup>
 	
 	<ItemGroup Label="InternalsVisibleTo">
 		<InternalsVisibleTo Include="$(AssemblyName).UnitTests" />
@@ -65,9 +60,8 @@ Contains objects and helpers to help the calculation of objects in space and tim
 		
 	<ItemGroup Label="PackageReferences">
 		<PackageReference Include="Architect.AmbientContexts" Version="1.1.1" />
-		<PackageReference Include="CodeChops.DomainDrivenDesign.DomainModeling" Version="1.7.0" />
-		<PackageReference Include="CodeChops.GenericMath" Version="3.3.3" />
-		<PackageReference Include="CodeChops.ImplementationDiscovery" Version="0.38.1" />
+		<PackageReference Include="CodeChops.DomainDrivenDesign.DomainModeling" Version="1.9.1" />
+		<PackageReference Include="CodeChops.ImplementationDiscovery" Version="1.0.1" />
 		<PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
 		<PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="7.0.0" />
 		<PackageReference Include="System.Collections.Immutable" Version="7.0.0" />

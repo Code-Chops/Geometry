@@ -1,13 +1,14 @@
-﻿using CodeChops.Geometry.Space.Points;
+﻿using CodeChops.Geometry.Space.Lines;
+using CodeChops.Geometry.Space.Points;
 using Xunit.Abstractions;
 
 namespace CodeChops.Geometry.UnitTests;
 
-public class PointTests
+public class LineTests
 {
 	private ITestOutputHelper TestOutputHelper { get; }
 
-	public PointTests(ITestOutputHelper testOutputHelper)
+	public LineTests(ITestOutputHelper testOutputHelper)
 	{
 		this.TestOutputHelper = testOutputHelper;
 	}
@@ -18,13 +19,14 @@ public class PointTests
 	{
 		var startingPoint = new Point<double>(startX, startY);
 		var endPoint = new Point<double>(endX, endY);
-
+		var line = new Line<double>(startingPoint, endPoint);
+		
 		var index = 0;
-		foreach (var point in (startingPoint, endPoint))
+		foreach (var point in line)
 		{
-			this.TestOutputHelper.WriteLine(point.ToString());
-			Assert.Equal(xOrY[index * 2], point.X.ConvertToPrimitive<int>());
-			Assert.Equal(xOrY[index * 2 + 1], point.Y.ConvertToPrimitive<int>());
+			this.TestOutputHelper.WriteLine(line.ToString());
+			Assert.Equal(xOrY[index * 2], Math.Round(point.X, MidpointRounding.AwayFromZero));
+			Assert.Equal(xOrY[index * 2 + 1], Math.Round(point.Y, MidpointRounding.AwayFromZero));
 			index++;
 		}
 	}

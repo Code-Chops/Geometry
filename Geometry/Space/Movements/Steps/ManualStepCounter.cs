@@ -1,9 +1,17 @@
 ﻿namespace CodeChops.Geometry.Space.Movements.Steps;
 
+/// <summary>
+/// A counter in which the steps are incremented manually until maximum steps.
+/// </summary>
 [GenerateIdentity]
 public partial class ManualStepCounter : Entity, IStepCounter
 {
 	public long Steps { get; private set; }
+	
+	public TNumber GetSteps<TNumber>()
+		where TNumber : INumber<TNumber>
+		=> TNumber.CreateChecked(this.Steps);
+	
 	public bool IsRunning { get; private set; }
 	public long MaximumSteps { get; }
 

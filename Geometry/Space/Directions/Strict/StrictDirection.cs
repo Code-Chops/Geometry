@@ -6,21 +6,16 @@ public abstract record StrictDirection<TSelf> : StrictDirection<TSelf, int>
 	where TSelf : StrictDirection<TSelf>, new();
 
 /// <summary>
-/// A strict direction based on a StrictDirection magic enum and therefore strongly typed. No freely direction delta points are used.
+/// A strongly typed direction that resides in a specific enum that holds other direction values.
 /// </summary>
 public abstract record StrictDirection<TSelf, TNumber> : MagicEnumCore<TSelf, Point<TNumber>>, IStrictDirection<TNumber>, IHasDefault<TSelf>
-	where TSelf : StrictDirection<TSelf, TNumber>, new() where TNumber : struct, IComparable<TNumber>, IEquatable<TNumber>, IConvertible
+	where TSelf : StrictDirection<TSelf, TNumber>, new() 
+	where TNumber : INumber<TNumber>
 {
 	private static List<TSelf> PossibleDirections => _possibleDirections ??= GetMembers().ToList();
 	private static List<TSelf>? _possibleDirections;
 
 	public static TSelf Default { get; } = new();
-	
-	public Point<TTarget> GetValue<TTarget>()
-		where TTarget : struct, IComparable<TTarget>, IEquatable<TTarget>, IConvertible
-	{
-		return this.Value.Convert<TTarget>();
-	}
 
 	/// <summary>
 	/// A publicly available wrapper of TryGetSingleMember. 
@@ -37,9 +32,10 @@ public abstract record StrictDirection<TSelf, TNumber> : MagicEnumCore<TSelf, Po
 		return true;
 	}
 
-	protected static TSelf CreatePoint(int x, int y, [CallerMemberName] string name = null!)
+	protected static TSelf CreatePoint<TSourceNumber>(TSourceNumber x, TSourceNumber y, [CallerMemberName] string name = null!)
+		where TSourceNumber : INumber<TSourceNumber>
 	{
-		var point = new Point<int>(x, y).Convert<TNumber>();
+		var point = Point<TNumber>.Create(x, y);
 		var member = CreateMember<TSelf>(valueCreator: () => point, memberCreator: null, name);
 
 		// Empty cache
@@ -47,12 +43,10 @@ public abstract record StrictDirection<TSelf, TNumber> : MagicEnumCore<TSelf, Po
 		return member;
 	}
 
-	/// <summary>
-	/// RotationType left or right. Is non-deterministic!
-	/// </summary>
-	public IStrictDirection<TNumber> GetDirectionFromRandomTurn()
+	private static Random Random { get; } = new();
+	public IStrictDirection<TNumber> GetDirectionFromRandomTurn(Random? random = null)
 	{
-		var rotationType = (RotationType)(new Random().NextDouble() * 4 - 2);
+		var rotationType = (RotationType)((random ?? Random).NextDouble() * 4 - 2);
 
 		return this.GetDirectionFromTurn(rotationType);
 	}
@@ -70,21 +64,21 @@ public abstract record StrictDirection<TSelf, TNumber> : MagicEnumCore<TSelf, Po
 
 	public TTargetDirection Convert<TTargetDirection, TTargetNumber>()
 		where TTargetDirection : StrictDirection<TTargetDirection, TTargetNumber>, new()
-		where TTargetNumber : struct, IComparable<TTargetNumber>, IEquatable<TTargetNumber>, IConvertible
+		where TTargetNumber : INumber<TTargetNumber>
 	{
 		return Convert<TTargetDirection, TTargetNumber>(this.Value);
 	}
 
 	public bool TryConvert<TTargetDirection, TTargetNumber>([NotNullWhen(true)] out TTargetDirection? direction)
 		where TTargetDirection : StrictDirection<TTargetDirection, TTargetNumber>, new()
-		where TTargetNumber : struct, IComparable<TTargetNumber>, IEquatable<TTargetNumber>, IConvertible
+		where TTargetNumber : INumber<TTargetNumber>
 	{
 		return TryConvert<TTargetDirection, TTargetNumber>(this.Value, out direction);
 	}
 	
 	public static TTargetDirection Convert<TTargetDirection, TTargetNumber>(Point<TNumber> deltaPoint)
 		where TTargetDirection : StrictDirection<TTargetDirection, TTargetNumber>, new()
-		where TTargetNumber : struct, IComparable<TTargetNumber>, IEquatable<TTargetNumber>, IConvertible
+		where TTargetNumber : INumber<TTargetNumber>
 	{
 		if (!TryConvert<TTargetDirection, TTargetNumber>(deltaPoint, out var direction))
 			throw new InvalidOperationException($"{deltaPoint} does not exist in {typeof(TTargetDirection).Name}.");
@@ -94,7 +88,7 @@ public abstract record StrictDirection<TSelf, TNumber> : MagicEnumCore<TSelf, Po
 
 	public static bool TryConvert<TTargetDirection, TTargetNumber>(Point<TNumber> deltaPoint, [NotNullWhen(true)] out TTargetDirection? direction)
 		where TTargetDirection : StrictDirection<TTargetDirection, TTargetNumber>, new()
-		where TTargetNumber : struct, IComparable<TTargetNumber>, IEquatable<TTargetNumber>, IConvertible
+		where TTargetNumber : INumber<TTargetNumber>
 	{
 		var newDeltaPoint = deltaPoint.Convert<TTargetNumber>();
 		if (!StrictDirection<TTargetDirection, TTargetNumber>.TryGetSingleMember(newDeltaPoint, out var newDirection))

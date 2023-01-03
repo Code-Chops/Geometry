@@ -1,4 +1,4 @@
-﻿namespace CodeChops.Geometry.Space;
+﻿namespace CodeChops.Geometry.Space.Directions.Strict;
 
 [DisableConcurrency]
 public sealed record RotationType : MagicEnum<RotationType>

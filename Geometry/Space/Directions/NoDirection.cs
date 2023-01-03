@@ -1,18 +1,22 @@
-﻿namespace CodeChops.Geometry.Space.Directions;
+﻿using System.Runtime.InteropServices;
+using System.Runtime.Serialization;
 
-public record NoDirection<TNumber> : IDirection
-	where TNumber : struct, IComparable<TNumber>, IEquatable<TNumber>, IConvertible
+namespace CodeChops.Geometry.Space.Directions;
+
+[StructLayout(LayoutKind.Auto)]
+public readonly record struct NoDirection<TNumber> : IDirection<TNumber>
+	where TNumber : INumber<TNumber>
 {
+	public static implicit operator Point<TNumber>(NoDirection<TNumber> value) => value.Value;
+	
 	public Point<TNumber> Value => Point<TNumber>.Default;
 
-	public Point<TTargetNumber> GetValue<TTargetNumber>()
-		where TTargetNumber : struct, IComparable<TTargetNumber>, IEquatable<TTargetNumber>, IConvertible 
+	public Point<TTargetNumber> Convert<TTargetNumber>()
+		where TTargetNumber : INumber<TTargetNumber>
 		=> Point<TTargetNumber>.Default;
 
-	public static readonly NoDirection<TNumber> Instance = new();
+	public static readonly NoDirection<TNumber> Instance = (NoDirection<TNumber>)FormatterServices.GetUninitializedObject(typeof(NoDirection<TNumber>));
 	
-	// Should be private because it's a singleton.
-	private NoDirection()
-	{
-	}
+	[Obsolete("Don't use this empty constructor. This is a singleton.", error: true)]
+	public NoDirection() => throw new InvalidOperationException($"Don't use this empty constructor. This is a singleton.");
 }

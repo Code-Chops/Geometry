@@ -15,9 +15,9 @@ public static class StepCounterExtensions
 	/// This overwrites the step counter that is exposed by default.
 	/// </para>
 	/// </summary>
-	public static IApplicationBuilder UseStopwatchScope(this IApplicationBuilder applicationBuilder, IStepCounter stepCounter)
+	public static IApplicationBuilder UseStepCounterScope(this IApplicationBuilder applicationBuilder, IStepCounter stepCounter)
 	{
-		UseStopwatchScope(applicationBuilder.ApplicationServices, stepCounter);
+		UseStepCounterScope(applicationBuilder.ApplicationServices, stepCounter);
 		return applicationBuilder;
 	}
 
@@ -29,9 +29,9 @@ public static class StepCounterExtensions
 	/// This overwrites the step counter that is exposed by default.
 	/// </para>
 	/// </summary>
-	public static IHost UseStopwatchScope(this IHost host, IStepCounter stepCounter)
+	public static IHost UseStepCounterScope(this IHost host, IStepCounter stepCounter)
 	{
-		UseStopwatchScope(host.Services, stepCounter);
+		UseStepCounterScope(host.Services, stepCounter);
 		return host;
 	}
 
@@ -43,7 +43,7 @@ public static class StepCounterExtensions
 	/// This overwrites the step counter that is exposed by default.
 	/// </para>
 	/// </summary>
-	public static IServiceProvider UseStopwatchScope(this IServiceProvider serviceProvider, IStepCounter stepCounter)
+	public static IServiceProvider UseStepCounterScope(this IServiceProvider serviceProvider, IStepCounter stepCounter)
 	{
 		StepCounterScope.SetDefaultValue(stepCounter ?? throw new ArgumentNullException(nameof(stepCounter)));
 		return serviceProvider;

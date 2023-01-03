@@ -2,7 +2,7 @@ namespace CodeChops.Geometry.Space.Directions.Strict.Definitions;
 
 [DisableConcurrency]
 public sealed record EveryDirection<TNumber> : StrictDirection<EveryDirection<TNumber>, TNumber>
-	where TNumber : struct, IComparable<TNumber>, IEquatable<TNumber>, IConvertible
+	where TNumber : INumber<TNumber>
 {
 	public static readonly EveryDirection<TNumber> North 		= CreatePoint( 0, -1);
 	public static readonly EveryDirection<TNumber> NorthEast 	= CreatePoint( 1, -1);

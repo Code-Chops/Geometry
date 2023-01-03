@@ -1,10 +1,17 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.Runtime.InteropServices;
+using System.Text.Json.Serialization;
 using CodeChops.Geometry.Space.Directions;
+using CodeChops.Geometry.Space.Lines;
 
 namespace CodeChops.Geometry.Space;
 
+/// <summary>
+/// An Euclidean plane of a specific size (and offset).
+/// </summary>
+/// <typeparam name="TNumber"></typeparam>
+[StructLayout(LayoutKind.Auto)]
 public readonly record struct Surface<TNumber> : ISurface<TNumber>
-	where TNumber : struct, IComparable<TNumber>, IEquatable<TNumber>, IConvertible
+	where TNumber : struct, INumber<TNumber>
 {
 	public override string ToString() => this.ToDisplayString(new { this.Size, this.Offset });
 	
@@ -14,21 +21,21 @@ public readonly record struct Surface<TNumber> : ISurface<TNumber>
 	/// <summary>
 	/// The sum of the width and height.
 	/// </summary>
-	public Number<TNumber> Circumference { get; }
+	public TNumber Circumference { get; }
 	/// <summary>
 	/// The multiplication of the width and height. 
 	/// </summary>
-	public Number<TNumber> Area { get; }
+	public TNumber Area { get; }
 
 	[JsonConstructor]
 	public Surface(Size<TNumber> size, Point<TNumber> offset = default)
 	{
 		this.Size = size;
 		this.Offset = offset;
-		this.Circumference = this.Size.GetCircumference();
-		this.Area = this.Size.GetArea();
+		this.Circumference = this.Size.Circumference();
+		this.Area = this.Size.Area();
 	}
-
+	
 	/// <summary>
 	/// Enumerates all points from a starting point in a certain direction.
 	/// </summary>
@@ -55,6 +62,21 @@ public readonly record struct Surface<TNumber> : ISurface<TNumber>
 	}
 
 	/// <summary>
+	/// Enumerates all points of a line.
+	/// </summary>
+	public IEnumerable<Point<TNumber>> GetPointsOfLine(Line<TNumber> line, Validator? validator = null)
+	{
+		validator ??= new Validator(this.GetType().Name);
+	
+		foreach (var point in line)
+		{
+			validator.GuardInRange(this, point, errorCode: null);
+
+			yield return point;
+		}
+	}
+	
+	/// <summary>
 	/// Enumerates all points of the surface (starting from left to right and then downwards).
 	/// </summary>
 	public IEnumerable<Point<TNumber>> GetAllPoints()
@@ -63,14 +85,14 @@ public readonly record struct Surface<TNumber> : ISurface<TNumber>
 			yield return point + this.Offset;
 	}
 
-	public Number<TNumber> GetAddress(Point<TNumber> point)
+	public TNumber GetAddress(Point<TNumber> point)
 		=> Validator.Get<Surface<TNumber>>.Default.GuardInRange(this, point, errorCode: null);
 	
 	/// <summary>
 	/// Tries to get the address of a point (starting from left to right and then downwards). Is null when out of bounds.
 	/// </summary>
 	/// <returns>False when out of bounds.</returns>
-	public bool TryGetAddress(Point<TNumber> point, [NotNullWhen(returnValue: true)] out Number<TNumber>? address)
+	public bool TryGetAddress(Point<TNumber> point, [NotNullWhen(returnValue: true)] out TNumber? address)
 	{
 		address = this.Size.GetAddress(point, this.Offset);
 		
@@ -82,4 +104,13 @@ public readonly record struct Surface<TNumber> : ISurface<TNumber>
 		
 		return true;
 	}
+	
+	public Surface<TTargetNumber> Convert<TTargetNumber>() 
+		where TTargetNumber : struct, INumber<TTargetNumber>, IPowerFunctions<TTargetNumber>, IRootFunctions<TTargetNumber>
+	{
+		return new Surface<TTargetNumber>(this.Size.Convert<TTargetNumber>(), this.Offset.Convert<TTargetNumber>());
+	}
+	
+	public SizeIterator<TNumber> GetEnumerator()
+		=> new(this.Size);
 }

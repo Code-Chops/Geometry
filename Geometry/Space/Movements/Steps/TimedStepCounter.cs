@@ -3,6 +3,9 @@ using CodeChops.Geometry.Time;
 
 namespace CodeChops.Geometry.Space.Movements.Steps;
 
+/// <summary>
+/// A counter in which the steps are incremented over time, using a stopwatch.
+/// </summary>
 [GenerateIdentity]
 public sealed partial class TimedStepCounter : Entity, IStepCounter, IStopwatch
 {
@@ -10,6 +13,10 @@ public sealed partial class TimedStepCounter : Entity, IStepCounter, IStopwatch
     private Stopwatch StopWatch { get; }
 
     public long Steps => this.StepsGetter(this.StopWatch);
+
+    public TNumber GetSteps<TNumber>() 
+	    where TNumber : INumber<TNumber> 
+	    => TNumber.CreateChecked(this.StepsGetter(this.StopWatch));
     
     public bool IsRunning => this.StopWatch.IsRunning;
     public TimeSpan Elapsed => this.StopWatch.Elapsed;

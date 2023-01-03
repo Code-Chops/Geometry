@@ -8,12 +8,13 @@ namespace CodeChops.Geometry.Space.Movements;
 /// </summary>
 public record StraightMovement<TStrictDirection, TNumber> : Movement<TNumber>
 	where TStrictDirection : StrictDirection<TStrictDirection, TNumber>, new()
-	where TNumber : struct, IComparable<TNumber>, IEquatable<TNumber>, IConvertible
+	where TNumber : INumber<TNumber>
 {
 	public sealed override TStrictDirection GetDirection() => this._direction;
 	private readonly TStrictDirection _direction;
 	
-	protected sealed override Point<TNumber> CalculatePoint() => this.StartingPoint + this.GetDirection().Value * (Number<TNumber>)Convert.ChangeType(this.StepCounter.Steps, typeof(TNumber));
+	protected sealed override Point<TNumber> CalculatePoint() 
+		=> this.StartingPoint + this.GetDirection().Value * this.StepCounter.GetSteps<TNumber>();
 	
 	public StraightMovement(Point<TNumber> startingPoint, TStrictDirection direction, IStepCounter? stepCounter = null)
 		: base(startingPoint, stepCounter)

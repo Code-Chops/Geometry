@@ -3,7 +3,12 @@
 namespace CodeChops.Geometry.Space.Movements.Steps;
 
 /// <summary>
-/// Controls access to a step counter in the ambient context.
+/// <para>
+/// Controls access to a step counter in the ambient context. This way a statically shared step counter can be accessed and controlled from the outside.
+/// </para>
+/// <para>
+/// This functionality makes use of Ambient Context pattern as implemented by TheArchitectDev. See https://github.com/TheArchitectDev/Architect.AmbientContexts.
+/// </para>
 /// </summary>
 public sealed class StepCounterScope : AmbientScope<StepCounterScope>
 {

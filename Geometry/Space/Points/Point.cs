@@ -1,20 +1,28 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.Runtime.InteropServices;
+using System.Text.Json.Serialization;
 
 namespace CodeChops.Geometry.Space.Points;
 
 /// <summary>
-/// A 2-dimensional location with TNumber als type of the underlying values of X and Y. 
+/// A 2-dimensional location with TNumber as type of the underlying values of X and Y. 
 /// </summary>
-public readonly record struct Point<TNumber> : IPoint, IComparable<Point<TNumber>>, IHasDefault<Point<TNumber>> 
-	where TNumber : struct, IComparable<TNumber>, IEquatable<TNumber>, IConvertible
+[StructLayout(LayoutKind.Auto)]
+public readonly record struct Point<TNumber> : IPoint<TNumber>, IHasDefault<Point<TNumber>>, IComparable<Point<TNumber>>
+	where TNumber : INumber<TNumber>, IAdditionOperators<TNumber, TNumber, TNumber>
 {
+	public override string ToString() => $"({this.X}, {this.Y})";
+	
 	#region Comparison
 	
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public int CompareTo(Point<TNumber> other)
 	{
-		if (this.X == other.X) return (this.Y - other.Y).Value.ToInt32(CultureInfo.InvariantCulture);
-		return (this.X - other.X).Value.ToInt32(CultureInfo.InvariantCulture);
+		if (this.Y < other.Y || this.X < other.X)
+			return -1;
+		if (this.Y > other.Y || this.X > other.X) 
+			return 1;
+
+		return 0;
 	}
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -28,34 +36,32 @@ public readonly record struct Point<TNumber> : IPoint, IComparable<Point<TNumber
 	
 	#endregion
 	
-	public override string ToString() => $"({this.X}, {this.Y})";
-
-	public Number<TNumber> X { get; }
-	public Number<TNumber> Y { get; }
+	public TNumber X { get; }
+	public TNumber Y { get; }
 
 	/// <summary>
 	/// (0, 0)
 	/// </summary>
-	public static Point<TNumber> Default { get; } = new();
+	public static Point<TNumber> Default { get; } = new(TNumber.Zero, TNumber.Zero);
 
 	/// <summary>
 	/// Sums up X and Y.
 	/// </summary>
-	public Number<TNumber> Sum() => Calculator<TNumber>.Add(this.X, this.Y);
+	public TNumber Sum() => this.X + this.Y;
 	
 	/// <summary>
 	/// Multiplies X and Y.
 	/// </summary>
-	public Number<TNumber> Multiply() => Calculator<TNumber>.Multiply(this.X, this.Y);
-	
+	public TNumber Multiply() => this.X * this.Y;
+
 	[JsonConstructor]
-	public Point(Number<TNumber> x, Number<TNumber> y)
+	public Point(TNumber x, TNumber y)
 	{
 		this.X = x;
 		this.Y = y;
 	}
 
-	public Point(Number<TNumber> address, Size<TNumber> size)
+	public Point(TNumber address, Size<TNumber> size)
 	{
 		this.X = address % size.Width;
 		this.Y = address / size.Width;
@@ -63,59 +69,58 @@ public readonly record struct Point<TNumber> : IPoint, IComparable<Point<TNumber
 
 	public Point(double angle)
 	{
-		this.X = (TNumber)System.Convert.ChangeType(Math.Cos((angle - 90) / 180 * Math.PI), typeof(TNumber));
-		this.Y = (TNumber)System.Convert.ChangeType(Math.Sin((angle - 90) / 180 * Math.PI), typeof(TNumber));
+		this.X = TNumber.CreateChecked(Math.Cos((angle - 90) / 180 * Math.PI));
+		this.Y = TNumber.CreateChecked(Math.Sin((angle - 90) / 180 * Math.PI));
+	}
+
+	public static Point<TNumber> Create<TSourceNumber>(TSourceNumber x, TSourceNumber y)
+		where TSourceNumber : INumber<TSourceNumber>
+	{
+		return new Point<TNumber>(TNumber.CreateChecked(x), TNumber.CreateChecked(y));
 	}
 	
-	public void Deconstruct(out Number<TNumber> x, out Number<TNumber> y)
+	public void Deconstruct(out TNumber x, out TNumber y)
 	{
 		x = this.X;
 		y = this.Y;
 	}
-
-	public double DistanceTo(Point<TNumber> endPoint)
-	{
-		var difference = (endPoint - this).Convert<double>();
-
-		return Math.Sqrt(Math.Pow(difference.X, 2) + Math.Pow(difference.Y, 2));
-	}
+	
+	[Obsolete("Don't use this empty constructor. A value should be provided when initializing Point<TNumber>.", error: true)]
+	public Point() => throw new InvalidOperationException($"Don't use this empty constructor. A value should be provided when initializing Point<TNumber>.");
 
 	public static Point<TNumber> operator +(Point<TNumber> point1, Point<TNumber> point2) 
 		=> new(point1.X + point2.X, point1.Y + point2.Y);
 	
-	public static Point<TNumber> operator +(Point<TNumber> point, Number<TNumber> number) 
+	public static Point<TNumber> operator +(Point<TNumber> point, TNumber number) 
 		=> new(point.X + number, point.Y + number);
 
 	public static Point<TNumber> operator -(Point<TNumber> point1, Point<TNumber> point2) 
 		=> new(point1.X - point2.X, point1.Y - point2.Y);
 
-	public static Point<TNumber> operator -(Point<TNumber> point, Number<TNumber> number) 
+	public static Point<TNumber> operator -(Point<TNumber> point, TNumber number) 
 		=> new(point.X - number, point.Y - number);
 
 	public static Point<TNumber> operator *(Point<TNumber> point1, Point<TNumber> point2) 
 		=> new(point1.X * point2.X, point1.Y * point2.Y);
 
-	public static Point<TNumber> operator *(Point<TNumber> point, Number<TNumber> factor) 
+	public static Point<TNumber> operator *(Point<TNumber> point, TNumber factor) 
 		=> new(point.X * factor, point.Y * factor);
 	
 	public static Point<TNumber> operator /(Point<TNumber> point1, Point<TNumber> point2) 
 		=> new(point1.X / point2.X, point1.Y / point2.Y);
 
-	public static Point<TNumber> operator /(Point<TNumber> point, Number<TNumber> factor) 
+	public static Point<TNumber> operator /(Point<TNumber> point, TNumber factor) 
 		=> new(point.X / factor, point.Y / factor);
 
 	public static explicit operator Point<TNumber>(Size<TNumber> size) 
 		=> new(size.Width, size.Height);
 
-	public static implicit operator Point<TNumber>((Number<TNumber>, Number<TNumber>) tuple) 
-		=> new(tuple.Item1, tuple.Item2);
-	
 	public static implicit operator Point<TNumber>((TNumber, TNumber) tuple) 
 		=> new(tuple.Item1, tuple.Item2);
-
-	public Point<TTarget> Convert<TTarget>()
-		where TTarget : struct, IComparable<TTarget>, IEquatable<TTarget>, IConvertible
+	
+	public Point<TTargetNumber> Convert<TTargetNumber>()
+		where TTargetNumber : INumber<TTargetNumber>
 	{
-		return new Point<TTarget>(this.X.ConvertToPrimitive<TTarget>(), this.Y.ConvertToPrimitive<TTarget>());
+		return Point<TTargetNumber>.Create(this.X, this.Y);
 	}
 }

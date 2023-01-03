@@ -1,5 +1,4 @@
 ﻿using CodeChops.DomainDrivenDesign.DomainModeling.Identities.Serialization.Json;
-using CodeChops.GenericMath.Serialization.Json;
 using CodeChops.Geometry.Space.Directions.Free;
 using CodeChops.Geometry.Space.Points;
 using CodeChops.MagicEnums.Json;
@@ -12,7 +11,6 @@ public class FreeDirectionTests
 	{
 		JsonSerialization.DefaultOptions.Converters.Add(new MagicEnumJsonConverterFactory());
 		JsonSerialization.DefaultOptions.Converters.Add(new IdentityJsonConverterFactory());
-		JsonSerialization.DefaultOptions.Converters.Add(new NumberJsonConverterFactory());
 	}
 	
 	[Theory]
@@ -20,16 +18,17 @@ public class FreeDirectionTests
 	[InlineData(90,		 1,  0)]
 	[InlineData(180,	 0,  1)]
 	[InlineData(-90,	-1,  0)]
-	public void AngleToDeltaPoint_Is_Correct(double angle, int expectedDeltaX, int expectedDeltaY)
+	public void AngleToDeltaPoint_Is_Correct(double degrees, int expectedDeltaX, int expectedDeltaY)
 	{
-		var direction = new FreeDirection<float>(angle);
-		var (x, y) = direction.GetValue<float>();
-		var expectedPoint = new Point<float>(expectedDeltaX, expectedDeltaY);
+		var angle = new Angle(degrees);
+		var direction = new FreeDirection<double>(angle);
+		var (x, y) = direction.Value;
+		var expectedPoint = new Point<double>(expectedDeltaX, expectedDeltaY);
 
 		Assert.Equal((int)expectedPoint.X, (int)x);
 		Assert.Equal((int)expectedPoint.Y, (int)y);
 
-		direction = new FreeDirection<float>(expectedPoint);
+		direction = new FreeDirection<double>(expectedPoint);
 
 		Assert.Equal(angle, direction.Angle);
 	}
