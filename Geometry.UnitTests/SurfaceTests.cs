@@ -1,4 +1,4 @@
-﻿using CodeChops.DomainDrivenDesign.DomainModeling.Identities.Serialization.Json;
+﻿using CodeChops.DomainModeling.Identities.Serialization.Json;
 using CodeChops.Geometry.Space;
 using CodeChops.Geometry.Space.Points;
 using CodeChops.Geometry.Space.Sizes;

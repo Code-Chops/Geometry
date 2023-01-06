@@ -1,4 +1,4 @@
-using CodeChops.DomainDrivenDesign.DomainModeling.Identities.Serialization.Json;
+using CodeChops.DomainModeling.Identities.Serialization.Json;
 using CodeChops.Geometry.Space.Directions.Strict;
 using CodeChops.MagicEnums.Json;
 

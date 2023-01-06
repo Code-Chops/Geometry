@@ -10,8 +10,8 @@
 	</PropertyGroup>
 
 	<PropertyGroup Label="Package">
-		<Version>4.0.0</Version>
-		<PackageReleaseNotes>Big release: Added step counters, line, README.md. Stopped using CodeChops GenericMath.</PackageReleaseNotes>
+		<Version>4.1.0</Version>
+		<PackageReleaseNotes>Updated package references.</PackageReleaseNotes>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<Title>CodeChops.Geometry</Title>
 		<Description>Contains objects and helpers to help the calculation of objects in 2D-space and time.</Description>
@@ -60,8 +60,8 @@
 		
 	<ItemGroup Label="PackageReferences">
 		<PackageReference Include="Architect.AmbientContexts" Version="1.1.1" />
-		<PackageReference Include="CodeChops.DomainDrivenDesign.DomainModeling" Version="1.9.1" />
-		<PackageReference Include="CodeChops.ImplementationDiscovery" Version="1.0.1" />
+		<PackageReference Include="CodeChops.DomainModeling" Version="2.0.1" />
+		<PackageReference Include="CodeChops.ImplementationDiscovery" Version="1.1.0" />
 		<PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
 		<PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="7.0.0" />
 		<PackageReference Include="System.Collections.Immutable" Version="7.0.0" />

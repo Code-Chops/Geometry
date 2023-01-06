@@ -1,6 +1,6 @@
 ﻿global using Xunit;
 
-global using CodeChops.DomainDrivenDesign.DomainModeling.Serialization;
+global using CodeChops.DomainModeling.Serialization;
 
 global using Point = CodeChops.Geometry.Space.Points.Point<double>;
 global using EveryDirection = CodeChops.Geometry.Space.Directions.Strict.Definitions.EveryDirection<int>;
