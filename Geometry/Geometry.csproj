@@ -10,7 +10,7 @@
 	</PropertyGroup>
 
 	<PropertyGroup Label="Package">
-		<Version>4.1.0</Version>
+		<Version>4.1.1</Version>
 		<PackageReleaseNotes>Updated package references.</PackageReleaseNotes>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<Title>CodeChops.Geometry</Title>
@@ -61,7 +61,7 @@
 	<ItemGroup Label="PackageReferences">
 		<PackageReference Include="Architect.AmbientContexts" Version="1.1.1" />
 		<PackageReference Include="CodeChops.DomainModeling" Version="2.0.1" />
-		<PackageReference Include="CodeChops.ImplementationDiscovery" Version="1.1.0" />
+		<PackageReference Include="CodeChops.ImplementationDiscovery" Version="1.1.1" />
 		<PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
 		<PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="7.0.0" />
 		<PackageReference Include="System.Collections.Immutable" Version="7.0.0" />
