@@ -1,6 +1,6 @@
 # Geometry
 
-Contains objects and helpers to help the calculation of objects in 2D-space and time. 
+Objects and helpers to provide easy calculations of objects in 2D-space and time. 
 These objects can be (de)serialized to/from JSON.
 This library extensively uses the new generic math functionality of .NET 7 so each object can contain the numeric types you prefer.
 
