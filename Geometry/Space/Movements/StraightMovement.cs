@@ -1,5 +1,5 @@
 ﻿using CodeChops.Geometry.Space.Directions.Strict;
-using CodeChops.Geometry.Space.Movements.Steps;
+using CodeChops.Geometry.Time.Moments;
 
 namespace CodeChops.Geometry.Space.Movements;
 
@@ -13,12 +13,15 @@ public record StraightMovement<TStrictDirection, TNumber> : Movement<TNumber>
 	public sealed override TStrictDirection GetDirection() => this._direction;
 	private readonly TStrictDirection _direction;
 	
-	protected sealed override Point<TNumber> CalculatePoint() 
-		=> this.StartingPoint + this.GetDirection().Value * this.StepCounter.GetSteps<TNumber>();
+	public TNumber Multiplier { get; }
 	
-	public StraightMovement(Point<TNumber> startingPoint, TStrictDirection direction, IStepCounter? stepCounter = null)
-		: base(startingPoint, stepCounter)
+	protected sealed override Point<TNumber> CalculatePoint() 
+		=> this.StartingPoint + this.GetDirection().Value * this.MomentCounter.GetMoments<TNumber>() * this.Multiplier;
+
+	public StraightMovement(Point<TNumber> startingPoint, TStrictDirection direction, TNumber multiplier, IMomentCounter? momentCounter = null)
+		: base(startingPoint, momentCounter)
 	{
 		this._direction = direction;
+		this.Multiplier = multiplier;
 	}
 }

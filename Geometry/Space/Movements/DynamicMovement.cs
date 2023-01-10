@@ -4,7 +4,7 @@ using CodeChops.Geometry.Space.Directions.Free;
 namespace CodeChops.Geometry.Space.Movements;
 
 /// <summary>
-/// A movement in which the direction and location can be determined by using a formula with a step counter.
+/// A movement in which the direction and location can be determined by using a formula with a moment counter.
 /// </summary>
 public abstract record DynamicMovement<TNumber> : Movement<TNumber>
 	where TNumber : INumber<TNumber>

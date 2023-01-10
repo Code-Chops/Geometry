@@ -35,7 +35,7 @@ An Euclidean plane of a specific size (and offset). Contains bound checks using 
 - Some simple predefined calculations: `Circumference`, `Area`.
 - Converters to convert to a different `TNumber`.
 - A way to (try to) get the address of a point on the plan. 
-- An iterator to iterate all points in a certain direction (in # steps).
+- An iterator to iterate all points in a certain direction (in number of moments).
 - An iterator to iterate all points of a line.
 - An iterator to iterate all points in the dimensions.
 
@@ -81,7 +81,7 @@ No free directions can be used. Contains:
 A singleton object that holds a delta point of (0, 0).
 
 ## Movements
-Describes in what direction an object moves from a starting point, using a [step counter](#StepCounter). 
+Describes in what direction an object moves from a starting point, using a [moment counter](#MomentCounter). 
 There are different types of movements. Every movement type is a value object (and therefore immutable).
 
 ### StraightMovement
@@ -93,20 +93,20 @@ A movement in which the direction and (therefore the location over time) can be 
 ### NoMovement
 Should be used for objects that don't move. It can still hold a direction.
 
-## StepCounter
-A step counter helps calculating the direction and location of a moving object deterministically.
-The steps can be calculated over time using a [TimedStepCounter](#TimedStepCounter), or manual steps using [ManualStepCounter](#ManualStepCounter).)
+## MomentCounter
+A moment counter helps calculating the direction and location of a moving object deterministically.
+The moments can be calculated over time using a [TimedMomentCounter](#TimedMomentCounter), or manual moments using [ManualMomentCounter](#ManualMomentCounter).)
 
-### TimedStepCounter
-A counter in which the steps are incremented over time, using a stopwatch. 
+### TimedMomentCounter
+A counter in which the moments are incremented over time, using a stopwatch. 
 The timer can be stopped and (re)started.
-A `stepsGetter` can be provided in order to control what order of magnitude should be used (seconds, milliseconds, etc.).
+A `momentsCountGetter` can be provided in order to control what order of magnitude should be used (seconds, milliseconds, etc.).
 
-### ManualStepCounter
-A counter in which the steps are incremented manually until maximum steps.
+### ManualMomentCounter
+A counter in which the moments are incremented manually until maximum moments.
 
-### StepCounterScope
-Controls access to a step counter in the ambient context. This way a statically shared step counter can be accessed and controlled from the outside.
+### MomentCounterScope
+Controls access to a moment counter in the ambient context. This way a statically shared moment counter can be accessed and controlled from the outside.
 
 > This functionality makes use of Ambient Context pattern as implemented by TheArchitectDev. See [Architect.AmbientContexts](https://github.com/TheArchitectDev/Architect.AmbientContexts).
 

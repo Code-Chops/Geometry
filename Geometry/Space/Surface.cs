@@ -40,7 +40,7 @@ public readonly record struct Surface<TNumber> : ISurface<TNumber>
 	/// Enumerates all points from a starting point in a certain direction.
 	/// </summary>
 	/// <exception cref="ArgumentOutOfRangeException">If length is smaller than 0.</exception>
-	/// <param name="length">The amount of steps to take. If null, it continues until the end of the surface.</param>
+	/// <param name="length">The amount of moments to take. If null, it continues until the end of the surface.</param>
 	public IEnumerable<Point<TNumber>> GetPointsInDirection(Point<TNumber> startingPoint, IDirection<TNumber> direction, int? length = null, Validator? validator = null)
 	{
 		validator ??= new Validator(this.GetType().Name);

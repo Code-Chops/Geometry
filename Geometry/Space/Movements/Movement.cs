@@ -1,10 +1,10 @@
 ﻿using CodeChops.Geometry.Space.Directions;
-using CodeChops.Geometry.Space.Movements.Steps;
+using CodeChops.Geometry.Time.Moments;
 
 namespace CodeChops.Geometry.Space.Movements;
 
 /// <summary>
-/// Describes in what direction an object moves from a starting point, using a step counter.
+/// Describes in what direction an object moves from a starting point, using a moment counter.
 /// </summary>
 public abstract record Movement<TNumber> : Movement
 	where TNumber : INumber<TNumber>
@@ -14,16 +14,16 @@ public abstract record Movement<TNumber> : Movement
 	public Point<TNumber> Point => this.CalculatePoint();
 	public abstract override IDirection<TNumber> GetDirection();
 	public Point<TNumber> StartingPoint { get; }
-	public IStepCounter StepCounter { get; }
+	public IMomentCounter MomentCounter { get; }
 	
 	protected abstract Point<TNumber> CalculatePoint();
 	
-	protected Movement(Point<TNumber> startingPoint, IStepCounter? stepCounter = null)
+	protected Movement(Point<TNumber> startingPoint, IMomentCounter? momentCounter = null)
 	{
 		this.StartingPoint = startingPoint;
-		this.StepCounter = stepCounter ?? StepCounterScope.Current.Value;
+		this.MomentCounter = momentCounter ?? MomentCounterScope.Current.Value;
 		
-		this.StepCounter.Start();
+		this.MomentCounter.Start();
 	}
 }
 

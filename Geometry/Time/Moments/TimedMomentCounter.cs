@@ -1,22 +1,21 @@
 ﻿using System.Diagnostics;
-using CodeChops.Geometry.Time;
 
-namespace CodeChops.Geometry.Space.Movements.Steps;
+namespace CodeChops.Geometry.Time.Moments;
 
 /// <summary>
-/// A counter in which the steps are incremented over time, using a stopwatch.
+/// A counter in which the moments are incremented over time, using a stopwatch.
 /// </summary>
 [GenerateIdentity]
-public sealed partial class TimedStepCounter : Entity, IStepCounter, IStopwatch
+public sealed partial class TimedMomentCounter : Entity, IMomentCounter, IStopwatch
 {
     public override string ToString() => this.ToDisplayString();
     private Stopwatch StopWatch { get; }
 
-    public long Steps => this.StepsGetter(this.StopWatch);
+    public long Moments => this.momentsCountGetter(this.StopWatch);
 
-    public TNumber GetSteps<TNumber>() 
+    public TNumber GetMoments<TNumber>() 
 	    where TNumber : INumber<TNumber> 
-	    => TNumber.CreateChecked(this.StepsGetter(this.StopWatch));
+	    => TNumber.CreateChecked(this.momentsCountGetter(this.StopWatch));
     
     public bool IsRunning => this.StopWatch.IsRunning;
     public TimeSpan Elapsed => this.StopWatch.Elapsed;
@@ -28,11 +27,11 @@ public sealed partial class TimedStepCounter : Entity, IStepCounter, IStopwatch
     public void Restart() => this.StopWatch.Restart();
     public void Reset() => this.StopWatch.Reset();
 
-    private Func<Stopwatch, long> StepsGetter { get; }
+    private Func<Stopwatch, long> momentsCountGetter { get; }
     
-    public TimedStepCounter(Stopwatch? instance = null, Func<Stopwatch, long>? stepsGetter = null)
+    public TimedMomentCounter(Stopwatch? instance = null, Func<Stopwatch, long>? momentsCountGetter = null)
     {
 	    this.StopWatch = instance ?? new Stopwatch();
-	    this.StepsGetter = stepsGetter ?? (static stopwatch => stopwatch.ElapsedMilliseconds);
+	    this.momentsCountGetter = momentsCountGetter ?? (static stopwatch => stopwatch.ElapsedMilliseconds);
     }
 }
