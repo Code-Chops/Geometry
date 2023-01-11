@@ -10,8 +10,8 @@
 	</PropertyGroup>
 
 	<PropertyGroup Label="Package">
-		<Version>4.2.0</Version>
-		<PackageReleaseNotes>Renamed StepCounter to MomentCounter and moved it to Time namespace. Added multiplier to straight movement.</PackageReleaseNotes>
+		<Version>4.3.0</Version>
+		<PackageReleaseNotes>Added surface iterator and moved surface classes.</PackageReleaseNotes>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<Title>CodeChops.Geometry</Title>
 		<Description>Contains objects and helpers to help the calculation of objects in 2D-space and time.</Description>

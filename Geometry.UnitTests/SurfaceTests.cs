@@ -1,7 +1,7 @@
 ﻿using CodeChops.DomainModeling.Identities.Serialization.Json;
-using CodeChops.Geometry.Space;
 using CodeChops.Geometry.Space.Points;
 using CodeChops.Geometry.Space.Sizes;
+using CodeChops.Geometry.Space.Surface;
 using CodeChops.MagicEnums.Json;
 
 namespace CodeChops.Geometry.UnitTests;
@@ -27,7 +27,7 @@ public class SurfaceTests
 		var size = new Size<int>(width, height);
 		var surface = new Surface<int>(size);
 		
-		var points = surface.GetAllPoints().ToList();
+		var points = surface.Size.GetAllPoints().ToList();
 		var index = 0;
 		foreach (var point in points)
 		{

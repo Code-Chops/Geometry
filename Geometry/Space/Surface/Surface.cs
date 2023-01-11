@@ -3,7 +3,7 @@ using System.Text.Json.Serialization;
 using CodeChops.Geometry.Space.Directions;
 using CodeChops.Geometry.Space.Lines;
 
-namespace CodeChops.Geometry.Space;
+namespace CodeChops.Geometry.Space.Surface;
 
 /// <summary>
 /// An Euclidean plane of a specific size (and offset).
@@ -74,15 +74,6 @@ public readonly record struct Surface<TNumber> : ISurface<TNumber>
 
 			yield return point;
 		}
-	}
-	
-	/// <summary>
-	/// Enumerates all points of the surface (starting from left to right and then downwards).
-	/// </summary>
-	public IEnumerable<Point<TNumber>> GetAllPoints()
-	{
-		foreach (var point in this.Size.GetAllPoints()) 
-			yield return point + this.Offset;
 	}
 
 	public TNumber GetAddress(Point<TNumber> point)

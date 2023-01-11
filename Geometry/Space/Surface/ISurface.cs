@@ -1,4 +1,4 @@
-namespace CodeChops.Geometry.Space;
+namespace CodeChops.Geometry.Space.Surface;
 
 public interface ISurface<TNumber> : ISurface
 	where TNumber : INumber<TNumber>

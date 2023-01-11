@@ -1,4 +1,4 @@
-﻿namespace CodeChops.Geometry.Space;
+﻿namespace CodeChops.Geometry.Space.Surface;
 
 public static class InRangeGuardExtensions
 {
