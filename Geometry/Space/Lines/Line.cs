@@ -1,5 +1,6 @@
 ﻿using System.Runtime.InteropServices;
 using System.Text.Json.Serialization;
+using CodeChops.Geometry.Space.Directions.Strict;
 
 namespace CodeChops.Geometry.Space.Lines;
 
@@ -55,6 +56,13 @@ public readonly record struct Line<TNumber> : ILine<TNumber>
 		this.Endpoint = endpoint;
 	}
 	
+	[JsonConstructor]
+	public Line(Point<TNumber> startingPoint, IStrictDirection<TNumber> direction, TNumber length)
+	{
+		this.StartingPoint = startingPoint;
+		this.Endpoint = startingPoint + direction.Value * length;
+	}
+
 	public double Distance()
 	{
 		var difference = (this.Endpoint - this.StartingPoint).Convert<double>();

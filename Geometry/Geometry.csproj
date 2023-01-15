@@ -1,4 +1,4 @@
-﻿ <Project Sdk="Microsoft.NET.Sdk">
+﻿	 <Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup Label="Main">
 		<AssemblyName>CodeChops.Geometry</AssemblyName>
@@ -10,8 +10,8 @@
 	</PropertyGroup>
 
 	<PropertyGroup Label="Package">
-		<Version>4.3.0</Version>
-		<PackageReleaseNotes>Added surface iterator and moved surface classes.</PackageReleaseNotes>
+		<Version>4.3.1</Version>
+		<PackageReleaseNotes>Added line direction constructor.</PackageReleaseNotes>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<Title>CodeChops.Geometry</Title>
 		<Description>Contains objects and helpers to help the calculation of objects in 2D-space and time.</Description>
