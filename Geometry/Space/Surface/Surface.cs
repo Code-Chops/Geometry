@@ -76,32 +76,16 @@ public readonly record struct Surface<TNumber> : ISurface<TNumber>
 		}
 	}
 
-	public TNumber GetAddress(Point<TNumber> point)
-		=> Validator.Get<Surface<TNumber>>.Default.GuardInRange(this, point, errorCode: null);
-	
 	/// <summary>
 	/// Tries to get the address of a point (starting from left to right and then downwards). Is null when out of bounds.
 	/// </summary>
-	/// <returns>False when out of bounds.</returns>
-	public bool TryGetAddress(Point<TNumber> point, [NotNullWhen(returnValue: true)] out TNumber? address)
-	{
-		address = this.Size.GetAddress(point, this.Offset);
-		
-		if (Validator.Get<Surface<TNumber>>.Oblivious.GuardInRange(this, address.Value, errorCode: null))
-		{
-			address = null;
-			return false;
-		}
-		
-		return true;
-	}
-	
+	public TNumber GetAddress(Point<TNumber> point, Validator? validator = null)
+		=> (validator ?? Validator.Get<Surface<TNumber>>.Default).GuardInRange(this, point, errorCode: null);
+
 	public Surface<TTargetNumber> Convert<TTargetNumber>() 
-		where TTargetNumber : struct, INumber<TTargetNumber>, IPowerFunctions<TTargetNumber>, IRootFunctions<TTargetNumber>
-	{
-		return new Surface<TTargetNumber>(this.Size.Convert<TTargetNumber>(), this.Offset.Convert<TTargetNumber>());
-	}
-	
+		where TTargetNumber : struct, INumber<TTargetNumber>, IPowerFunctions<TTargetNumber>, IRootFunctions<TTargetNumber> 
+		=> new(this.Size.Convert<TTargetNumber>(), this.Offset.Convert<TTargetNumber>());
+
 	public SizeIterator<TNumber> GetEnumerator()
 		=> new(this.Size);
 }

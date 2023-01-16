@@ -17,6 +17,7 @@ public static class InRangeGuardExtensions
 	/// <summary>
 	/// Checks if the provided point is in the surface's bounds. 
 	/// </summary>
+	/// <returns>The address of the point on the surface.</returns>
 	public static TNumber GuardInRange<TNumber>(this Validator validator, ISurface<TNumber> surface, Point<TNumber> point, 
 		string? errorCode, Exception? innerException = null)
 		where TNumber : struct, INumber<TNumber>
