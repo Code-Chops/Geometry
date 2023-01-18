@@ -5,12 +5,12 @@ namespace CodeChops.Geometry.Space.Movements;
 /// <summary>
 /// Describes in what direction an object moves from a starting point, using a timer.
 /// </summary>
-public interface IMovement<TNumber> : IMovement
+public interface IMovement<out TDirection, TNumber> : IMovement
+	where TDirection : IDirection<TNumber>
 	where TNumber : INumber<TNumber>
 {
-	IDirection<TNumber> Direction { get; }
-
 	Point<TNumber> StartingPoint { get; }
+	TDirection Direction { get; }
 }
 
 /// <summary>

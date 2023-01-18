@@ -10,8 +10,8 @@
 	</PropertyGroup>
 
 	<PropertyGroup Label="Package">
-		<Version>4.4.1</Version>
-		<PackageReleaseNotes>Decoupled StraightMovement and StrictDirection.</PackageReleaseNotes>
+		<Version>4.5.0</Version>
+		<PackageReleaseNotes>Added TDirection to movements.</PackageReleaseNotes>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<Title>CodeChops.Geometry</Title>
 		<Description>Contains objects and helpers to help the calculation of objects in 2D-space and time.</Description>
