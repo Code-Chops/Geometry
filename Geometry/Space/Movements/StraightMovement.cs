@@ -1,5 +1,4 @@
 ﻿using CodeChops.Geometry.Space.Directions;
-using CodeChops.Geometry.Space.Directions.Strict;
 using CodeChops.Geometry.Time;
 
 namespace CodeChops.Geometry.Space.Movements;
