@@ -41,7 +41,7 @@ public class SurfaceTests
 	
 	[Theory]
 	[InlineData(0,7,	nameof(EveryDirection.North),		3,		0,7,	0,6,	0,5 		)]
-	[InlineData(1,0,	nameof(EveryDirection.NorthEast),	0									)]	
+	[InlineData(1,0,	nameof(EveryDirection.South),		0,		1,0,	1,1,	1,2,	1,3 )]	
 	[InlineData(0,1,	nameof(EveryDirection.East),		4,		0,1,	1,1,	2,1,	3,1	)]
 	[InlineData(1,2,	nameof(EveryDirection.SouthEast),	1,		1,2							)]
 	[InlineData(2,1,	nameof(EveryDirection.South),		2,		2,1,	2,2					)]
@@ -63,6 +63,7 @@ public class SurfaceTests
 			index++;
 		}
 		
-		Assert.Equal(xOrY.Length / 2, length);
+		if (length > 0)
+			Assert.Equal(xOrY.Length / 2, length);
 	}
 }

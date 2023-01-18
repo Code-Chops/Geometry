@@ -9,7 +9,7 @@ public abstract record StrictDirection<TSelf> : StrictDirection<TSelf, int>
 /// A strongly typed direction that resides in a specific enum that holds other direction values.
 /// </summary>
 public abstract record StrictDirection<TSelf, TNumber> : MagicEnumCore<TSelf, Point<TNumber>>, IStrictDirection<TNumber>, IHasDefault<TSelf>
-	where TSelf : StrictDirection<TSelf, TNumber>, new() 
+	where TSelf : StrictDirection<TSelf, TNumber>, IStrictDirection<TNumber>, new() 
 	where TNumber : INumber<TNumber>
 {
 	private static List<TSelf> PossibleDirections => _possibleDirections ??= GetMembers().ToList();
@@ -22,7 +22,7 @@ public abstract record StrictDirection<TSelf, TNumber> : MagicEnumCore<TSelf, Po
 	/// </summary>
 	public bool TryGetDirection(string directionName, [NotNullWhen(true)] out IStrictDirection? direction)
 	{
-		if (!StrictDirection<TSelf, TNumber>.TryGetSingleMember(directionName, out var concreteDirection))
+		if (!TryGetSingleMember(directionName, out var concreteDirection))
 		{
 			direction = null;
 			return false;

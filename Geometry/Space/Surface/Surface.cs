@@ -40,19 +40,23 @@ public readonly record struct Surface<TNumber> : ISurface<TNumber>
 	/// Enumerates all points from a starting point in a certain direction.
 	/// </summary>
 	/// <exception cref="ArgumentOutOfRangeException">If length is smaller than 0.</exception>
-	/// <param name="length">The amount of moments to take. If null, it continues until the end of the surface.</param>
-	public IEnumerable<Point<TNumber>> GetPointsInDirection(Point<TNumber> startingPoint, IDirection<TNumber> direction, int? length = null, Validator? validator = null)
+	/// <param name="length">The count of points to take. If 0, it continues until the end of the surface.</param>
+	public IEnumerable<Point<TNumber>> GetPointsInDirection(Point<TNumber> startingPoint, IDirection<TNumber> direction, int length = 0, Validator? validator = null)
 	{
-		validator ??= new Validator(this.GetType().Name);
-		
 		if (length < 0) throw new ArgumentOutOfRangeException($"Length cannot be smaller than 0. Provided length is {length}.");
-
+		
+		validator = length == 0
+			? Validator.Get<Surface<TNumber>>.DoNotThrow()
+			: validator ?? Validator.Get<Surface<TNumber>>.Default;
+		
 		var point = startingPoint;
 
 		var i = 0;
-		while (length is null || i < length)
+		while (i < length)
 		{
 			validator.GuardInRange(this, point, errorCode: null);
+			if (!validator.IsValid)
+				break;
 			
 			yield return point;
 			

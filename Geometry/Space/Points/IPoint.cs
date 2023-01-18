@@ -15,11 +15,10 @@ public interface IPoint<out TNumber> : IPoint
 	/// Multiplies X and Y.
 	/// </summary>
 	TNumber Multiply();
-
-	Point<TTargetNumber> Convert<TTargetNumber>()
-		where TTargetNumber : INumber<TTargetNumber>;
 }
 
 public interface IPoint : IValueObject
 {
+	Point<TTargetNumber> Convert<TTargetNumber>()
+		where TTargetNumber : INumber<TTargetNumber>;
 }

@@ -22,7 +22,6 @@ A line holds two points: a starting point and end point. Contains:
 - Some simple predefined calculations: `Distance()`, `Difference()`.
 - An iterator to iterate all points in the line `foreach(var point in new Line<int>((0,0), (10, 10))`
 
-
 ## Size
 A 2-dimensional measurement value object with TNumber as type of the underlying values of `Width` and `Height`. Contains:
 - Operators to perform calculations.
@@ -37,7 +36,7 @@ An Euclidean plane of a specific size (and offset). Contains bound checks using 
 - Some simple predefined calculations: `Circumference`, `Area`.
 - Converters to convert to a different `TNumber`.
 - A way to (try to) get the address of a point on the plan. 
-- An iterator to iterate all points in a certain direction (in number of moments).
+- An iterator to iterate all points in a certain direction.
 - An iterator to iterate all points of a line.
 - An iterator to iterate all points in the dimensions.
 
@@ -83,7 +82,7 @@ No free directions can be used. Contains:
 A singleton object that holds a delta point of (0, 0).
 
 ## Movements
-Describes in what direction an object moves from a starting point, using a [moment counter](#MomentCounter). 
+Describes in what direction an object moves from a starting point, using a [timer](#Timer). 
 There are different types of movements. Every movement type is a value object (and therefore immutable).
 
 ### StraightMovement
@@ -95,26 +94,20 @@ A movement in which the direction and (therefore the location over time) can be 
 ### NoMovement
 Should be used for objects that don't move. It can still hold a direction.
 
-## MomentCounter
-A moment counter helps calculating the direction and location of a moving object deterministically.
-The moments can be calculated over time using a [TimedMomentCounter](#TimedMomentCounter), or manual moments using [ManualMomentCounter](#ManualMomentCounter).)
+# Time
 
-### TimedMomentCounter
-A counter in which the moments are incremented over time, using a stopwatch. 
-The timer can be stopped and (re)started.
-A `momentsCountGetter` can be provided in order to control what order of magnitude should be used (seconds, milliseconds, etc.).
+## Timer
+A timer helps calculating the direction and location of a moving object deterministically. It uses `Stopwatch` behind the scenes for accuracy.
+The speed and value of the time can be influenced by using a [custom speed timer](#CustomSpeedTimer).
 
-### ManualMomentCounter
-A counter in which the moments are incremented manually until maximum moments.
+## CustomSpeedTimer
+A timer (wraps `Stopwatch`) in which the speed or time can be increased manually.  
+The timer can be stopped, reset and (re)started.
 
-### MomentCounterScope
-Controls access to a moment counter in the ambient context. This way a statically shared moment counter can be accessed and controlled from the outside.
+## TimerScope
+Controls access to a timer in the ambient context. This way a statically shared timer can be accessed and controlled from the outside.
 
-> This functionality makes use of Ambient Context pattern as implemented by TheArchitectDev. See [Architect.AmbientContexts](https://github.com/TheArchitectDev/Architect.AmbientContexts).
+> This functionality makes use of Ambient Context pattern as implemented by TheArchitectDev. See the [Architect.AmbientContexts package](https://github.com/TheArchitectDev/Architect.AmbientContexts).
 
-## Time
-### IStopwatch
-Wraps a `Stopwatch` in order to be able to control the stopwatch from the outside.
-
-### UnixEpochConverter
+## UnixEpochConverter
 A small helper to convert DateTimes to Unix time stamps and vice versa.

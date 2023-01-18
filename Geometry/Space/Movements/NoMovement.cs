@@ -1,23 +1,34 @@
-﻿using CodeChops.Geometry.Space.Directions;
+﻿using System.Runtime.InteropServices;
+using CodeChops.Geometry.Space.Directions;
 
 namespace CodeChops.Geometry.Space.Movements;
 
 /// <summary>
 /// Should be used for objects that don't move. It can still hold a direction.
 /// </summary>
-public record NoMovement<TNumber> : Movement<TNumber>, IHasDefault<NoMovement<TNumber>>
+[StructLayout(LayoutKind.Auto)]
+public readonly record struct NoMovement<TNumber> : IMovement<IDirection<TNumber>, TNumber>, IHasDefault<NoMovement<TNumber>>
 	where TNumber : INumber<TNumber>
 {
+	public static implicit operator Point<TNumber>(NoMovement<TNumber> value) => value.Point;
+	
 	public static NoMovement<TNumber> Default { get; } = new(Point<TNumber>.Default);
 
-	public sealed override IDirection<TNumber> GetDirection() => this._direction;
-	private readonly IDirection<TNumber> _direction;
+	public Point<TNumber> Point { get; }
+	public Point<TNumber> StartingPoint => this.Point;
 	
-	protected sealed override Point<TNumber> CalculatePoint() => this.StartingPoint;
+	public IDirection<TNumber> Direction { get; }
+	public IDirection GetDirection() => this.Direction;
 
-	public NoMovement(Point<TNumber> point, IDirection<TNumber>? direction = null)
-		: base(startingPoint: point)
+	private NoMovement(Point<TNumber> point, IDirection<TNumber>? direction = null)
 	{
-		this._direction = direction ?? NoDirection<TNumber>.Instance;
+		this.Point = point;
+		this.Direction = direction ?? NoDirection<TNumber>.Instance;
+	}
+
+	public Point<TTargetNumber> GetDeltaPoint<TTargetNumber>() 
+		where TTargetNumber : INumber<TTargetNumber>
+	{
+		return this.Direction.Value.Convert<TTargetNumber>();
 	}
 }

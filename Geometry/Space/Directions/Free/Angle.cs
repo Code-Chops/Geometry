@@ -6,7 +6,8 @@
 [GenerateValueObject<double>(minimumValue: -360, maximumValue: 360, useValidationExceptions: false, generateDefaultConstructor: false)]
 public readonly partial record struct Angle
 {
-	public Angle(Double value, Validator? _ = null)
+	// ReSharper disable once UnusedParameter.Local
+	public Angle(double value, Validator? _ = null)
 	{
 		this._value = value % 360;
 	}

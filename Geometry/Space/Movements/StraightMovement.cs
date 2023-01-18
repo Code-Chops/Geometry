@@ -1,27 +1,43 @@
 ﻿using CodeChops.Geometry.Space.Directions.Strict;
-using CodeChops.Geometry.Time.Moments;
+using CodeChops.Geometry.Time;
 
 namespace CodeChops.Geometry.Space.Movements;
 
 /// <summary>
 /// A movement that only goes into one straight direction over its lifetime.
 /// </summary>
-public record StraightMovement<TStrictDirection, TNumber> : Movement<TNumber>
+public readonly record struct StraightMovement<TStrictDirection, TNumber> : IMovement<TStrictDirection, TNumber>
 	where TStrictDirection : StrictDirection<TStrictDirection, TNumber>, new()
 	where TNumber : INumber<TNumber>
 {
-	public sealed override TStrictDirection GetDirection() => this._direction;
-	private readonly TStrictDirection _direction;
-	
-	public TNumber Multiplier { get; }
-	
-	protected sealed override Point<TNumber> CalculatePoint() 
-		=> this.StartingPoint + this.GetDirection().Value * this.MomentCounter.GetMoments<TNumber>() * this.Multiplier;
+	public static implicit operator Point<TNumber>(StraightMovement<TStrictDirection, TNumber> value) => value.Point;
 
-	public StraightMovement(Point<TNumber> startingPoint, TStrictDirection direction, TNumber multiplier, IMomentCounter? momentCounter = null)
-		: base(startingPoint, momentCounter)
+	public Point<TNumber> Point => this.StartingPoint + this.Direction.Value * this.DistanceFactorGetter(this.Timer);
+	public Point<TNumber> StartingPoint { get; }
+
+	public TStrictDirection Direction { get; }
+	private Func<ITimer, TNumber> DistanceFactorGetter { get; }
+	
+	private ITimer Timer { get; }
+	
+	/// <param name="distanceFactorGetter">This factor will be multiplied by the direction and added to the starting point.</param>
+	public StraightMovement(Point<TNumber> startingPoint, TStrictDirection direction, ITimer timer, Func<ITimer, TNumber> distanceFactorGetter)
 	{
-		this._direction = direction;
-		this.Multiplier = multiplier;
+		this.StartingPoint = startingPoint;
+		this.Direction = direction ?? throw new ArgumentNullException(nameof(direction));
+		this.Timer = timer ?? throw new ArgumentNullException(nameof(timer));
+		this.DistanceFactorGetter = distanceFactorGetter ?? throw new ArgumentNullException(nameof(distanceFactorGetter));
 	}
+	
+	public StraightMovement(Point<TNumber> startingPoint, TStrictDirection direction)
+	{
+		this.StartingPoint = startingPoint;
+		this.Direction = direction ?? throw new ArgumentNullException(nameof(direction));
+		this.Timer = null!;
+		this.DistanceFactorGetter = _ => TNumber.One;
+	}
+	
+	public Point<TTargetNumber> GetDeltaPoint<TTargetNumber>() 
+		where TTargetNumber : INumber<TTargetNumber> 
+		=> this.Direction.Value.Convert<TTargetNumber>();
 }

@@ -1,4 +1,4 @@
-﻿namespace CodeChops.Geometry.Time;
+﻿namespace CodeChops.Geometry.Time.Epoch;
 
 /// <summary>
 /// Helper to convert DateTimes to Unix time stamps and vice versa.

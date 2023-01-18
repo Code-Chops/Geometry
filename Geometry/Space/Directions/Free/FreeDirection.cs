@@ -11,6 +11,7 @@ public readonly partial record struct FreeDirection<TNumber> : IDirection<TNumbe
 
 	public Angle Angle { get; }
 	
+	// ReSharper disable once UnusedParameter.Local
 	public FreeDirection(Point<TNumber> value, Validator? _ = null)
 	{	
 		this._value = value;

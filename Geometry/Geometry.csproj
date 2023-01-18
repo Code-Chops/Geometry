@@ -10,8 +10,8 @@
 	</PropertyGroup>
 
 	<PropertyGroup Label="Package">
-		<Version>4.3.2</Version>
-		<PackageReleaseNotes>Added line direction constructor.</PackageReleaseNotes>
+		<Version>4.4.0</Version>
+		<PackageReleaseNotes>Created new timers and removed the old counters. Updated manual. Changed movements to be structs.</PackageReleaseNotes>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<Title>CodeChops.Geometry</Title>
 		<Description>Contains objects and helpers to help the calculation of objects in 2D-space and time.</Description>
@@ -65,6 +65,10 @@
 		<PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
 		<PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="7.0.0" />
 		<PackageReference Include="System.Collections.Immutable" Version="7.0.0" />
+	</ItemGroup>
+		
+	<ItemGroup>
+	  <Folder Include="Time\Moments" />
 	</ItemGroup>
 		
 </Project>
