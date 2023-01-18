@@ -1,4 +1,5 @@
-﻿using CodeChops.Geometry.Space.Directions.Free;
+﻿using CodeChops.Geometry.Space.Directions;
+using CodeChops.Geometry.Space.Directions.Free;
 using CodeChops.Geometry.Time;
 
 namespace CodeChops.Geometry.Space.Movements;
@@ -6,7 +7,7 @@ namespace CodeChops.Geometry.Space.Movements;
 /// <summary>
 /// A movement in which the direction and location can be determined by using a formula with a timer.
 /// </summary>
-public abstract record DynamicMovement<TNumber> : IMovement<FreeDirection<TNumber>, TNumber> 
+public abstract record DynamicMovement<TNumber> : IMovement<TNumber> 
 	where TNumber : INumber<TNumber>
 {
 	public static implicit operator Point<TNumber>(DynamicMovement<TNumber> value) => value.Point;
@@ -18,7 +19,7 @@ public abstract record DynamicMovement<TNumber> : IMovement<FreeDirection<TNumbe
 	
 	private ITimer Timer { get; }
 
-	public FreeDirection<TNumber> Direction
+	public IDirection<TNumber> Direction
 	{
 		get
 		{

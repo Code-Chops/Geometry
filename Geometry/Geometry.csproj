@@ -10,8 +10,8 @@
 	</PropertyGroup>
 
 	<PropertyGroup Label="Package">
-		<Version>4.4.0</Version>
-		<PackageReleaseNotes>Created new timers and removed the old counters. Updated manual. Changed movements to be structs.</PackageReleaseNotes>
+		<Version>4.4.1</Version>
+		<PackageReleaseNotes>Decoupled StraightMovement and StrictDirection.</PackageReleaseNotes>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<Title>CodeChops.Geometry</Title>
 		<Description>Contains objects and helpers to help the calculation of objects in 2D-space and time.</Description>

@@ -7,7 +7,7 @@ namespace CodeChops.Geometry.Space.Movements;
 /// Should be used for objects that don't move. It can still hold a direction.
 /// </summary>
 [StructLayout(LayoutKind.Auto)]
-public readonly record struct NoMovement<TNumber> : IMovement<IDirection<TNumber>, TNumber>, IHasDefault<NoMovement<TNumber>>
+public readonly record struct NoMovement<TNumber> : IMovement<TNumber>, IHasDefault<NoMovement<TNumber>>
 	where TNumber : INumber<TNumber>
 {
 	public static implicit operator Point<TNumber>(NoMovement<TNumber> value) => value.Point;
