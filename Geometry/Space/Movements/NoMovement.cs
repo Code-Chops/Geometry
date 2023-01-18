@@ -25,10 +25,4 @@ public readonly record struct NoMovement<TNumber> : IMovement<IDirection<TNumber
 		this.Point = point;
 		this.Direction = direction ?? NoDirection<TNumber>.Instance;
 	}
-
-	public Point<TTargetNumber> GetDeltaPoint<TTargetNumber>() 
-		where TTargetNumber : INumber<TTargetNumber>
-	{
-		return this.Direction.Value.Convert<TTargetNumber>();
-	}
 }

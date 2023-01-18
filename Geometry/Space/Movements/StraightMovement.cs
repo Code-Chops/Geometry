@@ -16,6 +16,7 @@ public readonly record struct StraightMovement<TDirection, TNumber> : IMovement<
 	public Point<TNumber> StartingPoint { get; }
 
 	public TDirection Direction { get; }
+	public IDirection GetDirection() => this.Direction;
 	private Func<ITimer, TNumber> DistanceFactorGetter { get; }
 	
 	private ITimer Timer { get; }
@@ -36,8 +37,4 @@ public readonly record struct StraightMovement<TDirection, TNumber> : IMovement<
 		this.Timer = null!;
 		this.DistanceFactorGetter = _ => TNumber.One;
 	}
-	
-	public Point<TTargetNumber> GetDeltaPoint<TTargetNumber>() 
-		where TTargetNumber : INumber<TTargetNumber> 
-		=> this.Direction.Value.Convert<TTargetNumber>();
 }

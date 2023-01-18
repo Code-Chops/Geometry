@@ -31,18 +31,7 @@ public abstract record StrictDirection<TSelf, TNumber> : MagicEnumCore<TSelf, Po
 		direction = concreteDirection;
 		return true;
 	}
-
-	protected static TSelf CreatePoint<TSourceNumber>(TSourceNumber x, TSourceNumber y, [CallerMemberName] string name = null!)
-		where TSourceNumber : INumber<TSourceNumber>
-	{
-		var point = Point<TNumber>.Create(x, y);
-		var member = CreateMember<TSelf>(valueCreator: () => point, memberCreator: null, name);
-
-		// Empty cache
-		_possibleDirections = null;
-		return member;
-	}
-
+	
 	private static Random Random { get; } = new();
 	public IStrictDirection<TNumber> GetDirectionFromRandomTurn(Random? random = null)
 	{
@@ -100,4 +89,19 @@ public abstract record StrictDirection<TSelf, TNumber> : MagicEnumCore<TSelf, Po
 		direction = newDirection;
 		return true;
 	}
+	
+	protected static TSelf CreatePoint<TSourceNumber>(TSourceNumber x, TSourceNumber y, [CallerMemberName] string name = null!)
+		where TSourceNumber : INumber<TSourceNumber>
+	{
+		var point = Point<TNumber>.Create(x, y);
+		var member = CreateMember<TSelf>(valueCreator: () => point, memberCreator: null, name);
+
+		// Empty cache
+		_possibleDirections = null;
+		return member;
+	}
+	
+	public Point<TTargetNumber> GetDeltaPoint<TTargetNumber>() 
+		where TTargetNumber : INumber<TTargetNumber>
+		=> this.Value.Convert<TTargetNumber>();
 }

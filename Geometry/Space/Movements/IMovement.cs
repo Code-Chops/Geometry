@@ -18,6 +18,5 @@ public interface IMovement<out TDirection, TNumber> : IMovement
 /// </summary>
 public interface IMovement : IValueObject
 {
-	Point<TTargetNumber> GetDeltaPoint<TTargetNumber>() 
-		where TTargetNumber : INumber<TTargetNumber>;
+	IDirection GetDirection();
 }

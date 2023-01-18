@@ -44,4 +44,8 @@ public readonly partial record struct FreeDirection<TNumber> : IDirection<TNumbe
 	{
 		return new(this.Value.Convert<TTargetNumber>());
 	}
+	
+	public Point<TTargetNumber> GetDeltaPoint<TTargetNumber>() 
+		where TTargetNumber : INumber<TTargetNumber>
+		=> this.Value.Convert<TTargetNumber>();
 }

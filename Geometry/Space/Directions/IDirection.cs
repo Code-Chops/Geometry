@@ -11,4 +11,6 @@ public interface IDirection<TNumber> : IDirection
 /// </summary>
 public interface IDirection : IValueObject
 {
+	Point<TTargetNumber> GetDeltaPoint<TTargetNumber>()
+		where TTargetNumber : INumber<TTargetNumber>;
 }

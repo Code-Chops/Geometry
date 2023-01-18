@@ -33,6 +33,8 @@ public abstract record DynamicMovement<TNumber> : IMovement<IDirection<TNumber>,
 		}
 	}
 
+	public IDirection GetDirection() => this.Direction;
+
 	protected DynamicMovement(Point<TNumber> startingPoint, ITimer timer)
 	{
 		this.StartingPoint = startingPoint;
@@ -41,8 +43,5 @@ public abstract record DynamicMovement<TNumber> : IMovement<IDirection<TNumber>,
 
 	private FreeDirection<TNumber> _currentDirection;
 	private Point<TNumber> _currentPoint;
-	
-	public Point<TTargetNumber> GetDeltaPoint<TTargetNumber>() 
-		where TTargetNumber : INumber<TTargetNumber>
-		=> this.Direction.Value.Convert<TTargetNumber>();
+
 }
