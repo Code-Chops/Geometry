@@ -2,6 +2,7 @@
 using System.Text.Json.Serialization;
 using CodeChops.Geometry.Space.Directions;
 using CodeChops.Geometry.Space.Lines;
+using CodeChops.Geometry.Space.Movements;
 
 namespace CodeChops.Geometry.Space.Surface;
 
@@ -35,7 +36,15 @@ public readonly record struct Surface<TNumber> : ISurface<TNumber>
 		this.Circumference = this.Size.Circumference();
 		this.Area = this.Size.Area();
 	}
-	
+
+	/// <summary>
+	/// Enumerates all points from a starting point in a certain direction.
+	/// </summary>
+	/// <exception cref="ArgumentOutOfRangeException">If length is smaller than 0.</exception>
+	/// <param name="length">The count of points to take. If 0, it continues until the end of the surface.</param>
+	public IEnumerable<Point<TNumber>> GetPointsInDirection(IStraightMovement<TNumber> movement, int length = 0, Validator? validation = null)
+		=> GetPointsInDirection(movement.StartingPoint, (IDirection<TNumber>)movement.GetDirection(), length, validation);
+
 	/// <summary>
 	/// Enumerates all points from a starting point in a certain direction.
 	/// </summary>
