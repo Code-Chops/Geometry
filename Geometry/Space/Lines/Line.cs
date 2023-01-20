@@ -1,6 +1,7 @@
 ﻿using System.Runtime.InteropServices;
 using System.Text.Json.Serialization;
 using CodeChops.Geometry.Space.Directions.Strict;
+using CodeChops.Geometry.Space.Movements;
 
 namespace CodeChops.Geometry.Space.Lines;
 
@@ -54,6 +55,13 @@ public readonly record struct Line<TNumber> : ILine<TNumber>
 	{
 		this.StartingPoint = startingPoint;
 		this.Endpoint = endpoint;
+	}
+	
+	[JsonConstructor]
+	public Line(IStraightMovement<TNumber> movement, TNumber length)
+	{
+		this.StartingPoint = movement.StartingPoint;
+		this.Endpoint = movement.StartingPoint + movement.GetDirection().GetDeltaPoint<TNumber>() * length;
 	}
 	
 	[JsonConstructor]

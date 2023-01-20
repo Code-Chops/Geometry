@@ -6,7 +6,7 @@ namespace CodeChops.Geometry.Space.Movements;
 /// <summary>
 /// A movement that only goes into one straight direction over its lifetime.
 /// </summary>
-public readonly record struct StraightMovement<TDirection, TNumber> : IMovement<TDirection, TNumber>
+public readonly record struct StraightMovement<TDirection, TNumber> : IMovement<TDirection, TNumber>, IStraightMovement<TNumber>
 	where TDirection : IDirection<TNumber>
 	where TNumber : INumber<TNumber>
 {

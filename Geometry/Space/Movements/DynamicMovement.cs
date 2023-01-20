@@ -7,7 +7,7 @@ namespace CodeChops.Geometry.Space.Movements;
 /// <summary>
 /// A movement in which the direction and location can be determined by using a formula with a timer.
 /// </summary>
-public abstract record DynamicMovement<TNumber> : IMovement<IDirection<TNumber>, TNumber> 
+public abstract record DynamicMovement<TNumber> : IMovement<IDirection<TNumber>, TNumber>, IDynamicMovement<TNumber>
 	where TNumber : INumber<TNumber>
 {
 	public static implicit operator Point<TNumber>(DynamicMovement<TNumber> value) => value.Point;

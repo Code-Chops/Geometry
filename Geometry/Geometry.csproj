@@ -10,8 +10,8 @@
 	</PropertyGroup>
 
 	<PropertyGroup Label="Package">
-		<Version>4.5.1</Version>
-		<PackageReleaseNotes>IMovement now can provide IDirection.</PackageReleaseNotes>
+		<Version>4.5.2</Version>
+		<PackageReleaseNotes>Added interfaces for StraightMovement and DynamicMovement and added Line constructor.</PackageReleaseNotes>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<Title>CodeChops.Geometry</Title>
 		<Description>Contains objects and helpers to help the calculation of objects in 2D-space and time.</Description>
