@@ -10,8 +10,8 @@
 	</PropertyGroup>
 
 	<PropertyGroup Label="Package">
-		<Version>4.6.0</Version>
-		<PackageReleaseNotes>Updated packages 2.</PackageReleaseNotes>
+		<Version>4.6.1</Version>
+		<PackageReleaseNotes>Updated packages 3.</PackageReleaseNotes>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<Title>CodeChops.Geometry</Title>
 		<Description>Contains objects and helpers to help the calculation of objects in 2D-space and time.</Description>
@@ -61,7 +61,7 @@
 	<ItemGroup Label="PackageReferences">
 		<PackageReference Include="Architect.AmbientContexts" Version="1.1.1" />
 		<PackageReference Include="CodeChops.DomainModeling" Version="2.4.0" />
-		<PackageReference Include="CodeChops.ImplementationDiscovery" Version="1.5.1" />
+		<PackageReference Include="CodeChops.ImplementationDiscovery" Version="1.5.2" />
 		<PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
 		<PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="7.0.0" />
 		<PackageReference Include="System.Collections.Immutable" Version="7.0.0" />
