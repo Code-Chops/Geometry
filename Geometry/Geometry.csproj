@@ -10,8 +10,8 @@
 	</PropertyGroup>
 
 	<PropertyGroup Label="Package">
-		<Version>4.5.3</Version>
-		<PackageReleaseNotes>Added GetPointsInDirection using movement.</PackageReleaseNotes>
+		<Version>4.5.4</Version>
+		<PackageReleaseNotes>Updated packages.</PackageReleaseNotes>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<Title>CodeChops.Geometry</Title>
 		<Description>Contains objects and helpers to help the calculation of objects in 2D-space and time.</Description>
@@ -60,8 +60,8 @@
 		
 	<ItemGroup Label="PackageReferences">
 		<PackageReference Include="Architect.AmbientContexts" Version="1.1.1" />
-		<PackageReference Include="CodeChops.DomainModeling" Version="2.3.0" />
-		<PackageReference Include="CodeChops.ImplementationDiscovery" Version="1.4.0" />
+		<PackageReference Include="CodeChops.DomainModeling" Version="2.3.5" />
+		<PackageReference Include="CodeChops.ImplementationDiscovery" Version="1.5.1" />
 		<PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
 		<PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="7.0.0" />
 		<PackageReference Include="System.Collections.Immutable" Version="7.0.0" />
