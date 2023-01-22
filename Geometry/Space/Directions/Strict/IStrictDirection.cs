@@ -3,7 +3,7 @@
 namespace CodeChops.Geometry.Space.Directions.Strict;
 
 [DiscoverImplementations(generateProxies: true)]
-public partial interface IStrictDirection<TNumber> : IDirection<TNumber>, IStrictDirection
+public interface IStrictDirection<TNumber> : IDirection<TNumber>, IStrictDirection
 	where TNumber : INumber<TNumber>
 {
 	IStrictDirection<TNumber> GetDirectionFromRandomTurn(Random? random = null);
