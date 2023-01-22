@@ -16,7 +16,7 @@ public sealed class TimerScope : AmbientScope<TimerScope>
 	
 	static TimerScope()
 	{
-		SetDefaultValue(new CustomSpeedTimer());
+		SetDefaultValue(new CustomSpeedTimer(id: new()));
 	}
 
 	/// <summary>

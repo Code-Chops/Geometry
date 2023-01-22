@@ -6,7 +6,7 @@ namespace CodeChops.Geometry.Time;
 /// A timer for which the speed can be changed using <see cref="ChangeSpeed(double)"/>. The speed can also be manually increased by using <see cref="AddTime"/>.
 /// </summary>
 [GenerateIdentity]
-public partial class CustomSpeedTimer : Entity, ITimer
+public partial class CustomSpeedTimer : Entity<CustomSpeedTimer.Identity>, ITimer
 {
 	public override string ToString() => this.ToDisplayString();
 
@@ -30,7 +30,8 @@ public partial class CustomSpeedTimer : Entity, ITimer
 	public long ElapsedTicks => (long)(this._elapsedTime.Ticks + this._currentTime.ElapsedTicks * this.SpeedFactor);
 	public bool IsRunning => this._currentTime.IsRunning;
 
-	public CustomSpeedTimer(TimeSpan elapsedTime = default)
+	public CustomSpeedTimer(Identity id, TimeSpan elapsedTime = default) 
+		: base(id)
 	{
 		this._elapsedTime = elapsedTime;
 		this._currentTime = new Stopwatch();

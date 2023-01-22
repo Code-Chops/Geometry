@@ -6,7 +6,7 @@ namespace CodeChops.Geometry.Time;
 /// A timer which wraps a <see cref="System.Diagnostics.Stopwatch"/>
 /// </summary>
 [GenerateIdentity]
-public sealed partial class Timer : Entity, ITimer
+public sealed partial class Timer : Entity<Timer.Identity>, ITimer
 {
     public override string ToString() => this.ToDisplayString();
 
@@ -22,7 +22,8 @@ public sealed partial class Timer : Entity, ITimer
     public void Restart() => this.Stopwatch.Restart();
     public void Reset() => this.Stopwatch.Reset();
     
-    public Timer(Stopwatch? instance = null)
+    public Timer(Identity id, Stopwatch? instance = null) 
+	    : base(id)
     {
 	    this.Stopwatch = instance ?? new Stopwatch();
     }
