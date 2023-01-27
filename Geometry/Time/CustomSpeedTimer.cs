@@ -30,8 +30,7 @@ public class CustomSpeedTimer : Entity<CustomSpeedTimerId>, ITimer
 	public long ElapsedTicks => (long)(this._elapsedTime.Ticks + this._currentTime.ElapsedTicks * this.SpeedFactor);
 	public bool IsRunning => this._currentTime.IsRunning;
 
-	public CustomSpeedTimer(CustomSpeedTimerId id, TimeSpan elapsedTime = default) 
-		: base(id)
+	public CustomSpeedTimer(CustomSpeedTimerId id, TimeSpan elapsedTime = default)
 	{
 		this._elapsedTime = elapsedTime;
 		this._currentTime = new Stopwatch();
