@@ -55,7 +55,7 @@ public readonly record struct Surface<TNumber> : ISurface<TNumber>
 		if (length < 0) throw new ArgumentOutOfRangeException($"Length cannot be smaller than 0. Provided length is {length}.");
 		
 		validator = length == 0
-			? Validator.Get<Surface<TNumber>>.DoNotThrow()
+			? Validator.Get<Surface<TNumber>>.Aggregate()
 			: validator ?? Validator.Get<Surface<TNumber>>.Default;
 		
 		var point = startingPoint;
@@ -79,7 +79,7 @@ public readonly record struct Surface<TNumber> : ISurface<TNumber>
 	/// </summary>
 	public IEnumerable<Point<TNumber>> GetPointsOfLine(Line<TNumber> line, Validator? validator = null)
 	{
-		validator ??= new Validator(this.GetType().Name);
+		validator ??= new DefaultValidator(this.GetType().Name);
 	
 		foreach (var point in line)
 		{

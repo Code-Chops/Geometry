@@ -22,7 +22,7 @@ public sealed class Timer : Entity<TimerId>, ITimer
     public void Restart() => this.Stopwatch.Restart();
     public void Reset() => this.Stopwatch.Reset();
     
-    public Timer(TimerId id, Stopwatch? instance = null)
+    public Timer(Stopwatch? instance = null)
     {
 	    this.Stopwatch = instance ?? new Stopwatch();
     }
