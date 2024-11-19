@@ -1,6 +1,6 @@
 ﻿using CodeChops.Geometry.Space.Directions;
 using CodeChops.Geometry.Space.Directions.Free;
-using CodeChops.Geometry.Time;
+using ITimer = CodeChops.Geometry.Time.ITimer;
 
 namespace CodeChops.Geometry.Space.Movements;
 
@@ -16,7 +16,7 @@ public abstract record DynamicMovement<TNumber> : IMovement<IDirection<TNumber>,
 	public Point<TNumber> StartingPoint { get; }
 
 	protected abstract Point<TNumber> CalculatePoint(ITimer timer);
-	
+
 	private ITimer Timer { get; }
 
 	public IDirection<TNumber> Direction
@@ -28,7 +28,7 @@ public abstract record DynamicMovement<TNumber> : IMovement<IDirection<TNumber>,
 				this._currentPoint = this.Point;
 				this._currentDirection = new FreeDirection<TNumber>(this.Point);
 			}
-	
+
 			return this._currentDirection;
 		}
 	}

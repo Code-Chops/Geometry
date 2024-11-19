@@ -1,4 +1,4 @@
-﻿using CodeChops.DomainModeling.Identities.Serialization.Json;
+﻿using CodeChops.DomainModeling.Serialization.Json;
 using CodeChops.Geometry.Space.Directions.Free;
 using CodeChops.Geometry.Space.Points;
 using CodeChops.MagicEnums.Json;
@@ -10,9 +10,9 @@ public class FreeDirectionTests
 	static FreeDirectionTests()
 	{
 		JsonSerialization.DefaultOptions.Converters.Add(new MagicEnumJsonConverterFactory());
-		JsonSerialization.DefaultOptions.Converters.Add(new IdentityJsonConverterFactory());
+		JsonSerialization.DefaultOptions.Converters.Add(new ValueObjectJsonConverterFactory());
 	}
-	
+
 	[Theory]
 	[InlineData(0,		 0, -1)]
 	[InlineData(90,		 1,  0)]

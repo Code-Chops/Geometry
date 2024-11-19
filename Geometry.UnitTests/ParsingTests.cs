@@ -1,4 +1,4 @@
-﻿using CodeChops.DomainModeling.Identities.Serialization.Json;
+﻿using CodeChops.DomainModeling.Serialization.Json;
 using CodeChops.Geometry.Space.Points;
 using CodeChops.MagicEnums.Json;
 
@@ -9,9 +9,9 @@ public class ParsingTests
 	static ParsingTests()
 	{
 		JsonSerialization.DefaultOptions.Converters.Add(new MagicEnumJsonConverterFactory());
-		JsonSerialization.DefaultOptions.Converters.Add(new IdentityJsonConverterFactory());
+		JsonSerialization.DefaultOptions.Converters.Add(new ValueObjectJsonConverterFactory());
 	}
-	
+
 	[Theory]
 	[InlineData(0,		0,		"left: 0px; top: 0px; ")]
 	[InlineData(0.5,	0.5,	"left: 0.5px; top: 0.5px; ")]

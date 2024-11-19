@@ -13,10 +13,10 @@ namespace CodeChops.Geometry.Time;
 public sealed class TimerScope : AmbientScope<TimerScope>
 {
 	public override string ToString() => this.GetType().Name;
-	
+
 	static TimerScope()
 	{
-		SetDefaultValue(new CustomSpeedTimer() { Id = default});
+		SetDefaultValue(new CustomSpeedTimer());
 	}
 
 	/// <summary>
@@ -24,7 +24,7 @@ public sealed class TimerScope : AmbientScope<TimerScope>
 	/// The scope is configurable from the outside, such as from startup.
 	/// </summary>
 	public static TimerScope Current => GetAmbientScope() ?? throw new InvalidOperationException(
-		$"{nameof(TimerScope)} was not configured. Call {nameof(ClockScopeExtensions)}.{nameof(ClockScopeExtensions.UseClockScope)} on startup.");
+		$"{nameof(TimerScope)} was not configured. Call {nameof(TimerScope)}.{nameof(TimerExtensions.UseTimerScope)} on startup.");
 
 	public ITimer Value { get; }
 

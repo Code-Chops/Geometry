@@ -15,16 +15,16 @@ public readonly record struct Surface<TNumber> : ISurface<TNumber>
 	where TNumber : struct, INumber<TNumber>
 {
 	public override string ToString() => this.ToDisplayString(new { this.Size, this.Offset });
-	
+
 	public Size<TNumber> Size { get; }
 	public Point<TNumber> Offset { get; }
-	
+
 	/// <summary>
 	/// The sum of the width and height.
 	/// </summary>
 	public TNumber Circumference { get; }
 	/// <summary>
-	/// The multiplication of the width and height. 
+	/// The multiplication of the width and height.
 	/// </summary>
 	public TNumber Area { get; }
 
@@ -53,22 +53,22 @@ public readonly record struct Surface<TNumber> : ISurface<TNumber>
 	public IEnumerable<Point<TNumber>> GetPointsInDirection(Point<TNumber> startingPoint, IDirection<TNumber> direction, int length = 0, Validator? validator = null)
 	{
 		if (length < 0) throw new ArgumentOutOfRangeException($"Length cannot be smaller than 0. Provided length is {length}.");
-		
+
 		validator = length == 0
 			? Validator.Get<Surface<TNumber>>.Aggregate()
 			: validator ?? Validator.Get<Surface<TNumber>>.Default;
-		
+
 		var point = startingPoint;
 
 		var i = 0;
 		while (i < length)
 		{
 			validator.GuardInRange(this, point, errorCode: null);
-			if (!validator.IsValid)
+			if (validator.HasException)
 				break;
-			
+
 			yield return point;
-			
+
 			point += direction.Value;
 			i++;
 		}
@@ -80,7 +80,7 @@ public readonly record struct Surface<TNumber> : ISurface<TNumber>
 	public IEnumerable<Point<TNumber>> GetPointsOfLine(Line<TNumber> line, Validator? validator = null)
 	{
 		validator ??= new DefaultValidator(this.GetType().Name);
-	
+
 		foreach (var point in line)
 		{
 			validator.GuardInRange(this, point, errorCode: null);
@@ -95,8 +95,8 @@ public readonly record struct Surface<TNumber> : ISurface<TNumber>
 	public TNumber GetAddress(Point<TNumber> point, Validator? validator = null)
 		=> (validator ?? Validator.Get<Surface<TNumber>>.Default).GuardInRange(this, point, errorCode: null);
 
-	public Surface<TTargetNumber> Convert<TTargetNumber>() 
-		where TTargetNumber : struct, INumber<TTargetNumber>, IPowerFunctions<TTargetNumber>, IRootFunctions<TTargetNumber> 
+	public Surface<TTargetNumber> Convert<TTargetNumber>()
+		where TTargetNumber : struct, INumber<TTargetNumber>, IPowerFunctions<TTargetNumber>, IRootFunctions<TTargetNumber>
 		=> new(this.Size.Convert<TTargetNumber>(), this.Offset.Convert<TTargetNumber>());
 
 	public SizeIterator<TNumber> GetEnumerator()

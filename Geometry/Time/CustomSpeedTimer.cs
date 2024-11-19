@@ -6,43 +6,37 @@ namespace CodeChops.Geometry.Time;
 /// A timer for which the speed can be changed using <see cref="ChangeSpeed(double)"/>. The speed can also be manually increased by using <see cref="AddTime"/>.
 /// </summary>
 [GenerateIdentity]
-public class CustomSpeedTimer : Entity<CustomSpeedTimerId>, ITimer
+public class CustomSpeedTimer(TimeSpan elapsedTime = default) : ITimer
 {
-	public override string ToString() => this.ToDisplayString();
+	public override string ToString() => this.GetType().Name;
 
 	/// <summary>
 	/// When increasing or decreasing the speed, the current time will be saved here and <see cref="_currentTime"/> will be reset.
 	/// </summary>
-	private TimeSpan _elapsedTime;
-	
+	private TimeSpan _elapsedTime = elapsedTime;
+
 	/// <summary>
-	/// This time is used (in combination with <see cref="SpeedFactor"/> to calculate the new time and will be added to <see cref="_elapsedTime"/>. 
+	/// This time is used (in combination with <see cref="SpeedFactor"/> to calculate the new time and will be added to <see cref="_elapsedTime"/>.
 	/// </summary>
-	private Stopwatch _currentTime;
-	
+	private Stopwatch _currentTime = new();
+
 	/// <summary>
 	/// The factor of the speed.
 	/// </summary>
 	public double SpeedFactor { get; private set; }
-	
+
 	public TimeSpan Elapsed => this._elapsedTime + this._currentTime.Elapsed * this.SpeedFactor;
 	public long ElapsedMilliseconds => (long)(this._elapsedTime.Milliseconds + this._currentTime.ElapsedMilliseconds * this.SpeedFactor);
 	public long ElapsedTicks => (long)(this._elapsedTime.Ticks + this._currentTime.ElapsedTicks * this.SpeedFactor);
 	public bool IsRunning => this._currentTime.IsRunning;
 
-	public CustomSpeedTimer(TimeSpan elapsedTime = default)
-	{
-		this._elapsedTime = elapsedTime;
-		this._currentTime = new Stopwatch();
-	}
-	
 	/// <inheritdoc cref="Stopwatch.Start()"/>
 	/// <exception cref="InvalidOperationException">When already running.</exception>
 	public void Start()
 	{
 		if (this.IsRunning)
 			throw new InvalidOperationException($"{this.GetType().Name} is already running.");
-		
+
 		this._currentTime.Start();
 	}
 
@@ -52,7 +46,7 @@ public class CustomSpeedTimer : Entity<CustomSpeedTimerId>, ITimer
 	{
 		if (!this.IsRunning)
 			throw new InvalidOperationException($"{this.GetType().Name} already stopped running.");
-		
+
 		this._currentTime.Stop();
 	}
 
@@ -78,11 +72,11 @@ public class CustomSpeedTimer : Entity<CustomSpeedTimerId>, ITimer
 	{
 		if (Math.Abs(factor - this.SpeedFactor) < 0.001)
 			return;
-		
+
 		this._currentTime.Stop();
-		
+
 		this._elapsedTime = this._currentTime.Elapsed;
-		
+
 		this._currentTime = new Stopwatch();
 		this.SpeedFactor = factor;
 		this._currentTime.Start();

@@ -1,5 +1,5 @@
 ﻿using CodeChops.Geometry.Space.Directions;
-using CodeChops.Geometry.Time;
+using ITimer = CodeChops.Geometry.Time.ITimer;
 
 namespace CodeChops.Geometry.Space.Movements;
 
@@ -18,9 +18,9 @@ public readonly record struct StraightMovement<TDirection, TNumber> : IMovement<
 	public TDirection Direction { get; }
 	public IDirection GetDirection() => this.Direction;
 	private Func<ITimer, TNumber> DistanceFactorGetter { get; }
-	
+
 	private ITimer Timer { get; }
-	
+
 	/// <param name="distanceFactorGetter">This factor will be multiplied by the direction and added to the starting point.</param>
 	public StraightMovement(Point<TNumber> startingPoint, TDirection direction, ITimer timer, Func<ITimer, TNumber> distanceFactorGetter)
 	{
@@ -29,7 +29,7 @@ public readonly record struct StraightMovement<TDirection, TNumber> : IMovement<
 		this.Timer = timer ?? throw new ArgumentNullException(nameof(timer));
 		this.DistanceFactorGetter = distanceFactorGetter ?? throw new ArgumentNullException(nameof(distanceFactorGetter));
 	}
-	
+
 	public StraightMovement(Point<TNumber> startingPoint, TDirection direction)
 	{
 		this.StartingPoint = startingPoint;

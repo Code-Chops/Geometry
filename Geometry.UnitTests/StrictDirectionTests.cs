@@ -1,4 +1,4 @@
-using CodeChops.DomainModeling.Identities.Serialization.Json;
+using CodeChops.DomainModeling.Serialization.Json;
 using CodeChops.Geometry.Space.Directions.Strict;
 using CodeChops.MagicEnums.Json;
 
@@ -9,10 +9,9 @@ public class StrictDirectionTests
 	static StrictDirectionTests()
 	{
 		JsonSerialization.DefaultOptions.Converters.Add(new MagicEnumJsonConverterFactory());
-		JsonSerialization.DefaultOptions.Converters.Add(new IdentityJsonConverterFactory());
-
+		JsonSerialization.DefaultOptions.Converters.Add(new ValueObjectJsonConverterFactory());
 	}
-	
+
 	[Theory]
 	[InlineData(nameof(EveryDirection.East),		nameof(RotationType.Invert),			nameof(EveryDirection.West))]
 	[InlineData(nameof(EveryDirection.South),		nameof(RotationType.Clockwise),			nameof(EveryDirection.SouthWest))]
